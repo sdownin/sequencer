@@ -1,4 +1,4 @@
-**SequenceR**  an `R` GUI for Sequence Analysis
+**SequenceR**  User-Friendly Sequence Analysis in `R`
 ==============
 
 Package info coming soon
