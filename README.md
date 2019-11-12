@@ -1,5 +1,7 @@
-*SequenceR*  an `R` GUI for Sequence Analysis
+**SequenceR**  an `R` GUI for Sequence Analysis
 ==============
+
+Package info coming soon
 
 ## Download
 
@@ -10,30 +12,30 @@ coming soon
 
 coming soon
 
-#### Import Data
+### Import Data
 
 coming soon
 
-#### Define Action Dictionary
+### Define Action Dictionary
 
 coming soon
 
-#### Select Measures
+### Select Measures
 
 coming soon
 
-#### Run Analyses
+### Run Analyses
 
 coming soon
 
-#### Output Results and Plots
+### Output Results and Plots
 
 coming soon
 
 
 ## Changelog
 
-#### v0.1.0
+### v0.1.0
 
 - initial version 
 
