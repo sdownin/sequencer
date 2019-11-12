@@ -33,10 +33,38 @@ coming soon
 coming soon
 
 
+
 ## Changelog
 
-### v0.1.0
+All notable changes to this project will be documented in this section.
 
-- initial version 
+### [0.2.0] - 2019-11-12
 
+#### Added
+
+- Sequence analysis dependencies in R-Portable
+
+#### Changed
+
+- App UI tabs
+
+#### Removed
+
+N/A
+
+
+### [0.1.0] - 2019-11-01
+
+#### Added
+
+- item 1
+- item 2
+
+#### Changed
+
+N/A
+
+#### Removed
+
+N/A
 
