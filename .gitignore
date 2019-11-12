@@ -1,0 +1,35 @@
+*.png
+*.doc*
+*.xls*
+*.ppt*
+*.jpg
+*.jpeg
+*.csv*
+*.zip*
+*.tar*
+*.gz*
+*.bz*
+*.pdf*
+*.tmp*
+*.RData
+*.RDataTmp
+*.RDat*
+*.rda*
+*.rds*
+*.Rhistory*
+*.graph*
+*.db
+*.bgs
+*.luu
+*.rhes
+*.shess
+*.swp*
+glmmadmb/*
+
+# CPython bitcode cache
+python/__pycache__/*
+
+# skip external code
+R-Portable/
+GoogleChromePortable/
+
