@@ -2,33 +2,89 @@ library(shiny)
 source('testModule.R')
 
 
-ui <- fluidPage(
-	titlePanel("Test App Title"),
-	sidebarLayout(
-		sidebarPanel(
-			fileInputUI("file1")
-		),
-		mainPanel(
-			tableOutputUI("file1Table"),
-			tableOutputSummaryUI("file1TableSummary")
-		),		
-	),
-	hr(),
-	sidebarLayout(
-		sidebarPanel(
-			sliderTextUI("one"),
-			a("Test Link (Google)", href="https://google.com", target="_blank")
-		),
-		mainPanel(
-			sliderTextUI("two"),
-			hr(),
-			actionButtonUI("one"),
-			checkboxGroupUI("one")
+ui <- navbarPage("SequenceR",
+
+	## Page 1 - Analysis ====================================
+	tabPanel("Analysis", 
+		tabsetPanel(
+		
+			## 1. Step 1. Data ----------
+			tabPanel("Data", 
+				sidebarLayout(
+				sidebarPanel(
+					fileInputUI("file1")
+				),
+				mainPanel(
+					tableOutputUI("file1Table"),
+					tableOutputSummaryUI("file1TableSummary")
+				),		
+				),
+				hr(),
+				sidebarLayout(
+					sidebarPanel(
+						sliderTextUI("one"),
+						a("Test Link (Google)", href="https://google.com", target="_blank")
+					),
+					mainPanel(
+						sliderTextUI("two"),
+						hr(),
+						actionButtonUI("one"),
+						checkboxGroupUI("one")
+					)
+				),
+				hr()
+			), 
+			
+			## 1. Step 2. Measures ----------
+			tabPanel("Measures", 
+				"coming soon"
+			), 
+			
+			## 1. Step 3. Outputs -----------
+			tabPanel("Outputs", 
+				"coming soon"
+			)
 		)
 	),
-	hr()
+	
+	## Page 2 - Inference ===================================
+	tabPanel("Inference"),
+	
+	## Pages - Other  =======================================
+	navbarMenu("Info",
+		tabPanel("FAQ",
+			"coming soon"
+		),
+		tabPanel("Version",
+			"coming soon"
+		)
+	)
 )
 
+
+#		sidebarLayout(
+#		sidebarPanel(
+#			fileInputUI("file1")
+#		),
+#		mainPanel(
+#			tableOutputUI("file1Table"),
+#			tableOutputSummaryUI("file1TableSummary")
+#		),		
+#		),
+#		hr(),
+#		sidebarLayout(
+#			sidebarPanel(
+#				sliderTextUI("one"),
+#				a("Test Link (Google)", href="https://google.com", target="_blank")
+#			),
+#			mainPanel(
+#				sliderTextUI("two"),
+#				hr(),
+#				actionButtonUI("one"),
+#				checkboxGroupUI("one")
+#			)
+#		),
+#		hr()
 
 server <- function(input, output, session) {
 	# server logic

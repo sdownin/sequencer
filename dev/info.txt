@@ -1,0 +1,17 @@
+R app using R portable, shiny web tools, and Google Chrome portable
+
+See: 
+http://blog.analytixware.com/2014/03/packaging-your-shiny-app-as-windows.html
+https://www.r-bloggers.com/deploying-desktop-apps-with-r/
+
+## Before doing anything, add to the bottom of R-Portable/App/R-Portable/etc/Rprofile.site:
+
+.First = function(){
+    .libPaths(.Library)
+}
+
+## install packages
+## Start R-Portable and install core package dependencies. At minimum this should be the package shiny and all its dependencies.
+.libPaths() # verify that only the local R-Portable library path is available
+## install command
+install.packages(c('tidyverse','TraMineR','PST','seqHMM','shiny','shinydashboard'), dependencies=TRUE)
