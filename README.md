@@ -38,33 +38,27 @@ coming soon
 
 All notable changes to this project will be documented in this section.
 
-### [0.2.0] - 2019-11-12
-
-#### Added
-
+#### [0.2.0] - 2019-11-12
+**Added**
 - Sequence analysis dependencies in R-Portable
 
-#### Changed
-
+**Changed**
 - App UI tabs
 
-#### Removed
+**Removed**
+(none)
 
-N/A
 
+#### [0.1.0] - 2019-11-01
 
-### [0.1.0] - 2019-11-01
+**Added**
+- SequenceR main Shiny app
+- GoogleChromePortable
+- R-Portable
 
-#### Added
+**Changed**
+(none)
 
-- item 1
-- item 2
-
-#### Changed
-
-N/A
-
-#### Removed
-
-N/A
+**Removed**
+(none)
 
