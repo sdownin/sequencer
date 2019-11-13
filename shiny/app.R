@@ -1,121 +1,195 @@
 library(shiny)
+#library(shinydashboard)
 source('testModule.R')
 
+####################################################################################
+##                                  VIEW 
+####################################################################################
 
-ui <- navbarPage("SequenceR",
+ui <-  navbarPage("SequenceR",
 
 	## Page 1 - Analysis ====================================
 	tabPanel("Analysis", 
-		tabsetPanel(
 		
-			## 1. Step 1. Data ----------
+		tabsetPanel(
+			
+			## 1. Tab 1. Data
 			tabPanel("Data", 
-				sidebarLayout(
-				sidebarPanel(
-					fileInputUI("file1")
-				),
-				mainPanel(
-					tableOutputUI("file1Table"),
-					tableOutputSummaryUI("file1TableSummary")
-				),		
-				),
-				hr(),
-				sidebarLayout(
-					sidebarPanel(
-						sliderTextUI("one"),
-						a("Test Link (Google)", href="https://google.com", target="_blank")
+				
+					titlePanel("Sequnce Dictionary"),
+					sidebarLayout(
+						sidebarPanel(
+							fileInputUI("analysis_file_dictionary")
+						),
+						mainPanel(
+							tableOutputSummaryUI("analysis_file_dictionary_summary", "Dictionary Summary")
+						),		
 					),
-					mainPanel(
-						sliderTextUI("two"),
-						hr(),
-						actionButtonUI("one"),
-						checkboxGroupUI("one")
-					)
-				),
-				hr()
+					#hr(),
+					titlePanel("Sequnce Data"),
+					sidebarLayout(
+						sidebarPanel(
+							fileInputUI("analysis_file_data")
+						),
+						mainPanel(
+							tableOutputUI("analysis_file_data_table"),
+							tableOutputSummaryUI("analysis_file_data_table_summary", "Data Summary")
+						),		
+					),
+					hr()
+				
+				
 			), 
 			
-			## 1. Step 2. Measures ----------
+			## 1. Tab 2. Measures
 			tabPanel("Measures", 
-				"coming soon"
+					titlePanel("Select Measures to Compute"),
+					actionButtonUIcheckdata("datacheck", "Data Check"),
+					hr(),
+					sidebarLayout(
+						sidebarPanel(
+							sliderTextUI("one"),
+						),
+						mainPanel(
+							sliderTextUI("two"),
+							hr(),
+							actionButtonUI("one"),
+							checkboxGroupUI("one")
+						)
+					),
+					hr()
 			), 
 			
-			## 1. Step 3. Outputs -----------
+			## 1. Tab 3. Outputs
 			tabPanel("Outputs", 
-				"coming soon"
+				"Outputs"
 			)
+			
 		)
+			
+		
+	), 
+	
+		
+	## Page 2 - Inference ===================================
+	tabPanel("Inference", 
+		"Coming soon..."
 	),
 	
-	## Page 2 - Inference ===================================
-	tabPanel("Inference"),
-	
-	## Pages - Other  =======================================
+	## Pages Other - Info ===================================
 	navbarMenu("Info",
-		tabPanel("FAQ",
-			"coming soon"
+		tabPanel("FAQ", 
+			"Where is the project code repository?",
+			a("https://github.com/sdownin/sequencer", href="https://github.com/sdownin/sequencer", target="_blank")
 		),
-		tabPanel("Version",
-			"coming soon"
+		tabPanel("Version", 
+			"[0.2.0] - 2019-11-12"
 		)
 	)
+
 )
 
 
-#		sidebarLayout(
-#		sidebarPanel(
-#			fileInputUI("file1")
-#		),
-#		mainPanel(
-#			tableOutputUI("file1Table"),
-#			tableOutputSummaryUI("file1TableSummary")
-#		),		
-#		),
-#		hr(),
-#		sidebarLayout(
-#			sidebarPanel(
-#				sliderTextUI("one"),
-#				a("Test Link (Google)", href="https://google.com", target="_blank")
-#			),
-#			mainPanel(
-#				sliderTextUI("two"),
-#				hr(),
-#				actionButtonUI("one"),
-#				checkboxGroupUI("one")
-#			)
-#		),
-#		hr()
+### Pages, Other  =======================================
+#navbarMenu("Info",
+#	tabPanel("FAQ",
+#		"coming soon"
+#	),
+#	tabPanel("Version",
+#		"coming soon"
+#	)
+#)
 
+
+
+####################################################################################
+##                                  SERVER 
+####################################################################################
 server <- function(input, output, session) {
+
+	model_file <- './../R-Portable/tmp_sequencer_data_model.rds'
+
+	if (file.exists(model_file)) {
+		model <- readRDS(model_file)
+	} else {
+		model <- list(analysis_dictionary=list(data=NA, datapath=''), 
+					  analysis_data=list(data=NA, datapath=''))
+	}
+
 	# server logic
 	callModule(sliderTextServer, "one")
 	callModule(sliderTextServer, "two")
 	callModule(actionButtonServer, "one")
 	callModule(checkboxGroupServer, "one")
 
-	# data table input #TODO: find why cannot call from external module?
-	output$file1Table <- renderDataTable({
-		inFile <- input$file1
+	# dictionary table input #TODO: find why cannot call from external module?
+	output$analysis_file_dictionary_summary <- renderPrint({
+		inFile <- input$analysis_file_dictionary
+		
+		## NONE
 		if (is.null(inFile)) 
 			return(NULL)
-		read.csv(inFile$datapath, header = input$header, 
-				nrows=as.numeric(input$file1Rows), stringsAsFactors=FALSE)
-	}, options = list(lengthMenu = c(5, 15, 50), pageLength = 5))
+		
+		## SAVED
+		if (inFile$datapath == model$analysis_dictionary$datapath)
+			return(str(model$analysis_dictionary$data))
+		
+		## INPUT
+		df <- read.csv(inFile$datapath, header = input$header, na.strings=c('','""'), stringsAsFactors=TRUE)
+		li <- apply(df, 2, function(col){
+			as.factor(unique(col[which(!is.null(col) & !is.nan(col) & !is.na(col))]))
+		})
+		
+		model$analysis_dictionary$datapath <- inFile$datapath
+		model$analysis_dictionary$data <- li
+		saveRDS(model, file=model_file)
+		
+		str(li)
+	})
+
+	## data table input #TODO: find why cannot call from external module?
+	#output$analysis_file_data_table <- renderDataTable({
+	#	inFile <- input$analysis_file_data
+	#	if (is.null(inFile)) 
+	#		return(NULL)
+	#	read.csv(inFile$datapath, header = input$header, sep=',', fill=TRUE, stringsAsFactors=TRUE)
+	#}, options = list(lengthMenu = c(5, 15, 50), pageLength = 5)) 
  
 	# Generate a summary of the dataset ----
-	output$file1TableSummary <- renderPrint({
-		inFile <- input$file1
+	output$analysis_file_data_table_summary <- renderPrint({
+		inFile <- input$analysis_file_data
+		
+		## NONE
 		if (is.null(inFile)) 
 			return(NULL)
-		df <- read.csv(inFile$datapath, header = input$header, 
-						nrows=as.numeric(input$file1Rows), stringsAsFactors=FALSE)
+		
+		## SAVED
+		if (inFile$datapath == model$analysis_data$datapath)
+			return(summary(model$analysis_data$data))
+		
+		## INPUT
+		df <- read.csv(inFile$datapath, header = input$header, sep=',', fill=TRUE, stringsAsFactors=TRUE)
+
+		model$analysis_data$datapath <- inFile$datapath
+		model$analysis_data$data <- df
+		saveRDS(model, file=model_file)
+
 		summary(df)
 	})
+ 
+	## Measures
+	output$datacheck <- renderText({
+		sprintf('Loaded Dictionary %s; Data %s', 
+			    !all(is.na(model$analysis_data$data)), !all(is.na(model$analysis_data$data)))
+	})
+ 
  
 	# close the R session when Chrome closes
 	session$onSessionEnded(function() { 
 		stopApp()
-		q("no") 
+		if (file.exists(model_file))
+			file.remove(model_file)
+		q("no")
 	})
 }
 
@@ -129,4 +203,4 @@ server <- function(input, output, session) {
 # }
 
 ## RUN
-shinyApp(ui, server)
+shinyApp(ui, server, enableBookmarking = "url")  ## enableBookmarking = "server", "url"

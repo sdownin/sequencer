@@ -1,4 +1,5 @@
 library(shiny)
+#library(shinydashboard)
 
 ## UI #####################################
 sliderTextUI <- function(id){
@@ -27,6 +28,14 @@ actionButtonUI <- function(id) {
 	)
 }
 
+actionButtonUIcheckdata <- function(id, label) {
+	ns <- NS(id)
+	tagList(
+		actionButton(ns("actionButtonDataCheck"), label = label),
+		textOutput(ns('datacheck'))
+	)
+}
+
 fileInputUI <- function(fileId) {
 	tagList(
 		fileInput(fileId, h3("Choose CSV File"),
@@ -36,9 +45,23 @@ fileInputUI <- function(fileId) {
 			  "text/comma-separated-values,text/plain",
 			  ".csv")
 		),
-		tags$hr(),
+		#tags$hr(),
 		checkboxInput("header", "Header", TRUE),
-		selectInput("file1Rows", label="Read N Rows", 
+	)
+}
+
+fileInputUInrows <- function(fileId, nrowsID) {
+	tagList(
+		fileInput(fileId, h3("Choose CSV File"),
+			multiple = F,
+			accept = c(
+			  "text/csv",
+			  "text/comma-separated-values,text/plain",
+			  ".csv")
+		),
+		#tags$hr(),
+		checkboxInput("header", "Header", TRUE),
+		selectInput(nrowsID, label="Read N Rows", 
 					choices=c("All"=Inf, "20"=20), 
 					selected = "All", multiple = FALSE,
 					selectize = TRUE, width = NULL, size = NULL)
@@ -51,9 +74,9 @@ tableOutputUI <- function(id) {
 	)
 }
 
-tableOutputSummaryUI <- function(id) {
+tableOutputSummaryUI <- function(id, title) {
 	tagList(
-		h4("Table Summary"),
+		h4(title),
 		verbatimTextOutput(id)
 	)
 }
