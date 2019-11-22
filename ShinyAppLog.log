@@ -2,10 +2,10 @@ library paths:
 ... C:/Users/steph/Google Drive/Rapp/SequenceR/R-Portable/App/R-Portable/library
 Loading required package: shiny
 
-Listening on http://127.0.0.1:5695
+Listening on http://127.0.0.1:5434
 Browser path: "C:/Users/steph/Google Drive/Rapp/SequenceR/GoogleChromePortable/App/Chrome-bin/chrome.exe"
-[15632:12364:1112/185226.828:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
-[15632:12364:1112/185226.829:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
-[15632:12364:1112/185226.829:ERROR:disk_cache.cc(178)] Unable to create cache
-[15632:12364:1112/185226.829:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
+[21332:7096:1121/160648.432:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
+[21332:7096:1121/160648.432:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
+[21332:7096:1121/160648.432:ERROR:disk_cache.cc(178)] Unable to create cache
+[21332:7096:1121/160648.432:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
 Opening in existing browser session.
