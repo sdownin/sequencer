@@ -312,15 +312,16 @@
 				library(reshape2)
 
 				model <- loadModel()
-				model$analysis_run <- 'CHECKPOINT BEFORE RUN'
-				saveRDS(model, file=MODEL_FILE)
+				# model$analysis_run <- 'CHECKPOINT BEFORE RUN'
+				# saveRDS(model, file=MODEL_FILE)
 
 				dat <- model$analysis_data$x
 				alphabet <- model$analysis_alphabet$x
 				method <- model$analysis_dist_settings$method
-				indel <- model$analysis_dist_settings$indel
+				indel <- as.numeric(model$analysis_dist_settings$indel)
 				norm <- model$analysis_dist_settings$norm
 				sm <- model$analysis_subcostmat$x
+				storage.mode(sm) <- "numeric"
 
 				actionCol <- 'action'
 				periodCol <- 'period'
@@ -334,7 +335,7 @@
 
 				dists <- list() # period list
 				seqdefs <- list() # period list
-				for (t in 1:length(periods))
+				for (t in 1:length(periods))  #length(periods)
 				{
 					pd <- periods[t]
 					tidx <- which(dat[,periodCol] == pd)
@@ -354,7 +355,7 @@
 				model$analysis_run <- 'ANALYSIS RUN COMPLETED'
 				saveRDS(model, file=MODEL_FILE)
 
-				print(list(Sequences=model$seqdefs,Distance_Method=method,Distances=model$dists))
+				return(print(list(Sequences=model$seqdefs,Distance_Method=method,Distances=model$dists)))
 			}
 			return()
 		})
