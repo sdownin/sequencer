@@ -96,13 +96,23 @@
 				    		h3("Sequence Plots"),
 				    		tagList(
 					    		actionButton("analysis_output_seq_plot_button", "Plot Sequences"),
-					    		plotOutput('analysis_output_seq_plot')
+					    		plotOutput('analysis_output_seq_plot', height='600px'#,
+					    			# click = "analysis_seq_plot_click",  # Equiv, to click=clickOpts(id="plot_click")
+					    			# hover = hoverOpts(id = "analysis_seq_plot_hover", delayType = "throttle"),
+					    			# brush = brushOpts(id = "analysis_seq_plot_brush")
+					    		)
 				    		),
-	    		    		tagList(
-	    			    		actionButton("analysis_output_dists_plot_button", "Plot Distances"),
-	    			    		plotOutput('analysis_output_dists_plot')
-	    		    		)
 				    	),
+					),
+					fluidRow(width=12,
+						tagList(
+    			    		actionButton("analysis_output_dists_plot_button", "Plot Distances"),
+    			    		plotOutput('analysis_output_dists_plot', height='800px'#,
+    			    			# click = "analysis_dists_plot_click",  # Equiv, to click=clickOpts(id="plot_click")
+    			    			# hover = hoverOpts(id = "analysis_dists_plot_hover", delayType = "throttle"),
+    			    			# brush = brushOpts(id = "analysis_dists_plot_brush")
+    			    		)
+	    		    	)
 					),
 					fluidRow(width=12,
 						''

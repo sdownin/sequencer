@@ -366,7 +366,7 @@
 				if ('seqdefs' %in% names(model)) {
 					par(mfrow=c(length(model$seqdefs),1))
 					for (i in 1:length(model$seqdefs)) {
-						plot(model$seqdefs[[i]])
+						plot(model$seqdefs[[i]], main=sprintf('Sequences: Period %s',i))
 					}
 				}
 			} else {
@@ -378,9 +378,12 @@
 		 	if(input$analysis_output_dists_plot_button) {
 		 		model <- readRDS(MODEL_FILE)
 		 		if ('dists' %in% names(model)) {
-		 			par(mfrow=c(length(model$dists),1))
+		 			nplotcols <- ifelse(length(model$dists)>1, 2, 1)
+		 			par(mfrow=c(length(model$dists),nplotcols))
 		 			for (i in 1:length(model$dists)) {
-		 				heatmap(model$dists[[i]])
+		 				# heatmap(model$dists[[i]])
+		 				image(model$dists[[i]], main=sprintf('Distances: Period %s',i))
+		 				# image(zlim=range(c(model$dists[[i]])), legend.only=T, horizontal=F)
 		 			}
 		 		}
 		 	} else {
