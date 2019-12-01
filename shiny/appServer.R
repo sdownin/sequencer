@@ -360,19 +360,34 @@
 			return()
 		})
 
-		# output$analysis_output_seq_plot <- renderPlot({
-			# if(input$analysis_output_seq_plot_button) {
-				# model <- readRDS(MODEL_FILE)
-				# if ('seqdefs' %in% names(model)) {
-				# 	par(mfrow=c(length(model$seqdefs),1))
-				# 	for (i in 1:length(model$seqdefs)) {
-				# 		plot(mode$seqdefs[[i]])
-				# 	}
-				# }
-			# }
-			# return()
-		# })
+		output$analysis_output_seq_plot <- renderPlot({
+			if(input$analysis_output_seq_plot_button) {
+				model <- readRDS(MODEL_FILE)
+				if ('seqdefs' %in% names(model)) {
+					par(mfrow=c(length(model$seqdefs),1))
+					for (i in 1:length(model$seqdefs)) {
+						plot(model$seqdefs[[i]])
+					}
+				}
+			} else {
+				return()
+			}
+		})
 	 
+		output$analysis_output_dists_plot <- renderPlot({
+		 	if(input$analysis_output_dists_plot_button) {
+		 		model <- readRDS(MODEL_FILE)
+		 		if ('dists' %in% names(model)) {
+		 			par(mfrow=c(length(model$dists),1))
+		 			for (i in 1:length(model$dists)) {
+		 				heatmap(model$dists[[i]])
+		 			}
+		 		}
+		 	} else {
+		 		return()
+		 	}
+		})
+
 		# close the R session when Chrome closes
 		session$onSessionEnded(function() { 
 			stopApp()

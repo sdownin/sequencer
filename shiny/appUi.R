@@ -95,11 +95,19 @@
 				    	column(width = 6,
 				    		h3("Sequence Plots"),
 				    		tagList(
-					    		actionButton("analysis_output_seq_plot_button", "Plot"),
+					    		actionButton("analysis_output_seq_plot_button", "Plot Sequences"),
 					    		plotOutput('analysis_output_seq_plot')
-				    		)
+				    		),
+	    		    		tagList(
+	    			    		actionButton("analysis_output_dists_plot_button", "Plot Distances"),
+	    			    		plotOutput('analysis_output_dists_plot')
+	    		    		)
 				    	),
 					),
+					fluidRow(width=12,
+						''
+					),
+					hr(),
 				icon=icon('chart-bar')	
 				)
 				

@@ -2,12 +2,12 @@ library paths:
 ... C:/Users/steph/Google Drive/Rapp/SequenceR/R-Portable/App/R-Portable/library
 Loading required package: shiny
 
-Listening on http://127.0.0.1:7199
+Listening on http://127.0.0.1:3797
 Browser path: "C:/Users/steph/Google Drive/Rapp/SequenceR/GoogleChromePortable/App/Chrome-bin/chrome.exe"
-[1108:16180:1201/155844.297:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
-[1108:16180:1201/155844.297:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
-[1108:16180:1201/155844.298:ERROR:disk_cache.cc(178)] Unable to create cache
-[1108:16180:1201/155844.298:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
+[17504:7348:1201/161038.769:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
+[17504:7348:1201/161038.770:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
+[17504:7348:1201/161038.770:ERROR:disk_cache.cc(178)] Unable to create cache
+[17504:7348:1201/161038.770:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
 Opening in existing browser session.
 
 SERVER:  MODEL STRUCT
@@ -87,7 +87,7 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 3 distinct sequences
  [>] min/max sequence length: 2/4
  [>] computing distances using the OM metric
- [>] elapsed time: 0 secs
+ [>] elapsed time: 0.02 secs
  [>] found missing values ('NA') in sequence data
  [>] preparing 3 sequences
  [>] coding void elements with '%' and missing values with '*'
@@ -154,4 +154,4 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 3 distinct sequences
  [>] min/max sequence length: 3/6
  [>] computing distances using the OM metric
- [>] elapsed time: 0 secs
+ [>] elapsed time: 0.02 secs
