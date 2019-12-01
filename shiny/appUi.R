@@ -87,7 +87,13 @@
 				
 				## 1. Tab 3. Outputs -------------
 				tabPanel("Outputs", 
-					"Outputs",
+					# fluidRow(
+				 #    	column(width = 12,
+				 #    		h3("Sequence Distance Measurement Settings"),
+				 #    		tableOutputSummaryUI("analysis_run_value", "Sequence Analysis Summary")
+				 #    	)
+					# )
+					,
 				icon=icon('chart-bar')	
 				)
 				

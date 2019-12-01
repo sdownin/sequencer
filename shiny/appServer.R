@@ -344,7 +344,7 @@
 					# plot(t.xseqdef)
 					t.xdist <- seqdist(t.xseqdef, 
 						method = method, indel = indel, norm = norm, sm = sm)
-					# dimnames(t.xdist) <-  list(names(firms), names(firms))
+					dimnames(t.xdist) <-  list(firms, firms)
 					seqdefs[[pd]] <- t.xseqdef
 					dists[[pd]] <- t.xdist
 				}
@@ -353,6 +353,8 @@
 				model$seqdefs <- seqdefs
 				model$analysis_run <- 'ANALYSIS RUN COMPLETED'
 				saveRDS(model, file=MODEL_FILE)
+
+				print(list(Sequences=model$seqdefs,Distances=model$dists))
 			}
 			return()
 		})
