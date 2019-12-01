@@ -79,6 +79,7 @@
 	exists <- function(x)
 	{
 		if(any(is.null(x))) return(FALSE)
+		if(class(x) %in% c('list','data.frame')) return(TRUE)
 		if(all(is.nan(x))) return(FALSE)
 		if(all(is.na(x))) return(FALSE)
 		if(all(x == '')) return(FALSE)
@@ -341,7 +342,7 @@
 					t.l <- longDf2SeqList(t.dat, firms, 'firm', 'action')
 					t.ldf <- seqList2Df(t.l)
 					t.xseqdef <- seqdef(t.ldf, alphabet=actionAlphabet, right=right)
-					# plot(t.xseqdef)
+					plot(t.xseqdef)
 					t.xdist <- seqdist(t.xseqdef, 
 						method = method, indel = indel, norm = norm, sm = sm)
 					dimnames(t.xdist) <-  list(firms, firms)
@@ -354,7 +355,20 @@
 				model$analysis_run <- 'ANALYSIS RUN COMPLETED'
 				saveRDS(model, file=MODEL_FILE)
 
-				print(list(Sequences=model$seqdefs,Distances=model$dists))
+				print(list(Sequences=model$seqdefs,Distance_Method=method,Distances=model$dists))
+			}
+			return()
+		})
+
+		output$analysis_run_seq_plot <- renderPlot({
+			if (input$analysis_run) {
+				# model <- loadModel()
+				# if ('seqdefs' %in% names(model)) {
+				# 	par(mfrow=c(1,length(model$seqdefs)))
+				# 	for (i in 1:length(model$seqdefs)) {
+				# 		plot(mode$seqdefs[[i]])
+				# 	}
+				# }
 			}
 			return()
 		})

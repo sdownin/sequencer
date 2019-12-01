@@ -2,12 +2,12 @@ library paths:
 ... C:/Users/steph/Google Drive/Rapp/SequenceR/R-Portable/App/R-Portable/library
 Loading required package: shiny
 
-Listening on http://127.0.0.1:6366
+Listening on http://127.0.0.1:7337
 Browser path: "C:/Users/steph/Google Drive/Rapp/SequenceR/GoogleChromePortable/App/Chrome-bin/chrome.exe"
-[5328:17928:1201/135952.534:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
-[5328:17928:1201/135952.534:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
-[5328:17928:1201/135952.534:ERROR:disk_cache.cc(178)] Unable to create cache
-[5328:17928:1201/135952.534:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
+[18840:2784:1201/143026.157:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
+[18840:2784:1201/143026.158:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
+[18840:2784:1201/143026.158:ERROR:disk_cache.cc(178)] Unable to create cache
+[18840:2784:1201/143026.158:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
 Opening in existing browser session.
 
 SERVER:  MODEL STRUCT
@@ -87,7 +87,7 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 3 distinct sequences
  [>] min/max sequence length: 2/4
  [>] computing distances using the OM metric
- [>] elapsed time: 0.01 secs
+ [>] elapsed time: 0.02 secs
  [>] found missing values ('NA') in sequence data
  [>] preparing 3 sequences
  [>] coding void elements with '%' and missing values with '*'
@@ -121,7 +121,7 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 3 distinct sequences
  [>] min/max sequence length: 2/6
  [>] computing distances using the OM metric
- [>] elapsed time: 0 secs
+ [>] elapsed time: 0.02 secs
  [>] found missing values ('NA') in sequence data
  [>] preparing 3 sequences
  [>] coding void elements with '%' and missing values with '*'
@@ -154,4 +154,4 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 3 distinct sequences
  [>] min/max sequence length: 3/6
  [>] computing distances using the OM metric
- [>] elapsed time: 0.01 secs
+ [>] elapsed time: 0.02 secs

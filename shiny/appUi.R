@@ -60,7 +60,7 @@
 								sliderTextUItenths('analysis_indel_cost', "INDEL Cost")
 						      ),
 						      column(width = 6,
-						      	h4("Clicked points")
+						      	checkboxGroupUImeasures('analysis_measures_group', 'Select Measures to Compute')
 						      )
 						 )),
 						fluidRow(
@@ -87,14 +87,16 @@
 				
 				## 1. Tab 3. Outputs -------------
 				tabPanel("Outputs", 
-					# fluidRow(
-				 #    	column(width = 12,
-				 #    		h3("Sequence Distance Measurement Settings"),
-				 #    		tableOutputSummaryUI("analysis_run_value", "Sequence Analysis Summary")
-				 #    	)
-					# )
-					verbatimTextOutput('analysis_run_value')
-					,
+					fluidRow(
+				    	column(width = 6,
+				    		h3("Sequence Distance Measurement Settings"),
+				    		verbatimTextOutput('analysis_run_value')
+				    	),
+				    	column(width = 6,
+				    		h3("Sequence Plots"),
+				    		plotOutput('analysis_run_seq_plot')
+				    	),
+					),
 				icon=icon('chart-bar')	
 				)
 				

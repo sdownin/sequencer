@@ -72,6 +72,26 @@ checkboxGroupUI <- function(id) {
 	)
 }
 
+	## seqdef - define missing values on right (NA or DEL)
+		##   --> compute dist from OM
+		## simplicity - HHI
+		## unpredictability - levdist from own firm previous period
+		## grouping - mean { gamma analysis separation score } across all actions
+		## motif - variance of the averages in the pair-wise gamma analysis precedence scores across all action types
+		##
+
+checkboxGroupUImeasures <- function(id, label) {
+	tagList(
+		checkboxGroupInput(id, label = h3(label), 
+			choices = list(
+				"Distances" = 1, "Simplicity" = 2, "Unpredictability" = 3,
+				'Grouping' = 4, 'Motif' = 5
+			),
+			selected = 1),
+		textOutput(paste0(id,'_value'))
+	)
+}
+
 actionButtonUI <- function(id) {
 	ns <- NS(id)
 	tagList(
