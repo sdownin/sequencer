@@ -1,3 +1,4 @@
+
 library(shiny)
 #library(shinydashboard)
 
@@ -7,6 +8,44 @@ sliderTextUI <- function(id){
 	tagList(
 		sliderInput(ns('slider'), "Slide me", 0, 100, 1),
 		textOutput(ns('number'))
+	)
+}
+
+selectInputUI <- function(id, label) {
+	ns <- NS(id)
+
+
+# Distances between state distributions: Euclidean ("EUCLID"), Chi-squared ("CHI2").
+
+	optList <- list(
+		`Edit Distances`=list(
+			`Optimal Matching (OM)`='OM',
+			`Localized OM`='OMloc',
+			`Spell-length-sensitive OM`='OMslen',
+			`OM of Spell Sequences`='OMspell',
+			`OM of Transition Sequences`='OMstran',
+			`Hamming`='OMstran',
+			`Dynamic Hamming`='DHD',
+			`Time Warp`='TWED'
+		),
+		`Common Attriute Count Metrics`=list(
+			`Longest Common Subsequence`='LCS',
+			`longest Common Prefix`='LCP',
+			`longest Common Suffix`='RLCP',
+			`Number of Matching Subsequences (NMS)`='NMS',
+			`NMS Weighted by Minimum Shared Time`='NMSMST',
+			`Subsequence Vectorial Representation`='SVRspell'
+		),
+		`State Distributions Distances`=list(
+			`Euclidean`='EUCLID',
+			`Chi-squared`='CHI2'
+		)
+	)
+	tagList(
+		selectInput(ns('selectInput'), label, optList, 
+			selected = NULL, multiple = FALSE,
+			selectize = TRUE, width = NULL, size = NULL
+		)
 	)
 }
 
@@ -31,8 +70,8 @@ actionButtonUI <- function(id) {
 actionButtonUIcheckdata <- function(id, label) {
 	ns <- NS(id)
 	tagList(
-		actionButton(ns("actionButtonDataCheck"), label = label),
-		textOutput(ns('datacheck'))
+		actionButton("actionButtonDataCheck", label = label),
+		textOutput('actionButtonDataCheckValue')
 	)
 }
 
@@ -46,6 +85,21 @@ fileInputUI <- function(fileId) {
 			  ".csv")
 		),
 		#tags$hr(),
+		checkboxInput("header", "Header", TRUE),
+	)
+}
+
+fileInputUIrownames <- function(fileId) {
+	tagList(
+		fileInput(fileId, h3("Choose CSV File"),
+			multiple = F,
+			accept = c(
+			  "text/csv",
+			  "text/comma-separated-values,text/plain",
+			  ".csv")
+		),
+		#tags$hr(),
+		checkboxInput("rownames", "Rownames", TRUE),
 		checkboxInput("header", "Header", TRUE),
 	)
 }
@@ -81,6 +135,13 @@ tableOutputSummaryUI <- function(id, title) {
 	)
 }
 
+plotOutputUI <- function(id, title) {
+	# tagList(
+	# 	h4(title),
+		plotOutput(id, width = "300px", height = "300px")
+	# )
+}
+
 #tableOutputSummaryUI <- function(id) {
 #	tagList(
 #		tableOutput(id)
@@ -112,6 +173,8 @@ actionButtonServer <- function(input, output, session){
     input$actionButton
   })
 }
+
+
 
 #fileInputServer <- function(input, output, session) {
 #  # You can access the value of the widget with input$file, e.g.
