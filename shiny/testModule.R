@@ -83,8 +83,7 @@ actionButtonUI <- function(id) {
 actionButtonUIrun <- function(id, label, ...) {
 	# ns <- NS(id)
 	tagList(
-		actionButton(id, label = label, ...),
-		textOutput(paste0(id,'_value'))
+		actionButton(id, label = label, ...)
 	)
 }
 

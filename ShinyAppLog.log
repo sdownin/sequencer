@@ -2,12 +2,12 @@ library paths:
 ... C:/Users/steph/Google Drive/Rapp/SequenceR/R-Portable/App/R-Portable/library
 Loading required package: shiny
 
-Listening on http://127.0.0.1:6362
+Listening on http://127.0.0.1:6366
 Browser path: "C:/Users/steph/Google Drive/Rapp/SequenceR/GoogleChromePortable/App/Chrome-bin/chrome.exe"
-[2040:6808:1201/135317.075:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
-[2040:6808:1201/135317.075:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
-[2040:6808:1201/135317.075:ERROR:disk_cache.cc(178)] Unable to create cache
-[2040:6808:1201/135317.075:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
+[5328:17928:1201/135952.534:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
+[5328:17928:1201/135952.534:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
+[5328:17928:1201/135952.534:ERROR:disk_cache.cc(178)] Unable to create cache
+[5328:17928:1201/135952.534:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
 Opening in existing browser session.
 
 SERVER:  MODEL STRUCT
@@ -87,7 +87,7 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 3 distinct sequences
  [>] min/max sequence length: 2/4
  [>] computing distances using the OM metric
- [>] elapsed time: 0 secs
+ [>] elapsed time: 0.01 secs
  [>] found missing values ('NA') in sequence data
  [>] preparing 3 sequences
  [>] coding void elements with '%' and missing values with '*'
@@ -154,44 +154,4 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 3 distinct sequences
  [>] min/max sequence length: 3/6
  [>] computing distances using the OM metric
- [>] elapsed time: 0 secs
-$Sequences
-$Sequences[[1]]
-         Sequence
-Coke     A-A-B-E 
-Pepsi    C-B-E-J 
-DrPepper A-D     
-
-$Sequences[[2]]
-         Sequence   
-Coke     B-C-A-G-A-B
-Pepsi    B-B-C-D-E  
-DrPepper D-E        
-
-$Sequences[[3]]
-         Sequence   
-Coke     B-C-J-A    
-Pepsi    C-A-B-D-A-B
-DrPepper A-C-C      
-
-
-$Distances
-$Distances[[1]]
-         Coke Pepsi DrPepper
-Coke      0.0   4.1      7.2
-Pepsi     4.1   0.0      7.5
-DrPepper  7.2   7.5      0.0
-
-$Distances[[2]]
-         Coke Pepsi DrPepper
-Coke      0.0   6.4     15.1
-Pepsi     6.4   0.0     10.2
-DrPepper 15.1  10.2      0.0
-
-$Distances[[3]]
-         Coke Pepsi DrPepper
-Coke      0.0   8.2      4.5
-Pepsi     8.2   0.0     10.9
-DrPepper  4.5  10.9      0.0
-
-
+ [>] elapsed time: 0.01 secs

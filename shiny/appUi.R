@@ -93,6 +93,7 @@
 				 #    		tableOutputSummaryUI("analysis_run_value", "Sequence Analysis Summary")
 				 #    	)
 					# )
+					verbatimTextOutput('analysis_run_value')
 					,
 				icon=icon('chart-bar')	
 				)

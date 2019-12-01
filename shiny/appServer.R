@@ -305,7 +305,7 @@
 		## motif - variance of the averages in the pair-wise gamma analysis precedence scores across all action types
 		##
 		## MAIN ANALYSIS FUNCTION CALLED FROM MEASURES TAB
-		output$analysis_run_value <- renderText({
+		output$analysis_run_value <- renderPrint({
 			if (input$analysis_run) {
 				library(TraMineR)
 				library(reshape2)
