@@ -342,7 +342,6 @@
 					t.l <- longDf2SeqList(t.dat, firms, 'firm', 'action')
 					t.ldf <- seqList2Df(t.l)
 					t.xseqdef <- seqdef(t.ldf, alphabet=actionAlphabet, right=right)
-					plot(t.xseqdef)
 					t.xdist <- seqdist(t.xseqdef, 
 						method = method, indel = indel, norm = norm, sm = sm)
 					dimnames(t.xdist) <-  list(firms, firms)
@@ -360,18 +359,18 @@
 			return()
 		})
 
-		output$analysis_run_seq_plot <- renderPlot({
-			if (input$analysis_run) {
-				# model <- loadModel()
+		# output$analysis_output_seq_plot <- renderPlot({
+			# if(input$analysis_output_seq_plot_button) {
+				# model <- readRDS(MODEL_FILE)
 				# if ('seqdefs' %in% names(model)) {
-				# 	par(mfrow=c(1,length(model$seqdefs)))
+				# 	par(mfrow=c(length(model$seqdefs),1))
 				# 	for (i in 1:length(model$seqdefs)) {
 				# 		plot(mode$seqdefs[[i]])
 				# 	}
 				# }
-			}
-			return()
-		})
+			# }
+			# return()
+		# })
 	 
 		# close the R session when Chrome closes
 		session$onSessionEnded(function() { 

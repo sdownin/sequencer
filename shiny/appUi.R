@@ -93,8 +93,11 @@
 				    		verbatimTextOutput('analysis_run_value')
 				    	),
 				    	column(width = 6,
-				    		h3("Sequence Plots"),
-				    		plotOutput('analysis_run_seq_plot')
+				    		# h3("Sequence Plots"),
+				    		# tagList(
+					    	# 	actionButton("analysis_output_seq_plot_button", "Plot"),
+					    	# 	plotOutput('analysis_output_seq_plot')
+				    		# )
 				    	),
 					),
 				icon=icon('chart-bar')	
