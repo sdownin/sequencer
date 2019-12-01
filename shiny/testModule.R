@@ -11,12 +11,24 @@ sliderTextUI <- function(id){
 	)
 }
 
-selectInputUI <- function(id, label) {
-	ns <- NS(id)
+sliderTextUItenths <- function(id, label){
+	tagList(
+		sliderInput(id, label, min=0, max=10, value=1, step=.1),
+		textOutput(paste0(id,'_value'))
+	)
+}
 
+selectInputUI <- function(id, label, optList) {
+	tagList(
+		selectInput(id, label, optList, 
+			selected = NULL, multiple = FALSE,
+			selectize = TRUE, width = NULL, size = NULL
+		),
+		textOutput(paste0(id,'_value'))
+	)
+}
 
-# Distances between state distributions: Euclidean ("EUCLID"), Chi-squared ("CHI2").
-
+selectInputUIdistance <- function(id, label) {
 	optList <- list(
 		`Edit Distances`=list(
 			`Optimal Matching (OM)`='OM',
@@ -30,8 +42,8 @@ selectInputUI <- function(id, label) {
 		),
 		`Common Attriute Count Metrics`=list(
 			`Longest Common Subsequence`='LCS',
-			`longest Common Prefix`='LCP',
-			`longest Common Suffix`='RLCP',
+			`Longest Common Prefix`='LCP',
+			`Longest Common Suffix`='RLCP',
 			`Number of Matching Subsequences (NMS)`='NMS',
 			`NMS Weighted by Minimum Shared Time`='NMSMST',
 			`Subsequence Vectorial Representation`='SVRspell'
@@ -41,13 +53,14 @@ selectInputUI <- function(id, label) {
 			`Chi-squared`='CHI2'
 		)
 	)
-	tagList(
-		selectInput(ns('selectInput'), label, optList, 
-			selected = NULL, multiple = FALSE,
-			selectize = TRUE, width = NULL, size = NULL
-		)
-	)
+	selectInputUI(id, label, optList)
 }
+
+selectInputUInorm <- function(id, label) {
+	optList <- list(`None` = "none", `Auto`= "auto")
+	selectInputUI(id, label, optList)
+}
+
 
 checkboxGroupUI <- function(id) {
 	ns <- NS(id)
@@ -67,6 +80,14 @@ actionButtonUI <- function(id) {
 	)
 }
 
+actionButtonUIrun <- function(id, label, ...) {
+	# ns <- NS(id)
+	tagList(
+		actionButton(id, label = label, ...),
+		textOutput(paste0(id,'_value'))
+	)
+}
+
 actionButtonUIcheckdata <- function(id, label) {
 	ns <- NS(id)
 	tagList(
@@ -75,9 +96,21 @@ actionButtonUIcheckdata <- function(id, label) {
 	)
 }
 
-fileInputUI <- function(fileId) {
+fileInputUI <- function(fileId, heading) {
 	tagList(
-		fileInput(fileId, h3("Choose CSV File"),
+		fileInput(fileId, h3(heading),
+			multiple = F,
+			accept = c(
+			  "text/csv",
+			  "text/comma-separated-values,text/plain",
+			  ".csv")
+		)
+	)
+}
+
+fileInputUIheader <- function(fileId, heading) {
+	tagList(
+		fileInput(fileId, h3(heading),
 			multiple = F,
 			accept = c(
 			  "text/csv",

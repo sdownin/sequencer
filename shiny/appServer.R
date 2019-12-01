@@ -16,14 +16,21 @@
 	initModel <- function()
 	{
 		return(list(
-			## BOOL flag indicating if model was saved/updated during session
-			updated=FALSE,
 			## Sequence Alphabet
 			analysis_alphabet = list(x=NA, xpath=''), 
 			## Substitution Cost Matrix
 			analysis_subcostmat = list(x=NA, xpath=''),
 			## Sequence Data Series
-			analysis_data = list(x=NA, xpath='')
+			analysis_data = list(x=NA, xpath=''),
+			##------------------------------
+			## BOOL flag indicating if model was saved/updated during session
+			updated=FALSE,
+			## Sequence distance settings
+			analysis_dist_settings = list(
+				method='OM',
+				norm='none',
+				indel=1.0
+			)
 		))
 	}
 
@@ -44,6 +51,16 @@
 	{
 		model[[xname]]$x <- x
 		model[[xname]]$xpath <- xpath
+		model$updated <- TRUE
+		saveRDS(model, file=MODEL_FILE)
+	}
+
+	##
+	#
+	##
+	saveModelDistSettings <- function(model, xname, x)
+	{
+		model$analysis_dist_settings[[xname]] <- x
 		model$updated <- TRUE
 		saveRDS(model, file=MODEL_FILE)
 	}
@@ -76,6 +93,42 @@
 			# }
 			image(model$analysis_subcostmat$x)
 		})
+	}
+
+
+	##
+	# Create list of sequences by `seqname` attribute (e.g., firm)
+	# for sequence listed in `varname` column (e.g., action)
+	##
+	longDf2SeqList <- function(df, seqnames, seqname='firm', varname='action')
+	{
+	  l <- list()
+	  for (i in 1:length(seqnames)) {
+	    seq_i <- as.character(seqnames[i])
+	    rows <- which(df[,seqname]==seq_i)
+	    l[[seq_i]] <- as.character(df[rows, varname])
+	  }
+	  return(l)
+	}
+
+	##
+	# Transform named list of sequences to wide dataframe of sequence rows
+	#   paddings NAs at end to match seq lengths 
+	##
+	seqList2Df <- function(l)
+	{
+	  maxlen <- max(sapply(l,length))
+	  for (i in 1:length(l)) {
+	    xi <- c(l[[i]], rep(NA, maxlen - length(l[[i]])) )
+	    if (i == 1) {
+	      ldf <- data.frame(xi)
+	      names(ldf) <- names(l)[i]
+	    } else {
+	      ldf <- cbind(ldf, xi)
+	      names(ldf)[i] <- names(l)[i]
+	    }
+	  }
+	  return(t(ldf))
 	}
 
 
@@ -126,15 +179,15 @@
 				return(NULL)
 			
 			## INPUT
-			df <- read.csv(inFile$datapath, header = input$header, na.strings=c('','""'), stringsAsFactors=TRUE)
+			df <- read.csv(inFile$datapath, header = T, na.strings=c('','""'), stringsAsFactors=TRUE)
 			
-			if (input$rownames) {
+			# if (input$rownames) {
 				row.names <- df[,1]
 				df <- df[,-1]
 				row.names(df) <- row.names
-			} else {
-				row.names <- names(df)
-			}
+			# } else {
+			# 	row.names <- names(df)
+			# }
 
 			mat <- as.matrix(df)
 
@@ -182,7 +235,7 @@
 				return(summary(model$analysis_data$x))
 			
 			## INPUT
-			df <- read.csv(inFile$datapath, header = input$header, sep=',', fill=TRUE, stringsAsFactors=TRUE)
+			df <- read.csv(inFile$datapath, header = T, sep=',', fill=TRUE, stringsAsFactors=TRUE)
 
 			## BREAK SCOPE TO SAVE
 			saveModel(model, xname='analysis_data', x=df, xpath=inFile$datapath)
@@ -221,6 +274,88 @@
 		# 	NULL
 		# })
 
+		## METHOD 
+		output$analysis_distance_function_value <- renderText({
+			if(exists(input$analysis_distance_function)) {
+				saveModelDistSettings(loadModel(), xname='method', x=input$analysis_distance_function)
+			}
+			return()
+		})
+		## NORM
+		output$analysis_distance_norm_value <- renderText({
+			if(exists(input$analysis_distance_norm)) {
+				saveModelDistSettings(loadModel(), xname='norm', x=input$analysis_distance_norm)
+			}
+			return()
+		})
+		## INDEL
+		output$analysis_indel_cost_value <- renderText({
+			if(exists(input$analysis_indel_cost)) {
+				saveModelDistSettings(loadModel(), xname='indel', x=input$analysis_indel_cost)
+			}
+			return()
+		})
+
+		##
+		## seqdef - define missing values on right (NA or DEL)
+		##   --> compute dist from OM
+		## simplicity - HHI
+		## unpredictability - levdist from own firm previous period
+		## grouping - mean { gamma analysis separation score } across all actions
+		## motif - variance of the averages in the pair-wise gamma analysis precedence scores across all action types
+		##
+		## MAIN ANALYSIS FUNCTION CALLED FROM MEASURES TAB
+		output$analysis_run_value <- renderText({
+			if (input$analysis_run) {
+				library(TraMineR)
+				library(reshape2)
+
+				model <- loadModel()
+				model$analysis_run <- 'CHECKPOINT BEFORE RUN'
+				saveRDS(model, file=MODEL_FILE)
+
+				dat <- model$analysis_data$x
+				alphabet <- model$analysis_alphabet$x
+				method <- model$analysis_dist_settings$method
+				indel <- model$analysis_dist_settings$indel
+				norm <- model$analysis_dist_settings$norm
+				sm <- model$analysis_subcostmat$x
+
+				actionCol <- 'action'
+				periodCol <- 'period'
+				firmCol <- 'firm'
+
+				right <- 'DEL'  # left <- 'NA' # gaps <- 'NA'
+
+				periods <- unique(dat[,periodCol])
+				firms <- as.character(alphabet[[firmCol]])
+				actionAlphabet <- as.character(alphabet[[actionCol]])
+
+				dists <- list() # period list
+				seqdefs <- list() # period list
+				for (t in 1:length(periods))
+				{
+					pd <- periods[t]
+					tidx <- which(dat[,periodCol] == pd)
+					t.dat <- dat[tidx, ]
+					t.l <- longDf2SeqList(t.dat, firms, 'firm', 'action')
+					t.ldf <- seqList2Df(t.l)
+					t.xseqdef <- seqdef(t.ldf, alphabet=actionAlphabet, right=right)
+					# plot(t.xseqdef)
+					t.xdist <- seqdist(t.xseqdef, 
+						method = method, indel = indel, norm = norm, sm = sm)
+					# dimnames(t.xdist) <-  list(names(firms), names(firms))
+					seqdefs[[pd]] <- t.xseqdef
+					dists[[pd]] <- t.xdist
+				}
+
+				model$dists <- dists
+				model$seqdefs <- seqdefs
+				model$analysis_run <- 'ANALYSIS RUN COMPLETED'
+				saveRDS(model, file=MODEL_FILE)
+			}
+			return()
+		})
 	 
 		# close the R session when Chrome closes
 		session$onSessionEnded(function() { 
