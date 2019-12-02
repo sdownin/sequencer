@@ -19,12 +19,12 @@ SequenceR
 	|--GoogleChromePortable
 	|--R-Portable
 	|--shiny
-    |	└--www/
-    |		└--js/
-    |			└--script.js
-    |	|--app.R
-    |	|--appServer.R
-    |	|--appUi.R
+	|	└--www/
+	|		└--js/
+	|			└--script.js
+	|	|--app.R
+	|	|--appServer.R
+	|	|--appUi.R
 	|--.gitignore
 	|--README.md
 	|--run.vbs
