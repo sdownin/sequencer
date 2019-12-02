@@ -3,7 +3,7 @@
 
 User-Friendly Sequence Analysis in `R`
 
-![SequenceR](/img/tutorial_screenvid_analysis_v1.gif "SequenceR")
+![SequenceR](/_img/tutorial_screenvid_analysis_v1.gif "SequenceR")
 
 ## Download
 
@@ -21,7 +21,7 @@ Import data files:
 - Substitution cost matrix
 - Sequence data
 
-![Import data files](/img/readme_analysis_import_data.gif "Import data files")
+![Import data files](/_img/readme_analysis_import_data.gif "Import data files")
 
 ### Select Measures
 
@@ -29,7 +29,7 @@ Select measures:
 - Sequence distance cost settings
 - Measures to compute
 
-![Measures](/img/readme_analysis_measures.gif "Measures")
+![Measures](/_img/readme_analysis_measures.gif "Measures")
 
 ### Output Results and Plots
 
@@ -37,7 +37,7 @@ Outputs:
 - Sequence summary outputs
 - Plots
 
-![Measures](/img/readme_analysis_outputs.gif "Measures")
+![Measures](/_img/readme_analysis_outputs.gif "Measures")
 
 
 
