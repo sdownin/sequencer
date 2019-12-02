@@ -1,4 +1,4 @@
-*.png
+#*.png
 *.doc*
 *.xls*
 *.ppt*
