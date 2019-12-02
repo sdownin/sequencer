@@ -18,7 +18,6 @@ User-Friendly Sequence Analysis in `R`
 
 ### Import Data
 
-Import data files:
 - Alphabet
 - Substitution cost matrix
 - Sequence data
@@ -27,7 +26,6 @@ Import data files:
 
 ### Select Measures
 
-Select measures: 
 - Sequence distance cost settings
 - Measures to compute
 
@@ -35,7 +33,6 @@ Select measures:
 
 ### Output Results and Plots
 
-Outputs: 
 - Sequence summary outputs
 - Plots
 
