@@ -3,7 +3,7 @@
 
 User-Friendly Sequence Analysis in `R`
 
-![SequenceR](img/tutorial_screenvid_v1.gif "SequenceR")
+![SequenceR](/img/tutorial_screenvid_analysis_v1.gif "SequenceR")
 
 ## Download
 
@@ -16,23 +16,28 @@ coming soon
 
 ### Import Data
 
-coming soon
+Import data files:
+- Alphabet
+- Substitution cost matrix
+- Sequence data
 
-### Define Action Dictionary
-
-coming soon
+![Import data files](/img/readme_analysis_import_data.gif "Import data files")
 
 ### Select Measures
 
-coming soon
+Select measures: 
+- Sequence distance cost settings
+- Measures to compute
 
-### Run Analyses
-
-coming soon
+![Measures](/img/readme_analysis_measures.gif "Measures")
 
 ### Output Results and Plots
 
-coming soon
+Outputs: 
+- Sequence summary outputs
+- Plots
+
+![Measures](/img/readme_analysis_outputs.gif "Measures")
 
 
 
