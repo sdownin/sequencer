@@ -53,12 +53,18 @@ SequenceR
 
 [![](/_img/readme_analysis_measures.png "Measures")](#2-select-measures)
 
-### 3. Output Results and Plots
+### 3. Output Results
 
-- Sequence summary outputs
+- Sequence measures summary
+- Download results
+
+[![](/_img/readme_analysis_outputs.png "Outputs")](#3-output-results)
+
+### 4. Plots
+
 - Plots
 
-[![](/_img/readme_analysis_outputs.png "Outputs")](#3-output-results-and-plots)
+[![](/_img/readme_analysis_plots.png "Plots")](#4-plots)
 
 
 
