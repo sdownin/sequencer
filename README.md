@@ -5,7 +5,7 @@ User-Friendly Sequence Analysis in **R**
 
 ## Download
 
-| Stage | Version | Release | Download Link |
+| Stage | Version | Date | Download Link |
 | ----------- | ----------- | ----------- | ----------- |
 | Development | 0.3.0 | 2019-12-02 | [SequenceR v0.3.0 2019-12-02](https://drive.google.com/file/d/1PkLfv5xoAXZXRkGILS47NLEKGJ9O6YAQ/view?usp=sharing, 'SequenceR v0.3.0') |
 
