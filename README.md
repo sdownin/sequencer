@@ -45,14 +45,27 @@ Outputs:
 
 All notable changes to this project will be documented in this section.
 
+#### [0.3.0] - 2019-12-02
+Added
+Analysis outputs
+Download link
+Readme screenshots
+
+Changed
+Resources directories
+
+Removed
+(none)
+
+
 #### [0.2.0] - 2019-11-12
-**Added**
-- Sequence analysis dependencies in R-Portable
+Added
+Sequence analysis dependencies in R-Portable
 
-**Changed**
-- App UI tabs
+Changed
+App UI tabs
 
-**Removed**
+Removed
 (none)
 
 
