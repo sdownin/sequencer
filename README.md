@@ -5,14 +5,13 @@ User-Friendly Sequence Analysis in `R`
 
 ## Download
 
-- Download zipped file.
-- Unzip, keeping all files inside directory
-
 [SequenceR v0.2.0 2019-11-12](https://drive.google.com/file/d/1w94bUbP7NhzbSSg9DLZNqnQPIxvt7BIX/view?usp=sharing, 'SequenceR v0.2.0')
 
 
 ## Getting Started
 
+- Download zipped file
+- Unzip, keeping all files inside same directory
 - Run app by executing runfile: `Run.vbs`
 
 ![SequenceR](/_img/tutorial_screenvid_analysis_v1.gif "SequenceR")
