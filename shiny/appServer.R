@@ -132,6 +132,64 @@
 	  return(t(ldf))
 	}
 
+	##
+	# Concordant and Discordant Pairs
+	# @see DescTools https://github.com/AndriSignorell/DescTools
+	##
+	ConDisPairs <- function(x) 
+	{
+	    n <- nrow(x)
+	    m <- ncol(x)
+	    pi.c <- pi.d <- matrix(0, nrow = n, ncol = m)
+	    row.x <- row(x)
+	    col.x <- col(x)
+	    for (i in 1:n) {
+	        for (j in 1:m) {
+	            pi.c[i, j] <- sum(x[row.x < i & col.x < j]) + sum(x[row.x > i & col.x > j])
+	            pi.d[i, j] <- sum(x[row.x < i & col.x > j]) + sum(x[row.x > i & col.x < j])
+	        }
+	    }
+	    C <- sum(pi.c * x)/2
+	    D <- sum(pi.d * x)/2
+	    return(list(pi.c = pi.c, pi.d = pi.d, C = C, D = D))
+	}
+
+
+	##
+	# Goodman Kruskall Gamma precedence measure 
+	# @see DescTools https://github.com/AndriSignorell/DescTools
+	##
+	GoodmanKruskalGamma <- function (x, y = NULL, conf.level = NA, ...) 
+	{
+	    if (!is.null(y)) 
+	        tab <- table(x, y, ...)
+	    else tab <- as.table(x)
+	    x <- ConDisPairs(tab)
+	    psi <- 2 * (x$D * x$pi.c - x$C * x$pi.d)/(x$C + x$D)^2
+	    sigma2 <- sum(tab * psi^2) - sum(tab * psi)^2
+	    gamma <- (x$C - x$D)/(x$C + x$D)
+	    if (all(is.na(conf.level))) {
+	        result <- gamma
+	    } else {
+	        pr2 <- 1 - (1 - conf.level)/2
+	        ci <- qnorm(pr2) * sqrt(sigma2) * c(-1, 1) + gamma
+	        result <- c(gamma = gamma, lwr.ci = max(ci[1], -1), upr.ci = min(ci[2], 1))
+	    }
+	    return(result)
+	}
+
+	##
+	# Herfindahl-Hirschman Index
+	#   0 < hhi <= 10,000
+	##
+	hhi <- function(x){
+		## market share in percentage points
+		ms <- 100 * x / sum(x) 
+		## HHI is sum of sqared market shares
+		hhi <- sum(ms^2)
+		return(hhi)
+	}
+
 
 	##
 	# Main Server Function
