@@ -287,19 +287,38 @@
 			if (is.null(inFile)) 
 				return(NULL)
 
+			library(TraMineR)
+			library(reshape2)
+
 			model <- loadModel()
-			
-			## SAVED
-			if (inFile$datapath == model$analysis_data$xpath)
-				return(summary(model$analysis_data$x))
 			
 			## INPUT
 			df <- read.csv(inFile$datapath, header = T, sep=',', fill=TRUE, stringsAsFactors=TRUE)
-
-			## BREAK SCOPE TO SAVE
 			saveModel(model, xname='analysis_data', x=df, xpath=inFile$datapath)
 
-			summary(df)
+			alphabet <- model$analysis_alphabet$x
+			periodCol <- 'period'
+			firmCol <- 'firm'
+			actionCol <- 'action'
+			periods <- unique(df[,periodCol])
+			firms <- as.character(alphabet[[firmCol]])
+			actionAlphabet <- as.character(alphabet[[actionCol]])
+
+			seqdefs <- list()
+			for (t in 1:length(periods))  #length(periods)
+			{
+				pd <- periods[t]
+				tidx <- which(df[,periodCol] == pd)
+				t.df <- df[tidx, ]
+				t.l <- longDf2SeqList(t.df, firms, 'firm', 'action')
+				t.ldf <- seqList2Df(t.l)
+				right <- 'DEL'  # left <- 'NA' # gaps <- 'NA'
+				seqdefs[[pd]] <- seqdef(t.ldf, alphabet=actionAlphabet, right=right)
+			}
+			model$seqdefs <- seqdefs
+			saveRDS(model, MODEL_FILE)
+
+			print(model$seqdefs)
 		})
 
 		## Measures 
@@ -391,7 +410,7 @@
 				firms <- as.character(alphabet[[firmCol]])
 				actionAlphabet <- as.character(alphabet[[actionCol]])
 
-				seqdefs <- list() # sequence definition object period list
+				seqdefs <- model$seqdefs
 				dists <- list() # squence distance mesaures period list
 				groupings <- list() # gamma list ('grouping' measure avg. precedence scores)
 				motifs <- list() # gamma list ('grouping' measure avg. precedence scores)
@@ -399,16 +418,10 @@
 				for (t in 1:length(periods))  #length(periods)
 				{
 					pd <- periods[t]
-					tidx <- which(dat[,periodCol] == pd)
-					t.dat <- dat[tidx, ]
-					t.l <- longDf2SeqList(t.dat, firms, 'firm', 'action')
-					t.ldf <- seqList2Df(t.l)
 					if ('distances' %in% input$analysis_measures_group) {
-						t.xseqdef <- seqdef(t.ldf, alphabet=actionAlphabet, right=right)
-						t.xdist <- seqdist(t.xseqdef, 
+						t.xdist <- seqdist(seqdefs[[t]], 
 							method = method, indel = indel, norm = norm, sm = sm)
-						dimnames(t.xdist) <-  list(firms, firms)
-						seqdefs[[pd]] <- t.xseqdef
+						dimnames(t.xdist) <- list(firms, firms)
 						dists[[pd]] <- t.xdist
 					}
 					if ('grouping' %in% input$analysis_measures_group) {
@@ -430,21 +443,30 @@
 						## Variance in average precedence scores captures the ordinal specificity and 
 						## stability of elements in a sequence.
 					}
+					if ('simplicities' %in% input$analysis_measures_group) {
+						## simplicity HHI score
+					}
+					if ('predictabilities' %in% input$analysis_measures_group) {
+						## based on OM of firm to previous period
+					}
 				}
 
 				model$dists <- dists
-				model$seqdefs <- seqdefs
 				model$groupings <- groupings
 				model$motifs <- motifs
+				model$predictabilities <- predictabilities
+				model$simplicities <- simplicities
 				model$analysis_run <- 'ANALYSIS RUN COMPLETED'
 				saveRDS(model, file=MODEL_FILE)
 
 				return(print(list(
-					Sequences=model$seqdefs,
+					# Sequences=model$seqdefs,
 					Distance_Method=method,
 					Distances=model$dists,
 					Groupings=model$groupings,
-					Motifs=model$motifs
+					Motifs=model$motifs,
+					Predictability=model$predictabilities,
+					Simplicity=model$simplicities
 				)))
 			}
 			return()

@@ -10,4 +10,3 @@
  - add/use buttons with server-side event handlers observeEvent(), eventReactive()
  - save plots (png, etc)
  - add unit tests
- - add info links (e.g., for distance measure, normalization, INDEL, etc.)
