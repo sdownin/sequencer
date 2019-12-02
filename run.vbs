@@ -1,7 +1,7 @@
 Rexe           = "R-Portable\App\R-Portable\bin\Rscript.exe"
 Ropts          = "--no-save --no-environ --no-init-file --no-restore --no-Rconsole"
 RScriptFile    = "runShinyApp.R"
-Outfile        = "logs\ShinyAppLog.log" 
+Outfile        = "logs\SequenceRlog.log" 
 strCommand     = Rexe & " " & Ropts & " " & RScriptFile & " 1> " & Outfile & " 2>&1"
 
 intWindowStyle = 0     ' Hide the window and activate another window.'
