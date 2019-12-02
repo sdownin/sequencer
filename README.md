@@ -16,19 +16,19 @@ User-Friendly Sequence Analysis in `R`
 
 ```
 SequenceR
-	|--GoogleChromePortable
-	|--R-Portable
-	|--shiny
-	|	└--www/
-	|		└--js/
-	|			└--script.js
-	|	|--app.R
-	|	|--appServer.R
-	|	|--appUi.R
-	|--.gitignore
-	|--README.md
-	|--run.vbs
-	└--runShinyApp.R
+    |--GoogleChromePortable
+    |--R-Portable
+    |--shiny
+    |    └--www/
+    |        └--js/
+    |            └--script.js
+    |    |--app.R
+    |    |--appServer.R
+    |    |--appUi.R
+    |--.gitignore
+    |--README.md
+    |--run.vbs
+    └--runShinyApp.R
 ```
 
 [![](/_img/tutorial_screenvid_analysis_v1.gif "SequenceR")](#getting-started)
