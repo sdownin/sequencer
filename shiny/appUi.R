@@ -45,7 +45,12 @@
 							),		
 						),
 						hr(),
-					
+						fluidRow(
+						    column(width = 6, offset=6,
+						        actionButtonUIrun("analysis_measures_show", "Select Measures", class='btn btn-primary btn-lg btn-block', icon=icon('sliders'))
+						    )
+						),
+						hr(),
 				icon=icon('table')	
 				), 
 				
