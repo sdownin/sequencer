@@ -44,21 +44,21 @@ SequenceR
 2. Substitution cost matrix
 3. Sequence data
 
-[![](/_img/readme_analysis_data_import.png "Import data files")](#import-data)
+[![](/_img/readme_analysis_data_import.png "Import data files")](#1-import-data)
 
 ### 2. Select Measures
 
 - Sequence distance cost settings
 - Measures to compute
 
-[![](/_img/readme_analysis_measures.png "Measures")](#select-measures)
+[![](/_img/readme_analysis_measures.png "Measures")](#2-select-measures)
 
 ### 3. Output Results and Plots
 
 - Sequence summary outputs
 - Plots
 
-[![](/_img/readme_analysis_outputs.png "Outputs")](#output-results-and-plots)
+[![](/_img/readme_analysis_outputs.png "Outputs")](#3-output-results-and-plots)
 
 
 
