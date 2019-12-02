@@ -71,7 +71,7 @@ App UI tabs<br>
 
 
 #### [0.1.0] - 2019-11-01
-
+```
 *Added*<br>
 SequenceR main Shiny app<br>
 GoogleChromePortable<br>
@@ -82,4 +82,4 @@ R-Portable<br>
 
 *Removed*<br>
 (none)<br>
-
+```
