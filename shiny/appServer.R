@@ -180,11 +180,11 @@
 
 	##
 	# Herfindahl-Hirschman Index
-	#   0 < hhi <= 10,000
+	#   0 < hhi <= 1
 	##
 	hhi <- function(x){
-		## market share in percentage points
-		ms <- 100 * x / sum(x) 
+		## market share in decimals (not percentages)
+		ms <-  x / sum(x) 
 		## HHI is sum of sqared market shares
 		hhi <- sum(ms^2)
 		return(hhi)
@@ -323,36 +323,6 @@
 			print(model$seqdefs)
 		})
 
-		## Measures 
-		# output$actionButtonDataCheckValue <- renderText({
-		# 	model <- loadModel()
-		# 	print("CHECK FROM actionButtonDataCheckValue renderText")
-		# 	print(model)
-		# 	if (model$updated != 'FALSE' | model$updated) {
-		# 	    return(sprintf('Loaded Alphabet %s; Data %s', 
-		# 			    !all(is.na(model$analysis_data$x)), !all(is.na(model$analysis_data$x))))
-		# 	} else {
-		# 		return('model not updated yet.')
-		# 	}
-		# })
-
-		# output$actionButtonDataCheckValue <- renderText({
-		# 	input$actionButtonDataCheck
-		# })
-		# output$actionButtonDataCheckValue <- renderText({
-		# 	if(input$actionButtonDataCheck) {
-		# 		model <- loadModel()
-		# 		if (model$updated != 'FALSE' | model$updated) {
-		# 		    return(sprintf('Loaded Alphabet %s;  Substitution Costs %s;  Data %s', 
-		# 				    !all(is.na(model$analysis_alphabet$x)), 
-		# 				    !all(is.na(model$analysis_subcostmat$x)),
-		# 				    !all(is.na(model$analysis_data$x))))
-		# 		} else {
-		# 			return('model not updated yet.')
-		# 		}
-		# 	} 
-		# 	NULL
-		# })
 
 		## METHOD 
 		output$analysis_distance_function_value <- renderText({
@@ -389,6 +359,7 @@
 			if (input$analysis_run) {
 				library(TraMineR)
 				library(reshape2)
+				library(tidyverse)
 
 				model <- loadModel()
 				# model$analysis_run <- 'CHECKPOINT BEFORE RUN'
@@ -411,7 +382,7 @@
 				actionAlphabet <- as.character(alphabet[[actionCol]])
 
 				seqdefs <- model$seqdefs
-				dists <- list() # squence distance mesaures period list
+				distances <- list() # squence distance mesaures period list
 				groupings <- list() # gamma list ('grouping' measure avg. precedence scores)
 				motifs <- list() # gamma list ('grouping' measure avg. precedence scores)
 				predictabilities <- list()
@@ -424,7 +395,7 @@
 						t.xdist <- seqdist(seqdefs[[t]], 
 							method = method, indel = indel, norm = norm, sm = sm)
 						dimnames(t.xdist) <- list(firms, firms)
-						dists[[pd]] <- t.xdist
+						distances[[pd]] <- t.xdist
 					}
 					if ('grouping' %in% input$analysis_measures_group) {
 						## separation score from gamma analysis
@@ -447,13 +418,23 @@
 					}
 					if ('simplicities' %in% input$analysis_measures_group) {
 						## simplicity HHI score
+
+						t.dat <- dat[dat[,periodCol]==pd, ]
+						t.simp <- data.frame()
+						for (i in 1:length(firms)) {
+							t.i.cnt <- plyr::count( t.dat[ t.dat[,firmCol]==firms[i] , actionCol] )
+							t.i.cntdf <- data.frame(firm=firms[i], hhi=hhi(t.i.cnt$freq))
+							t.simp <- rbind(t.simp,  t.i.cntdf)
+						}
+						simplicities[[pd]] <- t.simp
+
 					}
 					if ('predictabilities' %in% input$analysis_measures_group) {
 						## based on OM of firm to previous period
 					}
 				}
 
-				model$dists <- dists
+				model$distances <- distances
 				model$groupings <- groupings
 				model$motifs <- motifs
 				model$predictabilities <- predictabilities
@@ -462,9 +443,8 @@
 				saveRDS(model, file=MODEL_FILE)
 
 				return(print(list(
-					# Sequences=model$seqdefs,
 					Distance_Method=method,
-					Distances=model$dists,
+					Distances=model$distances,
 					Groupings=model$groupings,
 					Motifs=model$motifs,
 					Predictability=model$predictabilities,
@@ -480,7 +460,7 @@
 				library(ggpubr)
 				library(reshape2)
 				model <- readRDS(MODEL_FILE)
-				measuresAll <- c('seqdefs', 'dists')
+				measuresAll <- c('seqdefs', 'distances')
 				modelNames <- names(model)
 				measures <- measuresAll[measuresAll %in% modelNames]
 				if (length(measures) > 0) {
@@ -489,7 +469,7 @@
 					# #DEBUG
 					# plot(model[[measures[1]]][[1]], main=sprintf('%s: period %s',measures[1],1))
 					# for (measure in measures) {
-						measure <- 'dists'
+						measure <- 'distances'
 						plots <- list()
 						for (i in 1:length(model[[measure]])) {
 							dflong <- melt(model[[measure]][[i]], varnames = c('firm1','firm2'), value.name = 'distances')
@@ -515,16 +495,16 @@
 			}
 		})
 	 
-		# output$analysis_output_dists_plot <- renderPlot({
-		#  	if(input$analysis_output_dists_plot_button) {
+		# output$analysis_output_distances_plot <- renderPlot({
+		#  	if(input$analysis_output_distances_plot_button) {
 		#  		model <- readRDS(MODEL_FILE)
-		#  		if ('dists' %in% names(model)) {
-		#  			nplotcols <- ifelse(length(model$dists)>1, 2, 1)
-		#  			par(mfrow=c(length(model$dists),nplotcols))
-		#  			for (i in 1:length(model$dists)) {
-		#  				# heatmap(model$dists[[i]])
-		#  				image(model$dists[[i]], main=sprintf('Distances: Period %s',i))
-		#  				# image(zlim=range(c(model$dists[[i]])), legend.only=T, horizontal=F)
+		#  		if ('distances' %in% names(model)) {
+		#  			nplotcols <- ifelse(length(model$distances)>1, 2, 1)
+		#  			par(mfrow=c(length(model$distances),nplotcols))
+		#  			for (i in 1:length(model$distances)) {
+		#  				# heatmap(model$distances[[i]])
+		#  				image(model$distances[[i]], main=sprintf('Distances: Period %s',i))
+		#  				# image(zlim=range(c(model$distances[[i]])), legend.only=T, horizontal=F)
 		#  			}
 		#  		}
 		#  	} else {
@@ -542,7 +522,8 @@
 			content = function(con) {
 				library(reshape2)
 			  	model <- loadModel()
-			    # saveRDS(model, con)
+			  	measuresAll <- c('distances','groupings','motifs','simplicities','unpredictability')
+			  	measures <- measuresAll[measuresAll %in% names(model)]
 			    files <- NULL;
 			    # temp dir
 			    owd <- setwd(tempdir())
@@ -550,16 +531,32 @@
       			# timestamp
 			    ts <- as.integer(Sys.time())
 
-			    dat <- model$dists
-			    df <- data.frame()
-			    for (t in 1:length(dat)) {
-			    	dft <- melt(dat[[t]], varnames = c('firm1','firm2'), value.name = 'distances')
-			    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
-			    	df <- rbind(df, dft)
+			    ## DISTANCES
+			    if ('distances' %in% measures) {
+				    dat <- model$distances
+				    df <- data.frame()
+				    for (t in 1:length(dat)) {
+				    	dft <- melt(dat[[t]], varnames = c('firm1','firm2'), value.name = 'distances')
+				    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
+				    	df <- rbind(df, dft)
+				    }
+				    file <- sprintf('distances-%s.csv',ts)
+				    write.csv(df, file=file, row.names = F)
+				    files <- c(files, file)
 			    }
-			    file <- sprintf('dists-%s.csv',ts)
-			    write.csv(df, file=file, row.names = F)
-			    files <- c(files, file)
+
+			    ## Simplicities
+			    if ('simplicities' %in% measures) {
+				    df <- data.frame()
+				    for (t in 1:length(dat)) {
+				    	dft <- model$simplicities[[t]]
+				    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
+				    	df <- rbind(df, dft)
+				    }
+				    file <- sprintf('simplicities-%s.csv',ts)
+				    write.csv(df, file=file, row.names = F)
+				    files <- c(files, file)
+			    }
 
 			    # dat <- model$seqdefs
 			    # df <- data.frame()
@@ -568,7 +565,7 @@
 			    # 	dft$period <- names(dat)[t]
 			    # 	df <- rbind(df, dft)
 			    # }
-			    # file <- sprintf('dists-%s.csv',ts)
+			    # file <- sprintf('distances-%s.csv',ts)
 			    # write.csv(df, file=file)
 			    # files <- c(files, file)
 
