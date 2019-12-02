@@ -11,7 +11,7 @@ library(shiny)
 #library(shinydashboard)
 
 ## APP MODULES
-source('testModule.R')  ## loads ui,server helper functions
+source('analysisModule.R')  ## loads ui,server helper functions
 source('appUi.R') 		## loads `.ui()` function that returns `ui` object
 source('appServer.R')   ## loads `.server()` function that returns `server(input, output, session)` function
 

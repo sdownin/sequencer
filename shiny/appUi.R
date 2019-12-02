@@ -60,6 +60,11 @@
 						wellPanel(fluidRow(
 						      column(width = 6,
 						      	h3("Sequence Distance Measurement Settings"),
+						      	tagList(
+						      		icon('question-circle'),
+									a("Sequence distance function details", href="https://rdrr.io/cran/TraMineR/man/seqdist.html", target="_blank"),
+						      		br(),br()
+						      	),
 								selectInputUIdistance('analysis_distance_function', 'Distance Function'),
 								selectInputUInorm('analysis_distance_norm', 'Normalization'),
 								sliderTextUItenths('analysis_indel_cost', "INDEL Cost")
@@ -104,7 +109,7 @@
 					hr(),
 					fluidRow(
 					    column(width = 12,
-					    	h3("Save Outputs"),
+					    	h3("Save Results"),
 					        downloadButton('analysis_output_download', label = "Download") # class = NULL, ...
 					    )
 					),

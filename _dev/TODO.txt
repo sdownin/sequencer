@@ -1,11 +1,11 @@
 ## TODO
- - measures: simplicity  (compute measures based on input selected)
- - separate 1 model into models for each measure selected to be computed
- - measures: motif
- - measures: unpredictibaility
- - measures: grouping
  - check seqdist methods each work; compatibility with other input arguments (e.g., norm='auto')
- - UI measures conditional inputs (select, checkbox) from choice of distance method
+ - measures: grouping (compute measures based on input selected)
+ - separate 1 model into models for each measure selected to be computed
+ - measures: simplicity, motif, unpredictibaility
+ - Abbreviated alphabet (or state) name inputs
+ - UI measures conditional inputs (select, checkbox) from choice of distance method (index vs. sm)
+ - stress test different input data sizes/shapes to errors, bottlenecks
  - save plots (png, etc)
  - add unit tests
  - add info links (e.g., for distance measure, normalization, INDEL, etc.)
