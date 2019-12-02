@@ -360,36 +360,46 @@
 			return()
 		})
 
-		output$analysis_output_seq_plot <- renderPlot({
-			if(input$analysis_output_seq_plot_button) {
+		output$analysis_output_plots <- renderPlot({
+			if(input$analysis_output_plots_button) {
 				model <- readRDS(MODEL_FILE)
-				if ('seqdefs' %in% names(model)) {
-					par(mfrow=c(length(model$seqdefs),1))
-					for (i in 1:length(model$seqdefs)) {
-						plot(model$seqdefs[[i]], main=sprintf('Sequences: Period %s',i))
-					}
+				measuresAll <- c('seqdefs', 'dists')
+				modelNames <- names(model)
+				measures <- measuresAll[measuresAll %in% modelNames]
+				if (length(measures) > 0) {
+					nall <- sum(sapply(measures, function(x) length(model[[x]]) ))
+					par(mfrow=c(ceiling(nall/3),3), mar=c(2,3,2,1))
+					#DEBUG
+					plot(model[[measures[1]]][[1]], main=sprintf('%s: period %s',measures[1],1))
+					# for (measure in measures) {
+					# 	for (i in 1:length(model[[measure]])) {
+					# 		plot(model[[measure]][[i]], main=sprintf('%s: period %s',measure,i))
+					# 	}
+					# }
+				} else {
+					return('Notion to plot.')
 				}
 			} else {
 				return()
 			}
 		})
 	 
-		output$analysis_output_dists_plot <- renderPlot({
-		 	if(input$analysis_output_dists_plot_button) {
-		 		model <- readRDS(MODEL_FILE)
-		 		if ('dists' %in% names(model)) {
-		 			nplotcols <- ifelse(length(model$dists)>1, 2, 1)
-		 			par(mfrow=c(length(model$dists),nplotcols))
-		 			for (i in 1:length(model$dists)) {
-		 				# heatmap(model$dists[[i]])
-		 				image(model$dists[[i]], main=sprintf('Distances: Period %s',i))
-		 				# image(zlim=range(c(model$dists[[i]])), legend.only=T, horizontal=F)
-		 			}
-		 		}
-		 	} else {
-		 		return()
-		 	}
-		})
+		# output$analysis_output_dists_plot <- renderPlot({
+		#  	if(input$analysis_output_dists_plot_button) {
+		#  		model <- readRDS(MODEL_FILE)
+		#  		if ('dists' %in% names(model)) {
+		#  			nplotcols <- ifelse(length(model$dists)>1, 2, 1)
+		#  			par(mfrow=c(length(model$dists),nplotcols))
+		#  			for (i in 1:length(model$dists)) {
+		#  				# heatmap(model$dists[[i]])
+		#  				image(model$dists[[i]], main=sprintf('Distances: Period %s',i))
+		#  				# image(zlim=range(c(model$dists[[i]])), legend.only=T, horizontal=F)
+		#  			}
+		#  		}
+		#  	} else {
+		#  		return()
+		#  	}
+		# })
 
 		# close the R session when Chrome closes
 		session$onSessionEnded(function() { 

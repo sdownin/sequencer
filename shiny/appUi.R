@@ -47,7 +47,7 @@
 						hr(),
 						fluidRow(
 						    column(width = 6, offset=6,
-						        actionButtonUIrun("analysis_measures_show", "Select Measures", class='btn btn-primary btn-lg btn-block', icon=icon('sliders'))
+						        actionButtonUIrun("analysis_measures_goto", "Select Measures", class='btn btn-primary btn-lg btn-block', icon=icon('sliders'))
 						    )
 						),
 						hr(),
@@ -93,37 +93,44 @@
 				## 1. Tab 3. Outputs -------------
 				tabPanel("Outputs", 
 					fluidRow(
-				    	column(width = 6,
-				    		h3("Sequence Distance Measurement Settings"),
+				    	column(width = 12,
+				    		h3("Sequence Analysis Results Summary Output"),
 				    		verbatimTextOutput('analysis_run_value')
 				    	),
-				    	column(width = 6,
-				    		h3("Sequence Plots"),
-				    		tagList(
-					    		actionButton("analysis_output_seq_plot_button", "Plot Sequences"),
-					    		plotOutput('analysis_output_seq_plot', height='600px'#,
-					    			# click = "analysis_seq_plot_click",  # Equiv, to click=clickOpts(id="plot_click")
-					    			# hover = hoverOpts(id = "analysis_seq_plot_hover", delayType = "throttle"),
-					    			# brush = brushOpts(id = "analysis_seq_plot_brush")
-					    		)
-				    		),
-				    	),
 					),
-					fluidRow(width=12,
-						tagList(
-    			    		actionButton("analysis_output_dists_plot_button", "Plot Distances"),
-    			    		plotOutput('analysis_output_dists_plot', height='800px'#,
-    			    			# click = "analysis_dists_plot_click",  # Equiv, to click=clickOpts(id="plot_click")
-    			    			# hover = hoverOpts(id = "analysis_dists_plot_hover", delayType = "throttle"),
-    			    			# brush = brushOpts(id = "analysis_dists_plot_brush")
-    			    		)
-	    		    	)
-					),
-					fluidRow(width=12,
+					fluidRow(column(width=12,
 						''
+					)),
+					fluidRow(
+					    column(width = 6, offset=6,
+					        actionButtonUIrun("analysis_plots_goto", "Visualize Results", class='btn btn-primary btn-lg btn-block', icon=icon('chart-pie'))
+					    )
 					),
 					hr(),
-				icon=icon('chart-bar')	
+				icon=icon('poll-h')	
+				),
+
+
+				## 1. Tab 4. Plots -------------
+				tabPanel("Plots", 
+					fluidRow(
+						column(width = 12,
+							h3("Sequence Analysis Plots"),
+							tagList(
+	    			    		actionButton("analysis_output_plots_button", "Render Plots"),
+	    			    		plotOutput('analysis_output_plots', height=500, width=500#,
+	    			    			# click = "analysis_dists_plot_click",  # Equiv, to click=clickOpts(id="plot_click")
+	    			    			# hover = hoverOpts(id = "analysis_dists_plot_hover", delayType = "throttle"),
+	    			    			# brush = brushOpts(id = "analysis_dists_plot_brush")
+	    			    		)
+		    		    	)
+						)
+					),
+					fluidRow(column(width=12,
+						''
+					)),
+					hr(),
+				icon=icon('chart-pie')	
 				)
 				
 			),

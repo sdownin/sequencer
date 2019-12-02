@@ -1,0 +1,63 @@
+library paths:
+... C:/Users/steph/Google Drive/Rapp/SequenceR/R-Portable/App/R-Portable/library
+Loading required package: shiny
+
+Listening on http://127.0.0.1:7139
+Browser path: "C:/Users/steph/Google Drive/Rapp/SequenceR/GoogleChromePortable/App/Chrome-bin/chrome.exe"
+[4740:6496:1202/063321.158:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
+[4740:6496:1202/063321.158:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
+[4740:6496:1202/063321.158:ERROR:disk_cache.cc(178)] Unable to create cache
+[4740:6496:1202/063321.158:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
+Opening in existing browser session.
+
+SERVER:  MODEL STRUCT
+$analysis_alphabet
+$analysis_alphabet$x
+[1] NA
+
+$analysis_alphabet$xpath
+[1] ""
+
+
+$analysis_subcostmat
+$analysis_subcostmat$x
+[1] NA
+
+$analysis_subcostmat$xpath
+[1] ""
+
+
+$analysis_data
+$analysis_data$x
+[1] NA
+
+$analysis_data$xpath
+[1] ""
+
+
+$updated
+[1] FALSE
+
+$analysis_dist_settings
+$analysis_dist_settings$method
+[1] "OM"
+
+$analysis_dist_settings$norm
+[1] "none"
+
+$analysis_dist_settings$indel
+[1] 1
+
+
+
+TraMineR stable version 2.0-12 (Built: 2019-11-07)
+Website: http://traminer.unige.ch
+Please type 'citation("TraMineR")' for citation information.
+
+Warning: Error in [: incorrect number of dimensions
+  100: unique
+   99: renderPrint
+   98: func
+   82: origRenderFunc
+   81: output$analysis_run_value
+    1: shiny::runApp
