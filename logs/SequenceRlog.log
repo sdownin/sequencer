@@ -2,12 +2,12 @@ library paths:
 ... C:/Users/steph/Google Drive/Rapp/SequenceR/R-Portable/App/R-Portable/library
 Loading required package: shiny
 
-Listening on http://127.0.0.1:5714
+Listening on http://127.0.0.1:7533
 Browser path: "C:/Users/steph/Google Drive/Rapp/SequenceR/GoogleChromePortable/App/Chrome-bin/chrome.exe"
-[12156:23780:1202/114826.544:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
-[12156:23780:1202/114826.545:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
-[12156:23780:1202/114826.545:ERROR:disk_cache.cc(178)] Unable to create cache
-[12156:23780:1202/114826.545:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
+[3296:7548:1202/123920.786:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
+[3296:7548:1202/123920.786:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
+[3296:7548:1202/123920.787:ERROR:disk_cache.cc(178)] Unable to create cache
+[3296:7548:1202/123920.787:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
 Opening in existing browser session.
 
 SERVER:  MODEL STRUCT
@@ -79,323 +79,6 @@ Please type 'citation("TraMineR")' for citation information.
  [>] 3 sequences in the data set
  [>] min/max sequence length: 2/4
  [>] 3 sequences with 10 distinct states
-Warning: Error in : 'sm' has an unknown value
-  103: stop
-  102: msg.stop
-  101: msg.stop.na
-  100: seqdist
-   99: renderPrint
-   98: func
-   82: origRenderFunc
-   81: output$analysis_run_value
-    1: shiny::runApp
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 6 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = E
-     6 = J
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 2/4
- [>] 3 sequences with 10 distinct states
-Warning: Error in : 'sm' has an unknown value
-  103: stop
-  102: msg.stop
-  101: msg.stop.na
-  100: seqdist
-   99: renderPrint
-   98: func
-   82: origRenderFunc
-   81: output$analysis_run_value
-    1: shiny::runApp
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 6 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = E
-     6 = J
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 2/4
- [>] 3 sequences with 10 distinct states
-Warning: Error in : 'sm' has an unknown value
-  103: stop
-  102: msg.stop
-  101: msg.stop.na
-  100: seqdist
-   99: renderPrint
-   98: func
-   82: origRenderFunc
-   81: output$analysis_run_value
-    1: shiny::runApp
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 6 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = E
-     6 = J
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 2/4
- [>] 3 sequences with 10 distinct states
-Warning: Error in : 'sm' has an unknown value
-  103: stop
-  102: msg.stop
-  101: msg.stop.na
-  100: seqdist
-   99: renderPrint
-   98: func
-   82: origRenderFunc
-   81: output$analysis_run_value
-    1: shiny::runApp
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 6 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = E
-     6 = J
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 2/4
- [>] 3 sequences with 10 distinct states
-Warning: Error in : 'sm' has an unknown value
-  103: stop
-  102: msg.stop
-  101: msg.stop.na
-  100: seqdist
-   99: renderPrint
-   98: func
-   82: origRenderFunc
-   81: output$analysis_run_value
-    1: shiny::runApp
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 6 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = E
-     6 = J
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 2/4
- [>] 3 sequences with 10 distinct states
-Warning: Error in : 'sm' has an unknown value
-  103: stop
-  102: msg.stop
-  101: msg.stop.na
-  100: seqdist
-   99: renderPrint
-   98: func
-   82: origRenderFunc
-   81: output$analysis_run_value
-    1: shiny::runApp
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 6 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = E
-     6 = J
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 2/4
- [>] 3 sequences with 10 distinct states
- [>] context set to 1 - 2 * expcost = 0
- [>] 2 * expcost + context = 1
- [>] checking 'sm' (one value for each state, triangle inequality)
-Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
- [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
- [!] costs less than replacing directly A with B (cost=0.7)
- [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
- [>] 3 distinct sequences
- [>] min/max sequence length: 2/4
- [>] computing distances using the OMloc metric
- [>] elapsed time: 0 secs
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 6 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = E
-     6 = G
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 2/6
- [>] 3 sequences with 10 distinct states
- [>] context set to 1 - 2 * expcost = 0
- [>] 2 * expcost + context = 1
- [>] checking 'sm' (one value for each state, triangle inequality)
-Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
- [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
- [!] costs less than replacing directly A with B (cost=0.7)
- [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
- [>] 3 distinct sequences
- [>] min/max sequence length: 2/6
- [>] computing distances using the OMloc metric
- [>] elapsed time: 0 secs
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 5 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = J
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 3/6
- [>] 3 sequences with 10 distinct states
- [>] context set to 1 - 2 * expcost = 0
- [>] 2 * expcost + context = 1
- [>] checking 'sm' (one value for each state, triangle inequality)
-Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
- [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
- [!] costs less than replacing directly A with B (cost=0.7)
- [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
- [>] 3 distinct sequences
- [>] min/max sequence length: 3/6
- [>] computing distances using the OMloc metric
- [>] elapsed time: 0 secs
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 6 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = E
-     6 = J
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 2/4
- [>] 3 sequences with 10 distinct states
  [>] checking 'sm' (one value for each state, triangle inequality)
 Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
  [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
@@ -404,7 +87,7 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 3 distinct sequences
  [>] min/max sequence length: 2/4
  [>] computing distances using the OM metric
- [>] elapsed time: 0.02 secs
+ [>] elapsed time: 0.01 secs
  [>] found missing values ('NA') in sequence data
  [>] preparing 3 sequences
  [>] coding void elements with '%' and missing values with '*'
@@ -438,7 +121,7 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 3 distinct sequences
  [>] min/max sequence length: 2/6
  [>] computing distances using the OM metric
- [>] elapsed time: 0.02 secs
+ [>] elapsed time: 0 secs
  [>] found missing values ('NA') in sequence data
  [>] preparing 3 sequences
  [>] coding void elements with '%' and missing values with '*'
@@ -471,7 +154,8 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 3 distinct sequences
  [>] min/max sequence length: 3/6
  [>] computing distances using the OM metric
- [>] elapsed time: 0.02 secs
+ [>] elapsed time: 0 secs
+  adding: dists-1575308406.csv (deflated 74%)
 -- Attaching packages --------------------------------------- tidyverse 1.2.1 --
 v ggplot2 3.2.1     v purrr   0.3.3
 v tibble  2.1.3     v dplyr   0.8.3
@@ -492,319 +176,15 @@ The following object is masked from 'package:tidyr':
 
     extract
 
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 6 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = E
-     6 = J
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 2/4
- [>] 3 sequences with 10 distinct states
- [>] checking 'sm' (one value for each state, triangle inequality)
-Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
- [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
- [!] costs less than replacing directly A with B (cost=0.7)
- [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
- [>] 3 distinct sequences
- [>] min/max sequence length: 2/4
- [>] computing distances using the OM metric
- [>] elapsed time: 0 secs
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 6 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = E
-     6 = G
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 2/6
- [>] 3 sequences with 10 distinct states
- [>] checking 'sm' (one value for each state, triangle inequality)
-Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
- [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
- [!] costs less than replacing directly A with B (cost=0.7)
- [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
- [>] 3 distinct sequences
- [>] min/max sequence length: 2/6
- [>] computing distances using the OM metric
- [>] elapsed time: 0 secs
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 5 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = J
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 3/6
- [>] 3 sequences with 10 distinct states
- [>] checking 'sm' (one value for each state, triangle inequality)
-Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
- [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
- [!] costs less than replacing directly A with B (cost=0.7)
- [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
- [>] 3 distinct sequences
- [>] min/max sequence length: 3/6
- [>] computing distances using the OM metric
- [>] elapsed time: 0 secs
-  adding: dists-1575305540.csv (deflated 73%)
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 6 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = E
-     6 = J
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 2/4
- [>] 3 sequences with 10 distinct states
- [>] 3 distinct sequences
- [>] min/max sequence length: 2/4
- [>] computing distances using the CHI2 metric
- [>] elapsed time: 0.02 secs
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 6 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = E
-     6 = G
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 2/6
- [>] 3 sequences with 10 distinct states
- [>] 3 distinct sequences
- [>] min/max sequence length: 2/6
- [>] computing distances using the CHI2 metric
-Warning in min(pdot[-which.min(pdot)]) :
-  no non-missing arguments to min; returning Inf
- [>] elapsed time: 0 secs
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 5 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = J
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 3/6
- [>] 3 sequences with 10 distinct states
- [>] 3 distinct sequences
- [>] min/max sequence length: 3/6
- [>] computing distances using the CHI2 metric
-Warning in min(pdot[-which.min(pdot)]) :
-  no non-missing arguments to min; returning Inf
-Warning in min(pdot[-which.min(pdot)]) :
-  no non-missing arguments to min; returning Inf
- [>] elapsed time: 0.01 secs
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 6 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = E
-     6 = J
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 2/4
- [>] 3 sequences with 10 distinct states
- [>] 3 distinct sequences
- [>] min/max sequence length: 2/4
- [>] computing distances using the EUCLID metric
- [>] elapsed time: 0 secs
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 6 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = E
-     6 = G
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 2/6
- [>] 3 sequences with 10 distinct states
- [>] 3 distinct sequences
- [>] min/max sequence length: 2/6
- [>] computing distances using the EUCLID metric
- [>] elapsed time: 0 secs
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 5 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = J
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 3/6
- [>] 3 sequences with 10 distinct states
- [>] 3 distinct sequences
- [>] min/max sequence length: 3/6
- [>] computing distances using the EUCLID metric
- [>] elapsed time: 0 secs
- [>] found missing values ('NA') in sequence data
- [>] preparing 3 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 6 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = E
-     6 = J
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 3 sequences in the data set
- [>] min/max sequence length: 2/4
- [>] 3 sequences with 10 distinct states
-Warning: Error in : use 'prox' instead of 'sm'
-  102: stop
-  101: msg.stop
-  100: seqdist
-   99: renderPrint
-   98: func
+Warning: Error in par: invalid value specified for graphical parameter "mfrow"
+  168: par
+  167: renderPlot
+  165: func
+  125: drawPlot
+  111: <reactive:plotObj>
+   95: drawReactive
    82: origRenderFunc
-   81: output$analysis_run_value
+   81: output$analysis_output_plots
     1: shiny::runApp
  [>] found missing values ('NA') in sequence data
  [>] preparing 3 sequences
@@ -831,10 +211,15 @@ Warning: Error in : use 'prox' instead of 'sm'
  [>] 3 sequences in the data set
  [>] min/max sequence length: 2/4
  [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
  [>] 3 distinct sequences
- [>] min/max distinct states sequence length: 2/4
- [>] computing distances using the NMSMST metric
- [>] elapsed time: 0.04 secs
+ [>] min/max sequence length: 2/4
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0 secs
  [>] found missing values ('NA') in sequence data
  [>] preparing 3 sequences
  [>] coding void elements with '%' and missing values with '*'
@@ -860,10 +245,15 @@ Warning: Error in : use 'prox' instead of 'sm'
  [>] 3 sequences in the data set
  [>] min/max sequence length: 2/6
  [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
  [>] 3 distinct sequences
- [>] min/max distinct states sequence length: 2/6
- [>] computing distances using the NMSMST metric
- [>] elapsed time: 0.02 secs
+ [>] min/max sequence length: 2/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0 secs
  [>] found missing values ('NA') in sequence data
  [>] preparing 3 sequences
  [>] coding void elements with '%' and missing values with '*'
@@ -888,7 +278,12 @@ Warning: Error in : use 'prox' instead of 'sm'
  [>] 3 sequences in the data set
  [>] min/max sequence length: 3/6
  [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
  [>] 3 distinct sequences
- [>] min/max distinct states sequence length: 2/6
- [>] computing distances using the NMSMST metric
- [>] elapsed time: 0.03 secs
+ [>] min/max sequence length: 3/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.02 secs

@@ -391,8 +391,11 @@
 				firms <- as.character(alphabet[[firmCol]])
 				actionAlphabet <- as.character(alphabet[[actionCol]])
 
-				dists <- list() # period list
-				seqdefs <- list() # period list
+				seqdefs <- list() # sequence definition object period list
+				dists <- list() # squence distance mesaures period list
+				groupings <- list() # gamma list ('grouping' measure avg. precedence scores)
+				motifs <- list() # gamma list ('grouping' measure avg. precedence scores)
+				
 				for (t in 1:length(periods))  #length(periods)
 				{
 					pd <- periods[t]
@@ -400,23 +403,48 @@
 					t.dat <- dat[tidx, ]
 					t.l <- longDf2SeqList(t.dat, firms, 'firm', 'action')
 					t.ldf <- seqList2Df(t.l)
-					t.xseqdef <- seqdef(t.ldf, alphabet=actionAlphabet, right=right)
-					t.xdist <- seqdist(t.xseqdef, 
-						method = method, indel = indel, norm = norm, sm = sm)
-					dimnames(t.xdist) <-  list(firms, firms)
-					seqdefs[[pd]] <- t.xseqdef
-					dists[[pd]] <- t.xdist
+					if ('distances' %in% input$analysis_measures_group) {
+						t.xseqdef <- seqdef(t.ldf, alphabet=actionAlphabet, right=right)
+						t.xdist <- seqdist(t.xseqdef, 
+							method = method, indel = indel, norm = norm, sm = sm)
+						dimnames(t.xdist) <-  list(firms, firms)
+						seqdefs[[pd]] <- t.xseqdef
+						dists[[pd]] <- t.xdist
+					}
+					if ('grouping' %in% input$analysis_measures_group) {
+						## separation score from gamma analysis
+						## To calculate the extent to which the entire sequence exhibits grouping, 
+						## we calculated the mean of the separation scores across all action types. 
+						## High scores indicate that the sequence contains elements 
+						## that were not ordinally proximate to one another; 
+						## low scores indicate that the sequence exhibits groups of actions. 
+						## We reversed the direction of the scores (multiplying them by −1.0) 
+						## so that higher scores indicate higher levels of grouping among actions in a sequence.
+					}
+					if ('motif' %in% input$analysis_measures_group) {
+						## precedence score from gamma analysis
+						## To determine the extent to which the entire sequence exhibits internal structuredness, 
+						## we calculated the variance of the averages in the pair-wise precedence scores across all action types. 
+						## Averaging across action types indicates the relative position—beginning or 
+						## end—in the overall sequence in which the particular type of action appears. 
+						## Variance in average precedence scores captures the ordinal specificity and 
+						## stability of elements in a sequence.
+					}
 				}
 
 				model$dists <- dists
 				model$seqdefs <- seqdefs
+				model$groupings <- groupings
+				model$motifs <- motifs
 				model$analysis_run <- 'ANALYSIS RUN COMPLETED'
 				saveRDS(model, file=MODEL_FILE)
 
 				return(print(list(
 					Sequences=model$seqdefs,
 					Distance_Method=method,
-					Distances=model$dists
+					Distances=model$dists,
+					Groupings=model$groupings,
+					Motifs=model$motifs
 				)))
 			}
 			return()

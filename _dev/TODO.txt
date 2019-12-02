@@ -6,6 +6,8 @@
  - Abbreviated alphabet (or state) name inputs
  - UI measures conditional inputs (select, checkbox) from choice of distance method (index vs. sm)
  - stress test different input data sizes/shapes to errors, bottlenecks
+ - change render of plots to separate divs (dynamic UI render) for RWD, separate mouseover functions
+ - add/use buttons with server-side event handlers observeEvent(), eventReactive()
  - save plots (png, etc)
  - add unit tests
  - add info links (e.g., for distance measure, normalization, INDEL, etc.)
