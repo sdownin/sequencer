@@ -27,11 +27,10 @@ SequenceR
     |    └--www
     |        └--js
     |            └--main.js
+    |    |--analysisModule.R
     |    |--app.R
     |    |--appServer.R
     |    |--appUi.R
-    |--.gitignore
-    |--README.md
     |--run.vbs
     └--runShinyApp.R
 ```
