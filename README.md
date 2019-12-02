@@ -71,14 +71,14 @@ Removed
 
 #### [0.1.0] - 2019-11-01
 
-**Added**
-- SequenceR main Shiny app
-- GoogleChromePortable
-- R-Portable
+Added
+SequenceR main Shiny app
+GoogleChromePortable
+R-Portable
 
-**Changed**
+Changed
 (none)
 
-**Removed**
+Removed
 (none)
 
