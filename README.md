@@ -42,7 +42,7 @@ User-Friendly Sequence Analysis in `R`
 
 <hr>
 
-# Changelog
+## Changelog
 
 All notable changes to this project will be documented in this section.
 
