@@ -16,7 +16,7 @@ User-Friendly Sequence Analysis in `R`
 
 [![](/_img/tutorial_screenvid_analysis_v1.gif "SequenceR")](#getting-started)
 
-### Import Data
+### 1. Import Data
 
 1. Alphabet
 2. Substitution cost matrix
@@ -24,14 +24,14 @@ User-Friendly Sequence Analysis in `R`
 
 [![](/_img/readme_analysis_data_import.png "Import data files")](#import-data)
 
-### Select Measures
+### 2. Select Measures
 
 - Sequence distance cost settings
 - Measures to compute
 
 [![](/_img/readme_analysis_measures.png "Measures")](#select-measures)
 
-### Output Results and Plots
+### 3. Output Results and Plots
 
 - Sequence summary outputs
 - Plots
