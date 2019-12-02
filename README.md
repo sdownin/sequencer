@@ -21,7 +21,7 @@ Import data files:
 - Substitution cost matrix
 - Sequence data
 
-![Import data files](/_img/readme_analysis_import_data.gif "Import data files")
+![Import data files](/_img/readme_analysis_import_data.png "Import data files")
 
 ### Select Measures
 
@@ -29,7 +29,7 @@ Select measures:
 - Sequence distance cost settings
 - Measures to compute
 
-![Measures](/_img/readme_analysis_measures.gif "Measures")
+![Measures](/_img/readme_analysis_measures.png "Measures")
 
 ### Output Results and Plots
 
@@ -37,7 +37,7 @@ Outputs:
 - Sequence summary outputs
 - Plots
 
-![Measures](/_img/readme_analysis_outputs.gif "Measures")
+![Measures](/_img/readme_analysis_outputs.png "Measures")
 
 
 
