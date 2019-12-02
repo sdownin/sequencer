@@ -434,13 +434,17 @@
 			  	model <- loadModel()
 			    # saveRDS(model, con)
 			    files <- NULL;
+			    # temp dir
+			    owd <- setwd(tempdir())
+      			on.exit(setwd(owd))
+      			# timestamp
 			    ts <- as.integer(Sys.time())
 
 			    dat <- model$dists
 			    df <- data.frame()
 			    for (t in 1:length(dat)) {
 			    	dft <- melt(dat[[t]], varnames = c('firm1','firm2'), value.name = 'distances')
-			    	dft$period <- names(dat)[t]
+			    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
 			    	df <- rbind(df, dft)
 			    }
 			    file <- sprintf('dists-%s.csv',ts)
