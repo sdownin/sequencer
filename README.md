@@ -18,9 +18,9 @@ User-Friendly Sequence Analysis in `R`
 
 ### Import Data
 
-- Alphabet
-- Substitution cost matrix
-- Sequence data
+1. Alphabet
+2. Substitution cost matrix
+3. Sequence data
 
 [![](/_img/readme_analysis_data_import.png "Import data files")](#import-data)
 
