@@ -366,6 +366,9 @@
 
 		output$analysis_output_plots <- renderPlot({
 			if(input$analysis_output_plots_button) {
+				library(tidyverse)
+				library(ggpubr)
+				library(reshape2)
 				model <- readRDS(MODEL_FILE)
 				measuresAll <- c('seqdefs', 'dists')
 				modelNames <- names(model)
@@ -376,11 +379,24 @@
 					# #DEBUG
 					# plot(model[[measures[1]]][[1]], main=sprintf('%s: period %s',measures[1],1))
 					# for (measure in measures) {
-						measure <- measures[1]
+						measure <- 'dists'
+						plots <- list()
 						for (i in 1:length(model[[measure]])) {
-							plot(model[[measure]][[i]], main=sprintf('%s: period %s',measure,i))
+							dflong <- melt(model[[measure]][[i]], varnames = c('firm1','firm2'), value.name = 'distances')
+							plt <- ggplot(data = dflong, aes(x = firm1, y = firm2)) +
+								geom_tile(aes(fill = distances))  + 
+								geom_text(aes(label = round(distances, 1)), colour='#FFFFFF') +
+								scale_fill_continuous(high = "#132B43", low = "#56B1F7") + 
+								ggtitle(sprintf('%s: period %s',measure,i))
+							plots[[length(plots)+1]] <- plt
 						}
+
 					# }
+						ncols <- 3
+						nrows <- ceiling(length(plots) / ncols)
+						ggarrange(plotlist = plots, ncol=ncols, nrow = nrows #,
+					        	# labels = c("A", "B", "C")
+					        )
 				} else {
 					return('Notion to plot.')
 				}
@@ -446,6 +462,7 @@
 
 			}
 		)
+
 
 		# close the R session when Chrome closes
 		session$onSessionEnded(function() { 

@@ -26,7 +26,7 @@ SequenceR
     |--shiny
     |    └--www/
     |        └--js/
-    |            └--script.js
+    |            └--main.js
     |    |--app.R
     |    |--appServer.R
     |    |--appUi.R
