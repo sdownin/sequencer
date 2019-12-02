@@ -3,7 +3,7 @@
 
 User-Friendly Sequence Analysis in `R`
 
-![SequenceR](img/tutorial_screenvid_v1.img "SequenceR")
+![SequenceR](img/tutorial_screenvid_v1.gif "SequenceR")
 
 ## Download
 
