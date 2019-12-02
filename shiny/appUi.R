@@ -164,7 +164,7 @@
 				a("https://github.com/sdownin/sequencer", href="https://github.com/sdownin/sequencer", target="_blank")
 			),
 			tabPanel("Version", 
-				"[0.2.0] - 2019-11-12"
+				"[0.3.0] - 2019-12-02"
 			),
 		icon=icon('info-circle')	
 		)
