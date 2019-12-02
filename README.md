@@ -5,12 +5,11 @@ User-Friendly Sequence Analysis in **R**
 
 ## Download
 
-| Version | Release | Download Link |
-| ----------- | ----------- | ----------- |
-| 0.3.0 | 2019-12-02 | [SequenceR v0.3.0 2019-12-02](https://drive.google.com/file/d/1PkLfv5xoAXZXRkGILS47NLEKGJ9O6YAQ/view?usp=sharing, 'SequenceR v0.3.0') |
+| Stage | Version | Release | Download Link |
+| ----------- | ----------- | ----------- | ----------- |
+| Development | 0.3.0 | 2019-12-02 | [SequenceR v0.3.0 2019-12-02](https://drive.google.com/file/d/1PkLfv5xoAXZXRkGILS47NLEKGJ9O6YAQ/view?usp=sharing, 'SequenceR v0.3.0') |
 
-
-Archived Versions
+Archived
  - [v0.2.0 2019-11-12](https://drive.google.com/file/d/1w94bUbP7NhzbSSg9DLZNqnQPIxvt7BIX/view?usp=sharing, 'SequenceR v0.2.0')
 
 
@@ -18,7 +17,7 @@ Archived Versions
 
 - Download zipped file
 - Unzip, keeping all files inside same directory
-- Run app by executing runfile: `Run.vbs`
+- Run app by executing runfile: `run.vbs`
 
 ```
 SequenceR
@@ -37,7 +36,7 @@ SequenceR
     └--runShinyApp.R
 ```
 
-[![](/_img/tutorial_screenvid_analysis_v1.gif "SequenceR")](#getting-started)
+[![](/_img/tutorial_screenvid_analysis.gif "SequenceR")](#getting-started)
 
 ### 1. Import Data
 
