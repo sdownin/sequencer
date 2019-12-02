@@ -1,20 +1,16 @@
 **SequenceR**  
 ==============
 
-## Download
-
-coming soon
-
-
 User-Friendly Sequence Analysis in `R`
 
-![SequenceR](/_img/tutorial_screenvid_analysis_v1.gif "SequenceR")
+## Download
 
+[SequenceR v0.2.0 2019-11-12](https://drive.google.com/file/d/1w94bUbP7NhzbSSg9DLZNqnQPIxvt7BIX/view?usp=sharing, 'SequenceR v0.2.0')
 
 
 ## Getting Started
 
-coming soon
+![SequenceR](/_img/tutorial_screenvid_analysis_v1.gif "SequenceR")
 
 ### Import Data
 
