@@ -21,7 +21,7 @@ Import data files:
 - Substitution cost matrix
 - Sequence data
 
-![Import data files](/_img/readme_analysis_import_data.png "Import data files")
+![Import data files](/_img/readme_analysis_data_import.png "Import data files")
 
 ### Select Measures
 
