@@ -49,39 +49,39 @@ Outputs:
 All notable changes to this project will be documented in this section.
 
 #### [0.3.0] - 2019-12-02
-Added<br>
+<u>Added</u><br>
 Analysis outputs<br>
 Download link<br>
 Readme screenshots<br>
 
-Changed<br>
+<u>Changed</u><br>
 Resources directories<br>
 
-Removed<br>
+<u>Removed</u><br>
 (none)<br>
 
 
 #### [0.2.0] - 2019-11-12
-Added<br>
+<u>Added</u><br>
 Sequence analysis dependencies in R-Portable<br>
 
-Changed<br>
+<u>Changed</u><br>
 App UI tabs<br>
 
-Removed<br>
+<u>Removed</u><br>
 (none)<br>
 
 
 #### [0.1.0] - 2019-11-01
 
-Added:<br>
+<u>Added</u><br>
 SequenceR main Shiny app<br>
 GoogleChromePortable<br>
 R-Portable<br>
 
-Changed<br>
+<u>Changed</u><br>
 (none)<br>
 
-Removed<br>
+<u>Removed</u><br>
 (none)<br>
 
