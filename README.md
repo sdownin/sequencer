@@ -47,39 +47,43 @@ User-Friendly Sequence Analysis in `R`
 All notable changes to this project will be documented in this section.
 
 #### [0.3.0] - 2019-12-02
-*Added*<br>
-Analysis outputs<br>
-Download link<br>
-Readme screenshots<br>
+```
+Added
+ - Analysis outputs
+ - Download link
+ - Readme screenshots
 
-*Changed*<br>
-Resources directories<br>
+Changed
+ - Resources directories
 
-*Removed*<br>
-(none)<br>
+Removed
+ (none)
+```
 
 
 #### [0.2.0] - 2019-11-12
-*Added*<br>
-Sequence analysis dependencies in R-Portable<br>
+```
+Added
+ - Sequence analysis dependencies in R-Portable
 
-*Changed*<br>
-App UI tabs<br>
+Changed
+ - App UI tabs
 
-*Removed*<br>
-(none)<br>
+Removed
+ (none)
+```
 
 
 #### [0.1.0] - 2019-11-01
 ```
-*Added*<br>
-SequenceR main Shiny app<br>
-GoogleChromePortable<br>
-R-Portable<br>
+Added
+ - SequenceR main Shiny app
+ - GoogleChromePortable
+ - R-Portable
 
-*Changed*<br>
-(none)<br>
+Changed
+ (none)
 
-*Removed*<br>
-(none)<br>
+Removed
+ (none)
 ```
