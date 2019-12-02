@@ -2,12 +2,12 @@ library paths:
 ... C:/Users/steph/Google Drive/Rapp/SequenceR/R-Portable/App/R-Portable/library
 Loading required package: shiny
 
-Listening on http://127.0.0.1:3980
+Listening on http://127.0.0.1:5692
 Browser path: "C:/Users/steph/Google Drive/Rapp/SequenceR/GoogleChromePortable/App/Chrome-bin/chrome.exe"
-[11820:18960:1202/161913.012:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
-[11820:18960:1202/161913.012:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
-[11820:18960:1202/161913.012:ERROR:disk_cache.cc(178)] Unable to create cache
-[11820:18960:1202/161913.012:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
+[11708:15336:1202/164440.442:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
+[11708:15336:1202/164440.443:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
+[11708:15336:1202/164440.443:ERROR:disk_cache.cc(178)] Unable to create cache
+[11708:15336:1202/164440.443:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
 Opening in existing browser session.
 
 SERVER:  MODEL STRUCT
@@ -125,10 +125,93 @@ Please type 'citation("TraMineR")' for citation information.
      10  J           J        J
  [>] 3 sequences in the data set
  [>] min/max sequence length: 3/6
-Warning: Error in [: incorrect number of dimensions
-  100: unique
-   99: renderPrint
-   98: func
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 2/4
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.02 secs
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 2/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0 secs
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 3/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0 secs
+-- Attaching packages --------------------------------------- tidyverse 1.2.1 --
+v ggplot2 3.2.1     v purrr   0.3.3
+v tibble  2.1.3     v dplyr   0.8.3
+v tidyr   1.0.0     v stringr 1.4.0
+v readr   1.3.1     v forcats 0.4.0
+-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()
+Loading required package: magrittr
+
+Attaching package: 'magrittr'
+
+The following object is masked from 'package:purrr':
+
+    set_names
+
+The following object is masked from 'package:tidyr':
+
+    extract
+
+Warning: Error in [[: subscript out of bounds
+  168: melt
+  167: renderPlot
+  165: func
+  125: drawPlot
+  111: <reactive:plotObj>
+   95: drawReactive
    82: origRenderFunc
-   81: output$analysis_run_value
+   81: output$analysis_output_plots
     1: shiny::runApp
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 2/4
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.01 secs
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 2/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0 secs
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 3/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.01 secs

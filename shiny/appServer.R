@@ -294,7 +294,9 @@
 			
 			## INPUT
 			df <- read.csv(inFile$datapath, header = T, sep=',', fill=TRUE, stringsAsFactors=TRUE)
-			saveModel(model, xname='analysis_data', x=df, xpath=inFile$datapath)
+			model$analysis_data <- list(x=df, xpath=inFile$datapath)
+			saveRDS(model, file=MODEL_FILE)
+			# saveModel(model, xname='analysis_data', x=df, xpath=inFile$datapath)
 
 			alphabet <- model$analysis_alphabet$x
 			periodCol <- 'period'
@@ -316,7 +318,7 @@
 				seqdefs[[pd]] <- seqdef(t.ldf, alphabet=actionAlphabet, right=right)
 			}
 			model$seqdefs <- seqdefs
-			saveRDS(model, MODEL_FILE)
+			saveRDS(model, file=MODEL_FILE)
 
 			print(model$seqdefs)
 		})
@@ -404,8 +406,6 @@
 				periodCol <- 'period'
 				firmCol <- 'firm'
 
-				right <- 'DEL'  # left <- 'NA' # gaps <- 'NA'
-
 				periods <- unique(dat[,periodCol])
 				firms <- as.character(alphabet[[firmCol]])
 				actionAlphabet <- as.character(alphabet[[actionCol]])
@@ -414,7 +414,9 @@
 				dists <- list() # squence distance mesaures period list
 				groupings <- list() # gamma list ('grouping' measure avg. precedence scores)
 				motifs <- list() # gamma list ('grouping' measure avg. precedence scores)
-				
+				predictabilities <- list()
+				simplicities <- list()
+
 				for (t in 1:length(periods))  #length(periods)
 				{
 					pd <- periods[t]
