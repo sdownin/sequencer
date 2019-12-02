@@ -24,8 +24,8 @@ SequenceR
     |--GoogleChromePortable
     |--R-Portable
     |--shiny
-    |    └--www/
-    |        └--js/
+    |    └--www
+    |        └--js
     |            └--main.js
     |    |--app.R
     |    |--appServer.R
