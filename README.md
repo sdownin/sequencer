@@ -1,7 +1,9 @@
-**SequenceR**  User-Friendly Sequence Analysis in `R`
+**SequenceR**  
 ==============
 
-Package info coming soon
+User-Friendly Sequence Analysis in `R`
+
+![SequenceR](img/tutorial_screenvid_v1.img "SequenceR")
 
 ## Download
 

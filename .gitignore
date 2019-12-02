@@ -26,6 +26,9 @@
 *.swp*
 glmmadmb/*
 
+# Gif project file for screenvid 
+*.stg*
+
 # CPython bitcode cache
 python/__pycache__/*
 
