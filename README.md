@@ -14,7 +14,7 @@ User-Friendly Sequence Analysis in `R`
 - Unzip, keeping all files inside same directory
 - Run app by executing runfile: `Run.vbs`
 
-![SequenceR](/_img/tutorial_screenvid_analysis_v1.gif "SequenceR")
+[![](/_img/tutorial_screenvid_analysis_v1.gif "SequenceR")](#getting-started)
 
 ### Import Data
 
@@ -22,21 +22,21 @@ User-Friendly Sequence Analysis in `R`
 - Substitution cost matrix
 - Sequence data
 
-[![](/_img/readme_analysis_data_import.png "Import data files")](#)
+[![](/_img/readme_analysis_data_import.png "Import data files")](#import-data)
 
 ### Select Measures
 
 - Sequence distance cost settings
 - Measures to compute
 
-[![](/_img/readme_analysis_measures.png "Measures")](#)
+[![](/_img/readme_analysis_measures.png "Measures")](#select-measures)
 
 ### Output Results and Plots
 
 - Sequence summary outputs
 - Plots
 
-[![](/_img/readme_analysis_outputs.png "Outputs")](#)
+[![](/_img/readme_analysis_outputs.png "Outputs")](#output-results-and-plots)
 
 
 
