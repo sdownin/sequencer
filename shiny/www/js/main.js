@@ -2,7 +2,7 @@
  *
  * SequenceR App
  *
- * script.js
+ * main.js
  *
  */
 
@@ -34,17 +34,19 @@ $(document).ready(function(){
 
 
 	// NAVIGATION
+	// 2. Measures
 	$('button[id^=analysis_measures_goto]').click(function(){
 		activateTab('Measures');
 	});
-
-	$('button[id^=analysis_plots_goto]').click(function(){
-		activateTab('Plots');
-	});
-
+	// 3. Outputs
 	$('button[id^=analysis_run]').click(function(){
 		activateTab('Outputs');
 	});
+	// 4. Plots
+	$('button[id^=analysis_output_plots_button]').click(function(){
+		activateTab('Plots');
+	});
+
 
 	// DEBUG FEATURES
 	$('select[id^=analysis_distance_norm]').attr('disabled',true);

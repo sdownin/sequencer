@@ -355,7 +355,11 @@
 				model$analysis_run <- 'ANALYSIS RUN COMPLETED'
 				saveRDS(model, file=MODEL_FILE)
 
-				return(print(list(Sequences=model$seqdefs,Distance_Method=method,Distances=model$dists)))
+				return(print(list(
+					Sequences=model$seqdefs,
+					Distance_Method=method,
+					Distances=model$dists
+				)))
 			}
 			return()
 		})
@@ -369,12 +373,13 @@
 				if (length(measures) > 0) {
 					nall <- sum(sapply(measures, function(x) length(model[[x]]) ))
 					par(mfrow=c(ceiling(nall/3),3), mar=c(2,3,2,1))
-					#DEBUG
-					plot(model[[measures[1]]][[1]], main=sprintf('%s: period %s',measures[1],1))
+					# #DEBUG
+					# plot(model[[measures[1]]][[1]], main=sprintf('%s: period %s',measures[1],1))
 					# for (measure in measures) {
-					# 	for (i in 1:length(model[[measure]])) {
-					# 		plot(model[[measure]][[i]], main=sprintf('%s: period %s',measure,i))
-					# 	}
+						measure <- measures[1]
+						for (i in 1:length(model[[measure]])) {
+							plot(model[[measure]][[i]], main=sprintf('%s: period %s',measure,i))
+						}
 					# }
 				} else {
 					return('Notion to plot.')
@@ -400,6 +405,47 @@
 		#  		return()
 		#  	}
 		# })
+
+		output$analysis_output_download <- downloadHandler(
+			filename = function() {
+			    sprintf('sequence_analysis_results-%s.zip', 
+			    	as.integer(Sys.time())
+			    )
+		    # file.choose()
+			},
+			content = function(con) {
+				library(reshape2)
+			  	model <- loadModel()
+			    # saveRDS(model, con)
+			    files <- NULL;
+			    ts <- as.integer(Sys.time())
+
+			    dat <- model$dists
+			    df <- data.frame()
+			    for (t in 1:length(dat)) {
+			    	dft <- melt(dat[[t]], varnames = c('firm1','firm2'), value.name = 'distances')
+			    	dft$period <- names(dat)[t]
+			    	df <- rbind(df, dft)
+			    }
+			    file <- sprintf('dists-%s.csv',ts)
+			    write.csv(df, file=file, row.names = F)
+			    files <- c(files, file)
+
+			    # dat <- model$seqdefs
+			    # df <- data.frame()
+			    # for (t in 1:length(dat)) {
+			    # 	dft <- melt(dat[[t]], varnames = c('firm1','firm2'), value.name = 'se')
+			    # 	dft$period <- names(dat)[t]
+			    # 	df <- rbind(df, dft)
+			    # }
+			    # file <- sprintf('dists-%s.csv',ts)
+			    # write.csv(df, file=file)
+			    # files <- c(files, file)
+
+		    	zip(con,files)
+
+			}
+		)
 
 		# close the R session when Chrome closes
 		session$onSessionEnded(function() { 

@@ -9,7 +9,7 @@
 		## Page 1 - Analysis ====================================
 		tabPanel("Analysis", 
 
-			tags$head(tags$script(src="js/script.js")), ## load javascript
+			tags$head(tags$script(src="js/main.js")), ## load javascript
 			
 			tabsetPanel(
 
@@ -101,9 +101,17 @@
 					fluidRow(column(width=12,
 						''
 					)),
+					hr(),
+					fluidRow(
+					    column(width = 12,
+					    	h3("Save Outputs"),
+					        downloadButton('analysis_output_download', label = "Download") # class = NULL, ...
+					    )
+					),
+					hr(),
 					fluidRow(
 					    column(width = 6, offset=6,
-					        actionButtonUIrun("analysis_plots_goto", "Visualize Results", class='btn btn-primary btn-lg btn-block', icon=icon('chart-pie'))
+					        actionButtonUIrun("analysis_output_plots_button", "Visualize Results", class='btn btn-primary btn-lg btn-block', icon=icon('chart-pie'))
 					    )
 					),
 					hr(),
@@ -117,8 +125,7 @@
 						column(width = 12,
 							h3("Sequence Analysis Plots"),
 							tagList(
-	    			    		actionButton("analysis_output_plots_button", "Render Plots"),
-	    			    		plotOutput('analysis_output_plots', height=500, width=500#,
+	    			    		plotOutput('analysis_output_plots', height=400, width='100%'#,
 	    			    			# click = "analysis_dists_plot_click",  # Equiv, to click=clickOpts(id="plot_click")
 	    			    			# hover = hoverOpts(id = "analysis_dists_plot_hover", delayType = "throttle"),
 	    			    			# brush = brushOpts(id = "analysis_dists_plot_brush")
