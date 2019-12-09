@@ -1,7 +1,7 @@
 **SequenceR**  
 ==============
 
-User-Friendly Sequence Analysis in **R**
+(*Under Development*) User-Friendly Sequence Analysis in **R**
 
 ## Download
 
