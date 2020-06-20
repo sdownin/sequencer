@@ -31,26 +31,26 @@ selectInputUI <- function(id, label, optList) {
 selectInputUIdistance <- function(id, label) {
 	optList <- list(
 		`Edit Distances`=list(
-			`Optimal Matching (OM)`='OM',
-			`Localized OM`='OMloc',
-			`Spell-length-sensitive OM`='OMslen',
-			`OM of Spell Sequences`='OMspell',
-			`OM of Transition Sequences`='OMstran',
-			`Hamming`='OMstran',
-			`Dynamic Hamming`='DHD',
-			`Time Warp`='TWED'
+			 `Optimal Matching (OM)`='OM'
+			# ,`Localized OM`='OMloc'
+			# ,`Spell-length-sensitive OM`='OMslen'
+			# ,`OM of Spell Sequences`='OMspell'
+			# ,`OM of Transition Sequences`='OMstran'
+			# ,`Hamming`='OMstran'
+			# ,`Dynamic Hamming`='DHD'
+			# ,`Time Warp`='TWED'
 		),
 		`Common Attriute Count Metrics`=list(
-			`Longest Common Subsequence`='LCS',
-			`Longest Common Prefix`='LCP',
-			`Longest Common Suffix`='RLCP',
-			`Number of Matching Subsequences (NMS)`='NMS',
-			`NMS Weighted by Minimum Shared Time`='NMSMST',
-			`Subsequence Vectorial Representation`='SVRspell'
+			#  `Longest Common Subsequence`='LCS'
+			# ,`Longest Common Prefix`='LCP'
+			# ,`Longest Common Suffix`='RLCP'
+			# ,`Number of Matching Subsequences (NMS)`='NMS'
+			# ,`NMS Weighted by Minimum Shared Time`='NMSMST'
+			# ,`Subsequence Vectorial Representation`='SVRspell'
 		),
 		`State Distributions Distances`=list(
-			`Euclidean`='EUCLID',
-			`Chi-squared`='CHI2'
+			# `Euclidean`='EUCLID'
+			# ,`Chi-squared`='CHI2'
 		)
 	)
 	selectInputUI(id, label, optList)
@@ -84,13 +84,13 @@ checkboxGroupUImeasures <- function(id, label) {
 	tagList(
 		checkboxGroupInput(id, label = h3(label), 
 			choices = list(
-				'Distances' = 'distances' 
-				, 'Simplicity' = 'simplicities' 
-				# , 'Grouping' = 'groupinging'
-				#, 'Unpredictability' = 'unpredictabilities'
-				#, 'Motif' = 'motifs'
+				  'Distance' = 'distance' 
+				, 'Simplicity' = 'simplicity' 
+				, 'Grouping' = 'grouping'
+				, 'Predictability' = 'predictability'
+				, 'Motif' = 'motif'
 			),
-			selected = c('distances')),
+			selected = c('distance','simplicity','grouping','predictability','motif')),
 		textOutput(paste0(id,'_value'))
 	)
 }

@@ -66,8 +66,8 @@
 						      		br(),br()
 						      	),
 								selectInputUIdistance('analysis_distance_function', 'Distance Function'),
-								selectInputUInorm('analysis_distance_norm', 'Normalization'),
-								sliderTextUItenths('analysis_indel_cost', "INDEL Cost")
+								selectInputUInorm('analysis_distance_norm', 'Normalization') #,
+								# sliderTextUItenths('analysis_indel_cost', "INDEL Cost")
 						      ),
 						      column(width = 6,
 						      	checkboxGroupUImeasures('analysis_measures_group', 'Select Measures to Compute')
@@ -106,16 +106,20 @@
 					fluidRow(column(width=12,
 						''
 					)),
+					# hr(),
+					# fluidRow(
+					#     column(width = 12,
+					#     	h3("Save Results"),
+					#         downloadButton('analysis_output_download', class='btn btn-default btn-lg', label = "Download") # class = NULL, ...
+					#     )
+					# ),
 					hr(),
+					h3("Save Results"),
 					fluidRow(
-					    column(width = 12,
-					    	h3("Save Results"),
-					        downloadButton('analysis_output_download', label = "Download") # class = NULL, ...
-					    )
-					),
-					hr(),
-					fluidRow(
-					    column(width = 6, offset=6,
+						column(width = 6,
+						    downloadButton('analysis_output_download', class='btn btn-default btn-lg btn-block', label = "Download") # class = NULL, ...
+						),
+					    column(width = 6, #offset=6,
 					        actionButtonUIrun("analysis_output_plots_button", "Visualize Results", class='btn btn-primary btn-lg btn-block', icon=icon('chart-pie'))
 					    )
 					),

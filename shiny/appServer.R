@@ -29,7 +29,7 @@
 			analysis_dist_settings = list(
 				method='OM',
 				norm='none',
-				indel=1.0
+				indel=1.0   ## deprecated -- using indel substitution cost matrix instead
 			)
 		))
 	}
@@ -190,6 +190,47 @@
 		return(hhi)
 	}
 
+	##
+	# Compute table input for pairwaiseGammaMatrix()
+	##
+	getTable4GKgamma <- function(seqx, a, b) {
+	  z <- matrix(c(  
+	    seqx == a, 
+	    seqx == b 
+	  ), nrow=2, byrow = T)
+	  return( z * 1 ) #convert bool to integer
+	}
+
+	##
+	# GET Pairwise Gamma
+	#   for `seqx` sequence of actions (a character vector)
+	##
+	pairwiseGammaMatrix <- function(seqx, alphabet, na.fill=NA) {
+	  ## GET 1 firms sequence pairwise gamma table
+	  mat <- matrix(NA,nrow=length(alphabet), ncol=length(alphabet),
+	                dim=list(alphabet, alphabet))
+	  for (i in 1:length(alphabet)) {
+	    a <- alphabet[i]
+	    for (j in 1:length(alphabet)) {
+	      if (i == j) 
+	        next
+	      b <- alphabet[j]
+	      gammainput<- getTable4GKgamma(seqx, a, b)
+	      ## CHECK if any row is empty (one action type not in seq)
+	      mat[i,j] <- if (all(rowSums(gammainput) > 0 )) {
+	        GoodmanKruskalGamma(gammainput)
+	      } else {
+	        NA
+	      }
+	    }
+	  }
+	  if (all(!is.na(na.fill))) {
+	    mat[is.na(mat)] <- na.fill
+	  }
+	  return(mat)
+	}
+
+
 
 	##
 	# Main Server Function
@@ -215,9 +256,10 @@
 				return(NULL)
 			
 			## INPUT
-			df <- read.csv(inFile$datapath, header = input$header, na.strings=c('','""'), stringsAsFactors=TRUE)
+			df <- read.csv(inFile$datapath, header = input$header, na.strings=c('','""'), stringsAsFactors=FALSE)
 			li <- apply(df, 2, function(col){
-				as.factor(unique(col[which(!is.null(col) & !is.nan(col) & !is.na(col))]))
+				# as.factor(unique(col[which(!is.null(col) & !is.nan(col) & !is.na(col))]))
+				unique(col[which(!is.null(col) & !is.nan(col) & !is.na(col))])
 			})
 
 			## BREAK SCOPE TO SAVE
@@ -238,7 +280,7 @@
 				return(NULL)
 			
 			## INPUT
-			df <- read.csv(inFile$datapath, header = T, na.strings=c('','""'), stringsAsFactors=TRUE)
+			df <- read.csv(inFile$datapath, header = T, na.strings=c('','""'), stringsAsFactors=FALSE)
 			
 			# if (input$rownames) {
 				row.names <- df[,1]
@@ -276,7 +318,7 @@
 		#	inFile <- input$analysis_file_data
 		#	if (is.null(inFile)) 
 		#		return(NULL)
-		#	read.csv(inFile$datapath, header = input$header, sep=',', fill=TRUE, stringsAsFactors=TRUE)
+		#	read.csv(inFile$datapath, header = input$header, sep=',', fill=TRUE, stringsAsFactors=FALSE)
 		#}, options = list(lengthMenu = c(5, 15, 50), pageLength = 5)) 
 	 
 		# Generate a summary of the dataset ----
@@ -293,7 +335,7 @@
 			model <- loadModel()
 			
 			## INPUT
-			df <- read.csv(inFile$datapath, header = T, sep=',', fill=TRUE, stringsAsFactors=TRUE)
+			df <- read.csv(inFile$datapath, header = T, sep=',', fill=TRUE, stringsAsFactors=FALSE)
 			model$analysis_data <- list(x=df, xpath=inFile$datapath)
 			saveRDS(model, file=MODEL_FILE)
 			# saveModel(model, xname='analysis_data', x=df, xpath=inFile$datapath)
@@ -317,6 +359,7 @@
 				right <- 'DEL'  # left <- 'NA' # gaps <- 'NA'
 				seqdefs[[pd]] <- seqdef(t.ldf, alphabet=actionAlphabet, right=right)
 			}
+			names(seqdefs) <- periods
 			model$seqdefs <- seqdefs
 			saveRDS(model, file=MODEL_FILE)
 
@@ -348,7 +391,7 @@
 
 		##
 		## seqdef - define missing values on right (NA or DEL)
-		##   --> compute dist from OM
+		##   --> compute dist from OM  (or selected dist metric)
 		## simplicity - HHI
 		## unpredictability - levdist from own firm previous period
 		## grouping - mean { gamma analysis separation score } across all actions
@@ -376,80 +419,156 @@
 				actionCol <- 'action'
 				periodCol <- 'period'
 				firmCol <- 'firm'
+				right <- 'DEL'  # left <- 'NA' # gaps <- 'NA' ## seqdef parameter
 
 				periods <- unique(dat[,periodCol])
 				firms <- as.character(alphabet[[firmCol]])
 				actionAlphabet <- as.character(alphabet[[actionCol]])
 
+				npds <- length(periods)
+				nfirms <- length(firms)
+
 				seqdefs <- model$seqdefs
-				distances <- list() # squence distance mesaures period list
-				groupings <- list() # gamma list ('grouping' measure avg. precedence scores)
-				motifs <- list() # gamma list ('grouping' measure avg. precedence scores)
-				predictabilities <- list()
-				simplicities <- list()
+				gamma <- list()    # list of pairwise gamma matrices per period and per firm
+				distance <- list() # squence distance mesaures period list
+				grouping <- list() # gamma list ('grouping' measure avg. precedence scores)
+				motif <- list() # gamma list ('grouping' measure avg. precedence scores)
+				predictability <- list()
+				simplicity <- list()
+
+				measures <- input$analysis_measures_group
 
 				for (t in 1:length(periods))  #length(periods)
 				{
 					pd <- periods[t]
-					if ('distances' %in% input$analysis_measures_group) {
-						t.xdist <- seqdist(seqdefs[[t]], 
-							method = method, indel = indel, norm = norm, sm = sm)
+
+					## FIRST compute pairwise G-K gamma
+					gamma[[pd]] <- list()
+					for (i in 1:length(firms)) {
+						firm <- firms[i]
+						gamma[[pd]][[firm]] <- pairwiseGammaMatrix(seqdefs[[t]][i,], actionAlphabet, na.fill=0)
+					}
+					# names(gamma) <- firms
+
+					##-----------------------------------
+					## COMPUTE SELECTED MEASURES
+					##-----------------------------------
+					## loop over firms  (per period)
+					if ('distance' %in% measures) 
+					{
+						t.xdist <- seqdist(seqdefs[[t]], method=method, norm=norm, sm=sm)
 						dimnames(t.xdist) <- list(firms, firms)
-						distances[[pd]] <- t.xdist
+						distance[[pd]] <- t.xdist
 					}
-					if ('grouping' %in% input$analysis_measures_group) {
-						## separation score from gamma analysis
-						## To calculate the extent to which the entire sequence exhibits grouping, 
-						## we calculated the mean of the separation scores across all action types. 
-						## High scores indicate that the sequence contains elements 
-						## that were not ordinally proximate to one another; 
-						## low scores indicate that the sequence exhibits groups of actions. 
-						## We reversed the direction of the scores (multiplying them by −1.0) 
-						## so that higher scores indicate higher levels of grouping among actions in a sequence.
+
+					if ('grouping' %in% measures) 
+					{
+						t.dat <- dat[dat[,periodCol]==pd, ]
+						t.group <- data.frame()
+						for (i in 1:length(firms)) {
+							firm <- firms[i]
+							## separation score for a given type of element is calculated as 
+							## the mean of the absolute value of its pair-wise gamma values 
+							## (Holmes, 1995; Holmes and Sykes, 1993). 
+							separation <- rowMeans(abs(gamma[[pd]][[firm]]), na.rm = T)
+							## Grouping
+							## To calculate the extent to which the entire sequence exhibits grouping, 
+							## we calculated the mean of the separation scores across all action types.
+							## We reversed the direction of the scores (multiplying them by −1.0) 
+							## so that higher scores indicate higher levels of grouping 
+							## among actions in a sequence.
+							t.i.group <- data.frame(firm=firm, grouping=mean(separation, na.rm = T) * -1 )
+							t.group <- rbind(t.group, t.i.group)
+						}
+						grouping[[pd]] <- t.group
 					}
-					if ('motif' %in% input$analysis_measures_group) {
-						## precedence score from gamma analysis
-						## To determine the extent to which the entire sequence exhibits internal structuredness, 
-						## we calculated the variance of the averages in the pair-wise precedence scores across all action types. 
-						## Averaging across action types indicates the relative position—beginning or 
-						## end—in the overall sequence in which the particular type of action appears. 
-						## Variance in average precedence scores captures the ordinal specificity and 
-						## stability of elements in a sequence.
+
+					if ('motif' %in% measures) 
+					{
+						t.dat <- dat[dat[,periodCol]==pd, ]
+						t.motif <- data.frame()
+						for (i in 1:length(firms)) {
+							firm <- firms[i]
+							## the precedence score for a given element type is calculated as
+							## the mean of all of its pair-wise gamma values 
+							## (Holmes, 1995; Holmes and Sykes, 1993).
+							precedence <- rowMeans(gamma[[pd]][[firm]], na.rm = T)
+							## Motif
+							## determine the extent to which the entire sequence 
+							## exhibits internal structuredness, we calculated 
+							## **the variance of the averages in the pair-wise precedence scores 
+							## across all action types. Averaging across action types indicates 
+							## the relative position—beginning or end—in the overall sequence 
+							## in which the particular type of action appears. 
+							## Variance in average precedence scores captures the ordinal specificity 
+							## and stability of elements in a sequence.
+							t.i.motif <- data.frame(firm=firm, motif=var(precedence, na.rm = TRUE))
+							t.motif <- rbind(t.motif, t.i.motif)
+						}
+						motif[[pd]] <- t.motif
 					}
-					if ('simplicities' %in% input$analysis_measures_group) {
+
+					if ('simplicity' %in% measures) 
+					{
 						## simplicity HHI score
 
 						t.dat <- dat[dat[,periodCol]==pd, ]
 						t.simp <- data.frame()
 						for (i in 1:length(firms)) {
 							t.i.cnt <- plyr::count( t.dat[ t.dat[,firmCol]==firms[i] , actionCol] )
-							t.i.cntdf <- data.frame(firm=firms[i], hhi=hhi(t.i.cnt$freq))
+							t.i.cntdf <- data.frame(firm=firms[i], simplicity=hhi(t.i.cnt$freq))
 							t.simp <- rbind(t.simp,  t.i.cntdf)
 						}
-						simplicities[[pd]] <- t.simp
+						simplicity[[pd]] <- t.simp
 
-					}
-					if ('predictabilities' %in% input$analysis_measures_group) {
-						## based on OM of firm to previous period
 					}
 				}
 
-				model$distances <- distances
-				model$groupings <- groupings
-				model$motifs <- motifs
-				model$predictabilities <- predictabilities
-				model$simplicities <- simplicities
+				## loop over firms  (per period)
+				if ('predictability' %in% measures) 
+				{
+					seqlaglist <- list()
+					for (i in 1:length(firms)) {
+					  firm <- firms[i]
+					  for (t in 1:length(periods)) {
+					    seqlaglist[[firm]] <- lapply(seqdefs, function(x) {
+					      xseq <- as.character(unlist( x[i,]))
+					      return( xseq[which(xseq %in% actionAlphabet)] ) #remove filled-in "%" for empty levels
+					    })
+					  }
+					  tlagseq <- seqList2Df(seqlaglist[[firm]])
+					  seqdeflag <- seqdef(tlagseq, alphabet=actionAlphabet, right=right)
+					  predictability[[firm]] <- seqdist(seqdeflag,  method=method, norm=norm, sm=sm)
+					  dimnames(predictability[[firm]]) <- list(periods, periods)
+					}
+				}
+
+				## list names by time period
+				if (length(gamma) == npds)  		names(gamma) <- periods
+				if (length(distance) == npds) 		names(distance) <- periods
+				if (length(grouping) == npds) 		names(grouping) <- periods
+				if (length(motif) == npds) 			names(motif) <- periods
+				if (length(simplicity) == npds) 	names(simplicity) <- periods
+				## list names by firm
+				if (length(predictability) == nfirms) names(predictability) <- firms
+
+				if('distance' %in% measures)  		model$distance <- distance
+				if('grouping' %in% measures) 		model$grouping <- grouping
+				if('motif' %in% measures) 			model$motif <- motif
+				if('predictability' %in% measures)  model$predictability <- predictability
+				if('simplicity' %in% measures)  	model$simplicity <- simplicity
+				## add gamma if used by other measure
+				if (any('grouping','motif' %in% measures))	model$gamma <- gamma
+				
 				model$analysis_run <- 'ANALYSIS RUN COMPLETED'
 				saveRDS(model, file=MODEL_FILE)
 
-				return(print(list(
-					Distance_Method=method,
-					Distances=model$distances,
-					Groupings=model$groupings,
-					Motifs=model$motifs,
-					Predictability=model$predictabilities,
-					Simplicity=model$simplicities
-				)))
+				printModel <- list()
+				for (measure in measures) {
+					printModel[[measure]] <- model[[measure]]
+				}
+				return(print(printModel))
+
 			}
 			return()
 		})
@@ -460,7 +579,7 @@
 				library(ggpubr)
 				library(reshape2)
 				model <- readRDS(MODEL_FILE)
-				measuresAll <- c('seqdefs', 'distances')
+				measuresAll <- c('seqdefs', 'distance')
 				modelNames <- names(model)
 				measures <- measuresAll[measuresAll %in% modelNames]
 				if (length(measures) > 0) {
@@ -469,13 +588,13 @@
 					# #DEBUG
 					# plot(model[[measures[1]]][[1]], main=sprintf('%s: period %s',measures[1],1))
 					# for (measure in measures) {
-						measure <- 'distances'
+						measure <- 'distance'
 						plots <- list()
 						for (i in 1:length(model[[measure]])) {
-							dflong <- melt(model[[measure]][[i]], varnames = c('firm1','firm2'), value.name = 'distances')
+							dflong <- melt(model[[measure]][[i]], varnames = c('firm1','firm2'), value.name = 'distance')
 							plt <- ggplot(data = dflong, aes(x = firm1, y = firm2)) +
-								geom_tile(aes(fill = distances))  + 
-								geom_text(aes(label = round(distances, 1)), colour='#FFFFFF') +
+								geom_tile(aes(fill = distance))  + 
+								geom_text(aes(label = round(distance, 1)), colour='#FFFFFF') +
 								scale_fill_continuous(high = "#132B43", low = "#56B1F7") + 
 								ggtitle(sprintf('%s: period %s',measure,i))
 							plots[[length(plots)+1]] <- plt
@@ -495,16 +614,16 @@
 			}
 		})
 	 
-		# output$analysis_output_distances_plot <- renderPlot({
-		#  	if(input$analysis_output_distances_plot_button) {
+		# output$analysis_output_distance_plot <- renderPlot({
+		#  	if(input$analysis_output_distance_plot_button) {
 		#  		model <- readRDS(MODEL_FILE)
-		#  		if ('distances' %in% names(model)) {
-		#  			nplotcols <- ifelse(length(model$distances)>1, 2, 1)
-		#  			par(mfrow=c(length(model$distances),nplotcols))
-		#  			for (i in 1:length(model$distances)) {
-		#  				# heatmap(model$distances[[i]])
-		#  				image(model$distances[[i]], main=sprintf('Distances: Period %s',i))
-		#  				# image(zlim=range(c(model$distances[[i]])), legend.only=T, horizontal=F)
+		#  		if ('distance' %in% names(model)) {
+		#  			nplotcols <- ifelse(length(model$distance)>1, 2, 1)
+		#  			par(mfrow=c(length(model$distance),nplotcols))
+		#  			for (i in 1:length(model$distance)) {
+		#  				# heatmap(model$distance[[i]])
+		#  				image(model$distance[[i]], main=sprintf('Distances: Period %s',i))
+		#  				# image(zlim=range(c(model$distance[[i]])), legend.only=T, horizontal=F)
 		#  			}
 		#  		}
 		#  	} else {
@@ -512,51 +631,128 @@
 		#  	}
 		# })
 
+      	# timestamp
+		systime <- Sys.time()
+	    ts <- as.integer(systime)
+
+
 		output$analysis_output_download <- downloadHandler(
 			filename = function() {
-			    sprintf('sequence_analysis_results-%s.zip', 
-			    	as.integer(Sys.time())
-			    )
+			    sprintf('sequence_analysis_results-%s.zip', ts)
 		    # file.choose()
 			},
 			content = function(con) {
 				library(reshape2)
 			  	model <- loadModel()
-			  	measuresAll <- c('distances','groupings','motifs','simplicities','unpredictability')
+			  	measuresAll <- c('distance','grouping','motif','simplicity','predictability')
 			  	measures <- measuresAll[measuresAll %in% names(model)]
+			  	# if (any(c('grouping','motif') %in% measures))
+			  	# 	measures <- c(measures, 'gamma')
 			    files <- NULL;
 			    # temp dir
 			    owd <- setwd(tempdir())
       			on.exit(setwd(owd))
-      			# timestamp
-			    ts <- as.integer(Sys.time())
+      	# 		# timestamp
+      	# 		systime <- Sys.time()
+			    # ts <- as.integer(systime)
+
+			    ## write txt output summarizing the analyses called
+				file <- sprintf('analysis_summary-%s.txt',ts)
+				summarydf <- data.frame(summary=rbind(
+					sprintf('Time: %s', as.character(systime)),
+					sprintf('Measures: %s', paste(measures, collapse=', ')),
+					sprintf('Notes: %s', ifelse(any(c('grouping','motif') %in% measures), 'gamma values used in motif or grouping are also saved', ' '))
+				))
+			    write.table(summarydf, file=file, row.names=FALSE, col.names=FALSE)  ## skip first row (name placehoder) when saving summary txt file
+			    files <- c(files, file)
+
+			    ## GAMMAS
+			    if (any(c('grouping','motif') %in% measures)) {
+			    	measure <- 'gamma'
+				    dat <- model[[measure]]
+				    df <- data.frame()
+				    for (t in 1:length(dat)) {
+				    	dft <- melt(dat[[t]], varnames = c('action1','action2'), value.name = measure)
+				    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
+				    	df <- rbind(df, dft)
+				    }
+				    names(df)[which(names(df)=='L1')] <- 'firm'  ## list name at Level 1 is the firm name; rename column 'L1' to firmname
+				    file <- sprintf('%s-%s.csv', measure,ts)
+				    write.csv(df, file=file, row.names = F)
+				    files <- c(files, file)
+			    }
 
 			    ## DISTANCES
-			    if ('distances' %in% measures) {
-				    dat <- model$distances
+			    if ('distance' %in% measures) {
+			    	measure <- 'distance'
+				    dat <- model[[measure]]
 				    df <- data.frame()
 				    for (t in 1:length(dat)) {
-				    	dft <- melt(dat[[t]], varnames = c('firm1','firm2'), value.name = 'distances')
+				    	dft <- melt(dat[[t]], varnames = c('firm1','firm2'), value.name = measure)
 				    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
 				    	df <- rbind(df, dft)
 				    }
-				    file <- sprintf('distances-%s.csv',ts)
+				    file <- sprintf('%s-%s.csv',measure,ts)
 				    write.csv(df, file=file, row.names = F)
 				    files <- c(files, file)
 			    }
 
-			    ## Simplicities
-			    if ('simplicities' %in% measures) {
+		        ## GROUPING
+		        if ('grouping' %in% measures) {
+		        	measure <- 'grouping'
 				    df <- data.frame()
 				    for (t in 1:length(dat)) {
-				    	dft <- model$simplicities[[t]]
+				    	dft <- model[[measure]][[t]]
 				    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
 				    	df <- rbind(df, dft)
 				    }
-				    file <- sprintf('simplicities-%s.csv',ts)
+				    file <- sprintf('%s-%s.csv',measure,ts)
+				    write.csv(df, file=file, row.names = F)
+				    files <- c(files, file)
+		        }
+
+	            ## MOTIFS
+	            if ('motif' %in% measures) {
+	            	measure <- 'motif'
+				    df <- data.frame()
+				    for (t in 1:length(dat)) {
+				    	dft <- model[[measure]][[t]]
+				    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
+				    	df <- rbind(df, dft)
+				    }
+				    file <- sprintf('%s-%s.csv',measure,ts)
+				    write.csv(df, file=file, row.names = F)
+				    files <- c(files, file)
+	            }
+
+			    ## Simplicities
+			    if ('simplicity' %in% measures) {
+			    	measure <- 'simplicity'
+				    df <- data.frame()
+				    for (t in 1:length(dat)) {
+				    	dft <- model[[measure]][[t]]
+				    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
+				    	df <- rbind(df, dft)
+				    }
+				    file <- sprintf('%s-%s.csv',measure,ts)
 				    write.csv(df, file=file, row.names = F)
 				    files <- c(files, file)
 			    }
+
+		        ## Predictability
+		        if ('predictability' %in% measures) {
+		        	measure <- 'predictability'
+				    dat <- model[[measure]]
+				    df <- data.frame()
+				    for (i in 1:length(dat)) {
+				    	dfi <- melt(dat[[i]], varnames = c('period1','period2'), value.name = measure)
+				    	dfi$firm <- names(dat)[i] # ifelse(length(names(dat))>0, names(dat)[t], t)
+				    	df <- rbind(df, dfi)
+				    }
+				    file <- sprintf('%s-%s.csv',measure,ts)
+				    write.csv(df, file=file, row.names = F)
+				    files <- c(files, file)
+		        }
 
 			    # dat <- model$seqdefs
 			    # df <- data.frame()
@@ -565,7 +761,7 @@
 			    # 	dft$period <- names(dat)[t]
 			    # 	df <- rbind(df, dft)
 			    # }
-			    # file <- sprintf('distances-%s.csv',ts)
+			    # file <- sprintf('distance-%s.csv',ts)
 			    # write.csv(df, file=file)
 			    # files <- c(files, file)
 
