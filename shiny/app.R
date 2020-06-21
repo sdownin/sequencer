@@ -7,6 +7,7 @@
 ## BASE LIBRARIES
 library(shiny)
 library(shinycssloaders)
+library(shinyjqui)
 library(dplyr)
 # library(tidyverse)
 # library(TraMineR)

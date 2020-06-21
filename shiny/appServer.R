@@ -9,6 +9,8 @@
 	MODEL_FILE <- './../R-Portable/tmp_sequencer_data_model.rds'
 	## INPUT FILE
 	INPUT_FILE <- './../R-Portable/tmp_sequencer_input.rds'
+	## INPUT FILE
+	NUM_PLOTS_FILE <- './../R-Portable/tmp_sequencer_num_plots.rds'
 
 	##
 	# Init Model Object
@@ -394,6 +396,12 @@
 			return()
 		})
 
+		# output$analysis_num_plots <- renderText({
+		# 	model <- loadModel()
+		# 	if (length(model) > 0)
+		# 			return(length(model$analysis_alphabet$x$firms) + length(model$) )
+		# })
+
 		##
 		## seqdef - define missing values on right (NA or DEL)
 		##   --> compute dist from OM  (or selected dist metric)
@@ -578,6 +586,10 @@
 				model$analysis_run <- 'ANALYSIS RUN COMPLETED'
 				saveRDS(model, file=MODEL_FILE)
 
+				## SAVE NUM PLOTS
+				numplots <- length(model$seqdefs) * length(model$analysis_alphabet$x$firm)
+				saveRDS(list(num_plots=numplots), file=NUM_PLOTS_FILE)
+
 				## Print selected measures
 				printModel <- list()
 				for (measure in measures) {
@@ -588,6 +600,15 @@
 			}
 			return()
 		})
+
+
+		# output$analysis_num_plots <- renderPrint({
+		# 	if (input$analysis_measures_goto) {
+		# 		numplots <- readRDS(NUM_PLOTS_FILE)
+		# 		return(print(numplots))
+		# 	}
+		# 	return()
+		# })
 
 		# output$analysis_output_plot_distance <- renderPlot({
 
@@ -797,16 +818,17 @@
 	 		    plots[[length(plots)+1]] <- plt
 	 		}
 
+
+
 	 		## SAVE
 	 		model$plots <- plots
 	 		saveRDS(model, file=MODEL_FILE)
 
 	 		## PLOT
-	 		nall <- length(plots)
-	 		ncols <- 3
-	 		nrows <- ceiling(nall / ncols)
-	 		h <- nrows * 280
-	 		par(mfrow=c(ceiling(nall / ncols), ncols), mar=c(2,3,2,1))
+	    	nall <- length(model$plots)
+	    	ncols <- floor(sqrt(nall))
+	    	nrows <- ceiling(nall / ncols)
+	 		par(mar=c(2,3,2,1))
 	 		ggarrange(plotlist = plots, ncol=ncols, nrow = nrows)
 
 	 	} 
@@ -852,16 +874,13 @@
 			    # temp dir
 			    owd <- setwd(tempdir())
       			on.exit(setwd(owd))
-      	# 		# timestamp
-      	# 		systime <- Sys.time()
-			    # ts <- as.integer(systime)
 
 			    ## write txt output summarizing the analyses called
 				file <- sprintf('analysis_summary-%s.txt',ts)
 				summarydf <- data.frame(summary=rbind(
 					sprintf('Time: %s', as.character(systime)),
 					sprintf('Measures: %s', paste(measures, collapse=', ')),
-					sprintf('Notes: %s', ifelse(any(c('grouping','motif') %in% measures), 'gamma values used in motif or grouping are also saved', ' '))
+					sprintf('Notes: %s', ifelse(any(c('grouping','motif') %in% measures), 'gamma values used in motif and/or grouping are also saved', ' '))
 				))
 			    write.table(summarydf, file=file, row.names=FALSE, col.names=FALSE)  ## skip first row (name placehoder) when saving summary txt file
 			    files <- c(files, file)
@@ -984,7 +1003,7 @@
 			    if ('plots' %in% names(model)) {
 			    	## PLOT
 			    	nall <- length(model$plots)
-			    	ncols <- ceiling(sqrt(nall))
+			    	ncols <- floor(sqrt(nall))
 			    	nrows <- ceiling(nall / ncols)
 			    	grid <- ggarrange(plotlist = model$plots, ncol=ncols, nrow = nrows)
 			    	ggsave(file, plot=grid, width = ncols*5.5, height = nrows*4, dpi = 200, units = "in")  ## height='10', width='10', units='in', res=200

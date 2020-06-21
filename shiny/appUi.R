@@ -51,9 +51,7 @@
 						    )
 						),
 						hr(),
-						tagList(
-							div('analysis_num_plots', style="display:none;")
-						),
+						# div(id='analysis_num_plots', style="display:none;", value=0), ## initial value of num_plots
 				icon=icon('table')	
 				), 
 				
@@ -119,7 +117,7 @@
 					#     )
 					# ),
 					hr(),
-					h3("Save Results"),
+					# h3("Save Results"),
 					fluidRow(
 						column(width = 6,
 						    downloadButton('analysis_output_download', class='btn btn-default btn-lg btn-block', label = "Save Results") # class = NULL, ...
@@ -138,18 +136,24 @@
 					fluidRow(
 						column(width = 12,
 							h3("Sequence Analysis Plots"),
-    			    		plotOutput('analysis_output_plots', height=400, width='100%') %>% withSpinner(color="#0dc5c1")
+							h5("(Resize the figure by click-dragging the plot region's bottom right corner.)"),
+							jqui_resizabled(
+								plotOutput('analysis_output_plots', height=450, width='100%') 
+							) %>% withSpinner(color="#0dc5c1") 
     			    		# plotOutput('analysis_output_plot_distance', height=270, width='100%'),
     			    		# plotOutput('analysis_output_plot_predictability', height=270, width='100%'),
     			    		# plotOutput('analysis_output_plot_singles', height=270, width='100%')
 						)
 					),
 					hr(),
-					h3("Save Plot"),
+					# h3("Save Plot"),
 					fluidRow(column(width=6,
 						downloadButton("analysis_save_plots_button",  "Save Plot", class='btn btn-default btn-lg btn-block', icon=icon('save'))
 					)),
-					hr(),
+					br(),
+					br(),
+					br(),
+					br(),
 				icon=icon('chart-pie')	
 				)
 				
@@ -171,9 +175,9 @@
 				"Where is the project code repository?",
 				a("https://github.com/sdownin/sequencer", href="https://github.com/sdownin/sequencer", target="_blank")
 			),
-			tabPanel("Version", 
-				"[0.4.0] - 2020-06-20"
-			),
+			# tabPanel("Version", 
+			# 	"[0.4.0] - 2020-06-20"
+			# ),
 		icon=icon('info-circle')	
 		)
 
