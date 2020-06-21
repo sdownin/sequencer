@@ -23,19 +23,19 @@ function activateTab(dataVal) {
 			.removeClass('disabled');
 }
 
-function getNumPlots () {
-    let nplots = 0;
-	let measures = $('#analysis_measures_group input:checkbox:checked').map(function(){
-      return $(this).val();
-    }).get();
-    if (measures.includes('distance')) {  nplots += 3 }
-    if (measures.includes('predictability')) {  nplots += 1  }
-    if (measures.includes('simplicity')) { 	nplots += 1 }
-    if (measures.includes('grouping')) {  nplots += 1 }
-    if (measures.includes('motif')) { nplots += 1  }
-    console.log('nplots: ', nplots)
-    return nplots;
-}
+// function getNumPlots () {
+//     let nplots = 0;
+// 	let measures = $('#analysis_measures_group input:checkbox:checked').map(function(){
+//       return $(this).val();
+//     }).get();
+//     if (measures.includes('distance')) {  nplots += 3 }
+//     if (measures.includes('predictability')) {  nplots += 1  }
+//     if (measures.includes('simplicity')) { 	nplots += 1 }
+//     if (measures.includes('grouping')) {  nplots += 1 }
+//     if (measures.includes('motif')) { nplots += 1  }
+//     console.log('nplots: ', nplots)
+//     return nplots;
+// }
 
 
 $(document).ready(function(){

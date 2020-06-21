@@ -188,8 +188,16 @@ tableOutputUI <- function(id) {
 tableOutputSummaryUI <- function(id, title) {
 	tagList(
 		h4(title),
-		verbatimTextOutput(id)
-	)
+		verbatimTextOutput(id) 
+	) 
+}
+
+
+tableOutputSummaryUIwithSpinner <- function(id, title) {
+	tagList(
+		h4(title),
+		verbatimTextOutput(id) %>% withSpinner(color="#0dc5c1")
+	) 
 }
 
 plotOutputUI <- function(id, title) {

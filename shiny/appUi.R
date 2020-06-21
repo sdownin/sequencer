@@ -41,7 +41,7 @@
 							),
 							mainPanel(
 								tableOutputUI("analysis_file_data_table"),
-								tableOutputSummaryUI("analysis_file_data_table_summary", "Sequence Data Summary") %>% withSpinner(color="#0dc5c1")
+								tableOutputSummaryUIwithSpinner("analysis_file_data_table_summary", "Sequence Data Summary") 
 							),		
 						),
 						hr(),
@@ -51,6 +51,9 @@
 						    )
 						),
 						hr(),
+						tagList(
+							div('analysis_num_plots', style="display:none;")
+						),
 				icon=icon('table')	
 				), 
 				
@@ -135,21 +138,16 @@
 					fluidRow(
 						column(width = 12,
 							h3("Sequence Analysis Plots"),
-							tagList(
-	    			    		plotOutput('analysis_output_plots', height=600, width='100%') %>% withSpinner(color="#0dc5c1")
-	    			    		# plotOutput('analysis_output_plot_distance', height=270, width='100%'),
-	    			    		# plotOutput('analysis_output_plot_predictability', height=270, width='100%'),
-	    			    		# plotOutput('analysis_output_plot_singles', height=270, width='100%')
-		    		    	)
+    			    		plotOutput('analysis_output_plots', height=400, width='100%') %>% withSpinner(color="#0dc5c1")
+    			    		# plotOutput('analysis_output_plot_distance', height=270, width='100%'),
+    			    		# plotOutput('analysis_output_plot_predictability', height=270, width='100%'),
+    			    		# plotOutput('analysis_output_plot_singles', height=270, width='100%')
 						)
 					),
 					hr(),
 					h3("Save Plot"),
 					fluidRow(column(width=6,
-						tagList(
-							downloadButton("analysis_save_plots_button",  "Save Plot", class='btn btn-default btn-lg btn-block', icon=icon('save')),
-							textOutput('savePlotValue')
-						)
+						downloadButton("analysis_save_plots_button",  "Save Plot", class='btn btn-default btn-lg btn-block', icon=icon('save'))
 					)),
 					hr(),
 				icon=icon('chart-pie')	

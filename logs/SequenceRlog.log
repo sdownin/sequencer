@@ -14,12 +14,12 @@ The following objects are masked from 'package:base':
     intersect, setdiff, setequal, union
 
 
-Listening on http://127.0.0.1:5887
+Listening on http://127.0.0.1:3567
 Browser path: "C:/Users/steph/Google Drive/Rapp/SequenceR/GoogleChromePortable/App/Chrome-bin/chrome.exe"
-[18976:7464:0621/200025.846:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
-[18976:7464:0621/200025.846:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_001
-[18976:7464:0621/200025.846:ERROR:disk_cache.cc(178)] Unable to create cache
-[18976:7464:0621/200025.847:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
+[11288:6844:0621/203254.851:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
+[11288:6844:0621/203254.852:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_001
+[11288:6844:0621/203254.852:ERROR:disk_cache.cc(178)] Unable to create cache
+[11288:6844:0621/203254.852:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
 Opening in existing browser session.
 
 SERVER:  MODEL STRUCT
@@ -154,7 +154,7 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 4 distinct sequences
  [>] min/max sequence length: 2/4
  [>] computing distances using the OM metric
- [>] elapsed time: 0 secs
+ [>] elapsed time: 0.02 secs
  [>] 4 sequences with 10 distinct states
  [>] checking 'sm' (one value for each state, triangle inequality)
 Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
@@ -164,7 +164,7 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 4 distinct sequences
  [>] min/max sequence length: 2/6
  [>] computing distances using the OM metric
- [>] elapsed time: 0.01 secs
+ [>] elapsed time: 0 secs
  [>] 4 sequences with 10 distinct states
  [>] checking 'sm' (one value for each state, triangle inequality)
 Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
@@ -208,7 +208,7 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 3 distinct sequences
  [>] min/max sequence length: 4/6
  [>] computing distances using the OM metric
- [>] elapsed time: 0.01 secs
+ [>] elapsed time: 0.02 secs
  [>] found missing values ('NA') in sequence data
  [>] preparing 3 sequences
  [>] coding void elements with '%' and missing values with '*'
@@ -242,7 +242,7 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 3 distinct sequences
  [>] min/max sequence length: 4/6
  [>] computing distances using the OM metric
- [>] elapsed time: 0.01 secs
+ [>] elapsed time: 0.02 secs
  [>] found missing values ('NA') in sequence data
  [>] preparing 3 sequences
  [>] coding void elements with '%' and missing values with '*'
@@ -274,7 +274,7 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 3 distinct sequences
  [>] min/max sequence length: 2/3
  [>] computing distances using the OM metric
- [>] elapsed time: 0 secs
+ [>] elapsed time: 0.02 secs
  [>] found missing values ('NA') in sequence data
  [>] preparing 3 sequences
  [>] coding void elements with '%' and missing values with '*'
@@ -305,7 +305,7 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 3 distinct sequences
  [>] min/max sequence length: 2/3
  [>] computing distances using the OM metric
- [>] elapsed time: 0.02 secs
+ [>] elapsed time: 0 secs
 Loading required package: ggpubr
 Loading required package: magrittr
 
@@ -319,74 +319,3 @@ The following object is masked from 'package:tidyr':
 
     extract
 
- [>] found missing values ('NA') in sequence data
- [>] preparing 4 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 6 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = E
-     6 = J
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 4 sequences in the data set
- [>] min/max sequence length: 2/4
- [>] found missing values ('NA') in sequence data
- [>] preparing 4 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 6 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = E
-     6 = G
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 4 sequences in the data set
- [>] min/max sequence length: 2/6
- [>] found missing values ('NA') in sequence data
- [>] preparing 4 sequences
- [>] coding void elements with '%' and missing values with '*'
- [>] 5 distinct states appear in the data: 
-     1 = A
-     2 = B
-     3 = C
-     4 = D
-     5 = J
- [>] state coding:
-       [alphabet]  [label]  [long label] 
-     1  A           A        A
-     2  B           B        B
-     3  C           C        C
-     4  D           D        D
-     5  E           E        E
-     6  F           F        F
-     7  G           G        G
-     8  H           H        H
-     9  I           I        I
-     10  J           J        J
- [>] 4 sequences in the data set
- [>] min/max sequence length: 3/6

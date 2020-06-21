@@ -292,6 +292,11 @@
 
 			mat <- as.matrix(df)
 
+			# if (nrow(mat) != ncol(mat)) {
+			# 	print('Rows and Columns are different dimensions. Are you sure you selected a substitution cost matrix?')
+			# 	return()
+			# }
+
 			## SAVE
 			saveModel(loadModel(), xname='analysis_subcostmat', x=mat, xpath=inFile$datapath)
 			
