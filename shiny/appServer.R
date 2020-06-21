@@ -976,18 +976,14 @@
 			    # temp dir
 			    owd <- setwd(tempdir())
       			on.exit(setwd(owd))
-
 			    if ('plots' %in% names(model)) {
 			    	## PLOT
 			    	nall <- length(model$plots)
-			    	ncols <- 3
+			    	ncols <- ceiling(sqrt(nall))
 			    	nrows <- ceiling(nall / ncols)
-			    	# h <- nrows * 280
-			    	par(mfrow=c(ceiling(nall / ncols), ncols), mar=c(2,3,2,1))
 			    	grid <- ggarrange(plotlist = model$plots, ncol=ncols, nrow = nrows)
-			    	ggsave(file, plot=grid)  ## height='10', width='10', units='in', res=200
+			    	ggsave(file, plot=grid, width = ncols*5.5, height = nrows*4, dpi = 200, units = "in")  ## height='10', width='10', units='in', res=200
 			    }
-
 			}
 		)
 

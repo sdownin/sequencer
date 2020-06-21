@@ -21,7 +21,7 @@
 								fileInputUIheader("analysis_file_alphabet", '1. Sequence Alphabet')
 							),
 							mainPanel(
-								tableOutputSummaryUI("analysis_file_alphabet_summary", "Alphabet Summary")
+								tableOutputSummaryUI("analysis_file_alphabet_summary", "Alphabet Summary") 
 							),		
 						),
 						hr(),
@@ -41,7 +41,7 @@
 							),
 							mainPanel(
 								tableOutputUI("analysis_file_data_table"),
-								tableOutputSummaryUI("analysis_file_data_table_summary", "Sequence Data Summary")
+								tableOutputSummaryUI("analysis_file_data_table_summary", "Sequence Data Summary") %>% withSpinner(color="#0dc5c1")
 							),		
 						),
 						hr(),
@@ -102,7 +102,7 @@
 					fluidRow(
 				    	column(width = 12,
 				    		h3("Sequence Analysis Results Summary Output"),
-				    		verbatimTextOutput('analysis_run_value')
+				    		verbatimTextOutput('analysis_run_value') %>% withSpinner(color="#0dc5c1")
 				    	),
 					),
 					fluidRow(column(width=12,
@@ -119,7 +119,7 @@
 					h3("Save Results"),
 					fluidRow(
 						column(width = 6,
-						    downloadButton('analysis_output_download', class='btn btn-default btn-lg btn-block', label = "Download") # class = NULL, ...
+						    downloadButton('analysis_output_download', class='btn btn-default btn-lg btn-block', label = "Save Results") # class = NULL, ...
 						),
 					    column(width = 6, #offset=6,
 					        actionButtonUIrun("analysis_output_plots_button", "Visualize Results", class='btn btn-primary btn-lg btn-block', icon=icon('chart-pie'))
@@ -136,17 +136,18 @@
 						column(width = 12,
 							h3("Sequence Analysis Plots"),
 							tagList(
-	    			    		plotOutput('analysis_output_plots', height=600, width='100%')
+	    			    		plotOutput('analysis_output_plots', height=600, width='100%') %>% withSpinner(color="#0dc5c1")
 	    			    		# plotOutput('analysis_output_plot_distance', height=270, width='100%'),
 	    			    		# plotOutput('analysis_output_plot_predictability', height=270, width='100%'),
 	    			    		# plotOutput('analysis_output_plot_singles', height=270, width='100%')
 		    		    	)
 						)
 					),
-					fluidRow(column(width=12,
-						# ''
+					hr(),
+					h3("Save Plot"),
+					fluidRow(column(width=6,
 						tagList(
-							downloadButton("analysis_save_plots_button",  "Save Plots", class='btn btn-default btn-lg btn-block', icon=icon('save')),
+							downloadButton("analysis_save_plots_button",  "Save Plot", class='btn btn-default btn-lg btn-block', icon=icon('save')),
 							textOutput('savePlotValue')
 						)
 					)),

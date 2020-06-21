@@ -65,33 +65,33 @@ $(document).ready(function(){
 	// DEBUG FEATURES
 	$('select[id^=analysis_distance_norm]').attr('disabled',true);
 
-	// update plot region height
-	$('#analysis_run').on('click', function(){
+	// // update plot region height
+	// $('#analysis_run').on('click', function(){
 
-		$('.shiny-plot-output').hide();
+	// 	$('.shiny-plot-output').hide();
 
-		// console.log('measures clicked....setting plot area height');
+	// 	// console.log('measures clicked....setting plot area height');
 
-		// let nplots = getNumPlots();
+	// 	// let nplots = getNumPlots();
 
-		// let $img = $('#analysis_output_plots img');
+	// 	// let $img = $('#analysis_output_plots img');
 
-		// console.log('img:  ', $img);
+	// 	// console.log('img:  ', $img);
 
-	 //    $img.height( 290 * Math.ceil(nplots/3) );
+	//  //    $img.height( 290 * Math.ceil(nplots/3) );
 
 
-    	// let measures = $('#analysis_measures_group input:checkbox:checked').map(function(){
-     //      return $(this).val();
-     //    }).get();
-    	// if (measures.includes('distance')) { $('#analysis_output_plot_distance').show(); }
-    	// if (measures.includes('predictability')) { $('#analysis_output_plot_predictability').show(); }
-    	// if (measures.includes('motif')) { $('#analysis_output_plot_singles').show(); }
-    	// if (measures.includes('grouping')) { $('#analysis_output_plot_singles').show(); }
-    	// if (measures.includes('simplicity')) { $('#analysis_output_plot_singles').show(); }
+ //    	// let measures = $('#analysis_measures_group input:checkbox:checked').map(function(){
+ //     //      return $(this).val();
+ //     //    }).get();
+ //    	// if (measures.includes('distance')) { $('#analysis_output_plot_distance').show(); }
+ //    	// if (measures.includes('predictability')) { $('#analysis_output_plot_predictability').show(); }
+ //    	// if (measures.includes('motif')) { $('#analysis_output_plot_singles').show(); }
+ //    	// if (measures.includes('grouping')) { $('#analysis_output_plot_singles').show(); }
+ //    	// if (measures.includes('simplicity')) { $('#analysis_output_plot_singles').show(); }
 
-    	$('#analysis_output_plots').show(); 
-	});
+ //    	$('#analysis_output_plots').show(); 
+	// });
 
 	// $('#analysis_output_plots_button').on('click', function(){
 
