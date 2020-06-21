@@ -143,7 +143,11 @@
 						)
 					),
 					fluidRow(column(width=12,
-						''
+						# ''
+						tagList(
+							downloadButton("analysis_save_plots_button",  "Save Plots", class='btn btn-default btn-lg btn-block', icon=icon('save')),
+							textOutput('savePlotValue')
+						)
 					)),
 					hr(),
 				icon=icon('chart-pie')	
@@ -155,11 +159,11 @@
 		), 
 		
 			
-		## Page 2 - Inference ===================================
-		tabPanel("Inference", 
-			"Coming soon...",
-		icon=icon('magic')	
-		),
+		# ## Page 2 - Inference ===================================
+		# tabPanel("Inference", 
+		# 	"Coming soon...",
+		# icon=icon('magic')	
+		# ),
 		
 		## Pages Other - Info ===================================
 		navbarMenu("Info",
@@ -168,7 +172,7 @@
 				a("https://github.com/sdownin/sequencer", href="https://github.com/sdownin/sequencer", target="_blank")
 			),
 			tabPanel("Version", 
-				"[0.3.0] - 2019-12-02"
+				"[0.4.0] - 2020-06-20"
 			),
 		icon=icon('info-circle')	
 		)

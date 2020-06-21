@@ -592,6 +592,8 @@
 				require(ggpubr)
 				require(reshape2)
 				model <- readRDS(MODEL_FILE)
+				if (! 'plots' %in% names(model))
+					model$plots <- list()
 				measuresAll <- c('distance')
 				modelNames <- names(model)
 				measures <- measuresAll[measuresAll %in% modelNames]
@@ -619,6 +621,9 @@
 					}
 				} 
 
+				model$plots <- c(model$plots, plots)
+				saveRDS(model, file=MODEL_FILE)
+
 				## PLOT
 				nall <- sum(sapply(measures, function(x) length(model[[x]]) ))
 				ncols <- 3
@@ -638,6 +643,8 @@
 			require(ggpubr)
 			require(reshape2)
 			model <- readRDS(MODEL_FILE)
+			if (! 'plots' %in% names(model))
+	 			model$plots <- list()
 			measuresAll <- c('predictability')
 			modelNames <- names(model)
 			measures <- measuresAll[measuresAll %in% modelNames]
@@ -666,6 +673,9 @@
 				}
 			} 
 
+			model$plots <- c(model$plots, plots)
+			saveRDS(model, file=MODEL_FILE)
+
 			## PLOT
 			nall <- sum(sapply(measures, function(x) length(model[[x]]) ))
 			ncols <- 3
@@ -680,11 +690,13 @@
 	output$analysis_output_plot_singles <- renderPlot({
 
 	 	if(input$analysis_output_plots_button) {
-
 	 		require(tidyverse)
 	 		require(ggpubr)
 	 		require(reshape2)
+
 	 		model <- readRDS(MODEL_FILE)
+	 		if (! 'plots' %in% names(model))
+	 			model$plots <- list()
 	 		measuresAll <- c('simplicity','grouping','motif')
 	 		modelNames <- names(model)
 	 		measures <- measuresAll[measuresAll %in% modelNames]
@@ -745,6 +757,9 @@
 	 		    	ggtitle(sprintf('%s',measure))
 	 		    plots[[length(plots)+1]] <- plt
 	 		}
+
+	 		model$plots <- c(model$plots, plots)
+	 		saveRDS(model, file=MODEL_FILE)
 
 	 		## PLOT
 	 		nall <- length(measures)
@@ -913,6 +928,55 @@
 
 			}
 		)
+
+
+
+		output$analysis_save_plots_button <- downloadHandler(
+			filename = function() {
+			    sprintf('sequence_analysis_results-%s.png', ts)
+		    # file.choose()
+			},
+			content = function(file) {
+				library(reshape2)
+			  	model <- loadModel()
+
+			  	# if (any(c('grouping','motif') %in% measures))
+			  	# 	measures <- c(measures, 'gamma')
+			    files <- NULL;
+			    # temp dir
+			    owd <- setwd(tempdir())
+      			on.exit(setwd(owd))
+      	# 		# timestamp
+      	# 		systime <- Sys.time()
+			    # ts <- as.integer(systime)
+
+			    if ('plots' %in% names(model)) {
+
+			    	nall <- length(model$plots)
+			    	ncols <- 3
+			    	nrows <- ceiling(nall / ncols)
+			    	par(mfrow=c(ceiling(nall / ncols), ncols), mar=c(2,3,2,1))
+			    	# ggarrange(plotlist = model$plots, ncol=ncols, nrow = nrows)
+			    	grid <- ggarrange(plotlist = model$plots, ncol=ncols, nrow = nrows)
+			    	ggsave(file, plot=grid, height='10', width='10', units='in', res=200)
+			    }
+
+			}
+		)
+
+		# output$savePlotValue <- renderText({
+		#     input$savePlots
+		# })
+
+		# output$analysis_save_plots_button <- downloadHandler(
+		# 	filename = function() {
+		# 	    sprintf('sequence_measure_plots-%s.png', ts)
+		#     # file.choose()
+		# 	},
+		# 	content = function(file) {
+		# 		ggsave(file,plot=data$plot)
+		# 	}
+		# )
 
 
 		# close the R session when Chrome closes

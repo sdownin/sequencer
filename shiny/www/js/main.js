@@ -92,5 +92,9 @@ $(document).ready(function(){
 
 	});
 
+	// $('#analysis_output_plots_button').on('click', function(){
+		
+	// })
+
 });
 
