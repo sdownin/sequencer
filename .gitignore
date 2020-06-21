@@ -36,3 +36,5 @@ python/__pycache__/*
 R-Portable/
 GoogleChromePortable/
 
+# include test data
+!/TestData/test_*.csv
