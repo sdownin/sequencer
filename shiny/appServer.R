@@ -584,15 +584,15 @@
 			return()
 		})
 
-		output$analysis_output_plots <- renderPlot({
+		output$analysis_output_plot_distance <- renderPlot({
 
 			if(input$analysis_output_plots_button) {
 
-				library(tidyverse)
-				library(ggpubr)
-				library(reshape2)
+				require(tidyverse)
+				require(ggpubr)
+				require(reshape2)
 				model <- readRDS(MODEL_FILE)
-				measuresAll <- c('distance', '')
+				measuresAll <- c('distance')
 				modelNames <- names(model)
 				measures <- measuresAll[measuresAll %in% modelNames]
 
@@ -600,40 +600,164 @@
 					return('Nothing to plot.')
 				}
 
+				plots <- list()
+
 				if ('distance' %in% measures) 
 				{
-					nall <- sum(sapply(measures, function(x) length(model[[x]]) ))
-					par(mfrow=c(ceiling(nall/3),3), mar=c(2,3,2,1))
 					# #DEBUG
 					# plot(model[[measures[1]]][[1]], main=sprintf('%s: period %s',measures[1],1))
 					# for (measure in measures) {
-						measure <- 'distance'
-						plots <- list()
-						for (i in 1:length(model[[measure]])) {
-							dflong <- melt(model[[measure]][[i]], varnames = c('firm1','firm2'), value.name = 'distance')
-							plt <- ggplot(data = dflong, aes(x = firm1, y = firm2)) +
-								geom_tile(aes(fill = distance))  + 
-								geom_text(aes(label = round(distance, 1)), colour='#FFFFFF') +
-								scale_fill_continuous(high = "#132B43", low = "#56B1F7") + 
-								ggtitle(sprintf('%s: period %s',measure,i))
-							plots[[length(plots)+1]] <- plt
-						}
-
-						ncols <- 3
-						nrows <- ceiling(length(plots) / ncols)
-						ggarrange(plotlist = plots, ncol=ncols, nrow = nrows #,
-					        	# labels = c("A", "B", "C")
-					    )
+					measure <- 'distance'
+					for (i in 1:length(model[[measure]])) {
+						dflong <- melt(model[[measure]][[i]], varnames = c('firm1','firm2'), value.name = 'distance')
+						plt <- ggplot(data = dflong, aes(x = firm1, y = firm2)) +
+							geom_tile(aes(fill = distance))  + 
+							geom_text(aes(label = round(distance, 1)), colour='#FFFFFF') +
+							scale_fill_continuous(high = "#132B43", low = "#56B1F7") + 
+							ggtitle(sprintf('%s: period %s',measure,i))
+						plots[[length(plots)+1]] <- plt
+					}
 				} 
 
-				# if ('motif' %in% measures)
-				# {
-					
-				# }
+				## PLOT
+				nall <- sum(sapply(measures, function(x) length(model[[x]]) ))
+				ncols <- 3
+				nrows <- ceiling(length(plots) / ncols)
+				par(mfrow=c(ceiling(nall / ncols), ncols), mar=c(2,3,2,1))
+				ggarrange(plotlist = plots, ncol=ncols, nrow = nrows)
 
 			} 
+
 		})
 	 
+	 output$analysis_output_plot_predictability <- renderPlot({
+
+		if(input$analysis_output_plots_button) {
+
+			require(tidyverse)
+			require(ggpubr)
+			require(reshape2)
+			model <- readRDS(MODEL_FILE)
+			measuresAll <- c('predictability')
+			modelNames <- names(model)
+			measures <- measuresAll[measuresAll %in% modelNames]
+
+			if ( length(measures) == 0 ) {
+				return('Nothing to plot.')
+			}
+
+			plots <- list()
+
+			if ('predictability' %in% measures) 
+			{
+				# #DEBUG
+				# plot(model[[measures[1]]][[1]], main=sprintf('%s: period %s',measures[1],1))
+				# for (measure in measures) {
+				measure <- 'predictability'
+				itemnames <- names(model[[measure]])
+				for (i in 1:length(model[[measure]])) {
+					dflong <- melt(model[[measure]][[i]], varnames = c('period1','period2'), value.name = 'predictability')
+					plt <- ggplot(data = dflong, aes(x = period1, y = period2)) +
+						geom_tile(aes(fill = predictability))  + 
+						geom_text(aes(label = round(predictability, 1)), colour='#FFFFFF') +
+						scale_fill_continuous(high = "#B10026", low = "#FFFFB2") + 
+						ggtitle(sprintf('%s: firm %s',measure, itemnames[i] ))
+					plots[[length(plots)+1]] <- plt
+				}
+			} 
+
+			## PLOT
+			nall <- sum(sapply(measures, function(x) length(model[[x]]) ))
+			ncols <- 3
+			nrows <- ceiling(length(plots) / ncols)
+			par(mfrow=c(ceiling(nall / ncols), ncols), mar=c(2,3,2,1))
+			ggarrange(plotlist = plots, ncol=ncols, nrow = nrows)
+
+		} 
+
+	})
+
+	output$analysis_output_plot_singles <- renderPlot({
+
+	 	if(input$analysis_output_plots_button) {
+
+	 		require(tidyverse)
+	 		require(ggpubr)
+	 		require(reshape2)
+	 		model <- readRDS(MODEL_FILE)
+	 		measuresAll <- c('simplicity','grouping','motif')
+	 		modelNames <- names(model)
+	 		measures <- measuresAll[measuresAll %in% modelNames]
+
+	 		if ( length(measures) == 0 ) {
+	 			return();
+	 		}
+
+	 		plots <- list()
+
+	 		if ('motif' %in% measures)
+	 		{
+	 			measure <- 'motif'
+	 			dat <- model[[measure]]
+	 		    dflong <- data.frame()
+	 		    for (t in 1:length(dat)) {
+	 		    	dft <- model[[measure]][[t]]
+	 		    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
+	 		    	dflong <- rbind(dflong, dft)
+	 		    }
+	 		    plt <- ggplot(data = dflong, aes(x = as.integer(period), y = motif, colour=firm)) +
+	 		    	geom_line()  + 	geom_point() +
+	 		    	xlab('Period') + theme_bw() + 
+	 		    	ggtitle(sprintf('%s',measure))
+	 		    plots[[length(plots)+1]] <- plt
+	 		}
+
+	 		if ('grouping' %in% measures)
+	 		{
+	 			measure <- 'grouping'
+	 			dat <- model[[measure]]
+	 		    dflong <- data.frame()
+	 		    for (t in 1:length(dat)) {
+	 		    	dft <- model[[measure]][[t]]
+	 		    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
+	 		    	dflong <- rbind(dflong, dft)
+	 		    }
+	 		    plt <- ggplot(data = dflong, aes(x = as.integer(period), y = grouping, colour=firm)) +
+	 		    	geom_line()  + 	geom_point() +
+	 		    	xlab('Period') + theme_bw() + 
+	 		    	ggtitle(sprintf('%s',measure))
+	 		    plots[[length(plots)+1]] <- plt
+	 		}
+
+	 		if ('simplicity' %in% measures)
+	 		{
+	 			measure <- 'simplicity'
+	 			dat <- model[[measure]]
+	 		    dflong <- data.frame()
+	 		    for (t in 1:length(dat)) {
+	 		    	dft <- model[[measure]][[t]]
+	 		    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
+	 		    	dflong <- rbind(dflong, dft)
+	 		    }
+	 		    plt <- ggplot(data = dflong, aes(x = as.integer(period), y = simplicity, colour=firm)) +
+	 		    	geom_line()  + 	geom_point() +
+	 		    	xlab('Period') + theme_bw() + 
+	 		    	ggtitle(sprintf('%s',measure))
+	 		    plots[[length(plots)+1]] <- plt
+	 		}
+
+	 		## PLOT
+	 		nall <- length(measures)
+	 		ncols <- 3
+	 		nrows <- ceiling(length(plots) / ncols)
+	 		par(mfrow=c(ceiling(nall / ncols), ncols), mar=c(2,3,2,1))
+	 		ggarrange(plotlist = plots, ncol=ncols, nrow = nrows)
+
+	 	} 
+
+	})
+
+
 		# output$analysis_output_distance_plot <- renderPlot({
 		#  	if(input$analysis_output_distance_plot_button) {
 		#  		model <- readRDS(MODEL_FILE)

@@ -2,12 +2,12 @@ library paths:
 ... C:/Users/steph/Google Drive/Rapp/SequenceR/R-Portable/App/R-Portable/library
 Loading required package: shiny
 
-Listening on http://127.0.0.1:6258
+Listening on http://127.0.0.1:7859
 Browser path: "C:/Users/steph/Google Drive/Rapp/SequenceR/GoogleChromePortable/App/Chrome-bin/chrome.exe"
-[12516:19160:0621/114314.603:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
-[12516:19160:0621/114314.604:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_001
-[12516:19160:0621/114314.604:ERROR:disk_cache.cc(178)] Unable to create cache
-[12516:19160:0621/114314.604:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
+[8748:4876:0621/135843.205:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
+[8748:4876:0621/135843.206:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_001
+[8748:4876:0621/135843.206:ERROR:disk_cache.cc(178)] Unable to create cache
+[8748:4876:0621/135843.206:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
 Opening in existing browser session.
 
 SERVER:  MODEL STRUCT
@@ -142,7 +142,7 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 3 distinct sequences
  [>] min/max sequence length: 2/4
  [>] computing distances using the OM metric
- [>] elapsed time: 0.02 secs
+ [>] elapsed time: 0.01 secs
  [>] 3 sequences with 10 distinct states
  [>] checking 'sm' (one value for each state, triangle inequality)
 Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
@@ -152,7 +152,7 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 3 distinct sequences
  [>] min/max sequence length: 2/6
  [>] computing distances using the OM metric
- [>] elapsed time: 0.02 secs
+ [>] elapsed time: 0 secs
  [>] 3 sequences with 10 distinct states
  [>] checking 'sm' (one value for each state, triangle inequality)
 Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
@@ -162,11 +162,8 @@ Warning:  [!] at least, one substitution cost doesn't respect the triangle inequ
  [>] 3 distinct sequences
  [>] min/max sequence length: 3/6
  [>] computing distances using the OM metric
- [>] elapsed time: 0 secs
-  adding: analysis_summary-1592710995.txt (deflated 12%)
-  adding: gamma-1592710995.csv (deflated 89%)
-  adding: distance-1592710995.csv (deflated 75%)
-  adding: motif-1592710995.csv (deflated 69%)
+ [>] elapsed time: 0.02 secs
+Loading required package: ggpubr
 Loading required package: magrittr
 
 Attaching package: 'magrittr'
@@ -179,3 +176,463 @@ The following object is masked from 'package:tidyr':
 
     extract
 
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 2/4
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.02 secs
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 2/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0 secs
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 3/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.02 secs
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 3 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 6 distinct states appear in the data: 
+     1 = A
+     2 = B
+     3 = C
+     4 = E
+     5 = G
+     6 = J
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+     8  H           H        H
+     9  I           I        I
+     10  J           J        J
+ [>] 3 sequences in the data set
+ [>] min/max sequence length: 4/6
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 4/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.02 secs
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 3 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 6 distinct states appear in the data: 
+     1 = A
+     2 = B
+     3 = C
+     4 = D
+     5 = E
+     6 = J
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+     8  H           H        H
+     9  I           I        I
+     10  J           J        J
+ [>] 3 sequences in the data set
+ [>] min/max sequence length: 4/6
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 4/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.02 secs
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 3 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 4 distinct states appear in the data: 
+     1 = A
+     2 = C
+     3 = D
+     4 = E
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+     8  H           H        H
+     9  I           I        I
+     10  J           J        J
+ [>] 3 sequences in the data set
+ [>] min/max sequence length: 2/3
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 2/3
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.01 secs
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 3 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 6 distinct states appear in the data: 
+     1 = A
+     2 = B
+     3 = C
+     4 = E
+     5 = G
+     6 = J
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+     8  H           H        H
+     9  I           I        I
+     10  J           J        J
+ [>] 3 sequences in the data set
+ [>] min/max sequence length: 4/6
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 4/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0 secs
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 3 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 6 distinct states appear in the data: 
+     1 = A
+     2 = B
+     3 = C
+     4 = D
+     5 = E
+     6 = J
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+     8  H           H        H
+     9  I           I        I
+     10  J           J        J
+ [>] 3 sequences in the data set
+ [>] min/max sequence length: 4/6
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 4/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.01 secs
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 3 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 4 distinct states appear in the data: 
+     1 = A
+     2 = C
+     3 = D
+     4 = E
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+     8  H           H        H
+     9  I           I        I
+     10  J           J        J
+ [>] 3 sequences in the data set
+ [>] min/max sequence length: 2/3
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 2/3
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0 secs
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 3 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 6 distinct states appear in the data: 
+     1 = A
+     2 = B
+     3 = C
+     4 = E
+     5 = G
+     6 = J
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+     8  H           H        H
+     9  I           I        I
+     10  J           J        J
+ [>] 3 sequences in the data set
+ [>] min/max sequence length: 4/6
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 4/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.02 secs
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 3 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 6 distinct states appear in the data: 
+     1 = A
+     2 = B
+     3 = C
+     4 = D
+     5 = E
+     6 = J
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+     8  H           H        H
+     9  I           I        I
+     10  J           J        J
+ [>] 3 sequences in the data set
+ [>] min/max sequence length: 4/6
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 4/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.01 secs
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 3 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 4 distinct states appear in the data: 
+     1 = A
+     2 = C
+     3 = D
+     4 = E
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+     8  H           H        H
+     9  I           I        I
+     10  J           J        J
+ [>] 3 sequences in the data set
+ [>] min/max sequence length: 2/3
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 2/3
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.01 secs
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 2/4
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0 secs
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 2/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.01 secs
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 3/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0 secs
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 3 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 6 distinct states appear in the data: 
+     1 = A
+     2 = B
+     3 = C
+     4 = E
+     5 = G
+     6 = J
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+     8  H           H        H
+     9  I           I        I
+     10  J           J        J
+ [>] 3 sequences in the data set
+ [>] min/max sequence length: 4/6
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 4/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0 secs
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 3 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 6 distinct states appear in the data: 
+     1 = A
+     2 = B
+     3 = C
+     4 = D
+     5 = E
+     6 = J
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+     8  H           H        H
+     9  I           I        I
+     10  J           J        J
+ [>] 3 sequences in the data set
+ [>] min/max sequence length: 4/6
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 4/6
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.02 secs
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 3 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 4 distinct states appear in the data: 
+     1 = A
+     2 = C
+     3 = D
+     4 = E
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+     8  H           H        H
+     9  I           I        I
+     10  J           J        J
+ [>] 3 sequences in the data set
+ [>] min/max sequence length: 2/3
+ [>] 3 sequences with 10 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+Warning:  [!] at least, one substitution cost doesn't respect the triangle inequality.
+ [!] replacing A with I (cost=0.3) and then I with B (cost=0.3)
+ [!] costs less than replacing directly A with B (cost=0.7)
+ [!] total difference ([A=>I] + [I=>B] - [A=>B]): -0.1
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 2/3
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0 secs

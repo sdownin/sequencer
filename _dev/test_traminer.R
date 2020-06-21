@@ -25,6 +25,65 @@ mvad.dist.custom <- seqdist(mvad.seq, method = "OM",
                             indel = 1.5, sm = subm.custom)
 
 
+
+
+
+
+## GAMMAS
+
+  measure <- 'gamma'
+  dat <- model[[measure]]
+  df <- data.frame()
+  for (t in 1:length(dat)) {
+    dft <- melt(dat[[t]], varnames = c('action1','action2'), value.name = measure)
+    # dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
+    df <- rbind(df, dft)
+  }
+  # names(df)[which(names(df)=='L1')] <- 'firm'  ## list name at Level 1 is the firm name; rename column 'L1' to firmname
+  file <- sprintf('%s-%s.csv', measure,ts)
+  write.csv(df, file=file, row.names = F)
+  files <- c(files, file)
+
+
+  
+  library(TraMineR)
+  library(reshape2)
+  library(tidyverse)
+  library(ggpubr)
+
+
+  plots <- list()
+  
+  
+  measure <- 'distance'
+  for (i in 1:length(model[[measure]])) {
+    dflong <- melt(model[[measure]][[i]], varnames = c('firm1','firm2'), value.name = 'distance')
+    plt <- ggplot(data = dflong, aes(x = firm1, y = firm2)) +
+      geom_tile(aes(fill = distance))  + 
+      geom_text(aes(label = round(distance, 1)), colour='#FFFFFF') +
+      scale_fill_continuous(high = "#132B43", low = "#56B1F7") + 
+      ggtitle(sprintf('%s: period %s',measure,i))
+    plots[[length(plots)+1]] <- plt
+  }
+  
+  
+  measure <- 'motif'
+  dat <- model[[measure]]
+  dflong <- data.frame()
+  for (t in 1:length(dat)) {
+    dft <- model[[measure]][[t]]
+    dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
+    dflong <- rbind(dflong, dft)
+  }
+  plt <- ggplot(data = dflong, aes(x = as.integer(period), y = motif, colour=as.factor(firm))) +
+    geom_line()  + 
+    geom_point() +
+    ggtitle(sprintf('%s',measure)) + xlab('Period') + theme_bw()
+  plots[[length(plots)+1]] <- plt
+  
+  ggarrange(plotlist = plots, ncol=3, nrow = 2)
+
+
 # KWgamma <- function(x){
 #   
 # }

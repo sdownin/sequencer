@@ -136,11 +136,9 @@
 						column(width = 12,
 							h3("Sequence Analysis Plots"),
 							tagList(
-	    			    		plotOutput('analysis_output_plots', height=300, width='100%'#,
-	    			    			# click = "analysis_dists_plot_click",  # Equiv, to click=clickOpts(id="plot_click")
-	    			    			# hover = hoverOpts(id = "analysis_dists_plot_hover", delayType = "throttle"),
-	    			    			# brush = brushOpts(id = "analysis_dists_plot_brush")
-	    			    		)
+	    			    		plotOutput('analysis_output_plot_distance', height=270, width='100%'),
+	    			    		plotOutput('analysis_output_plot_predictability', height=270, width='100%'),
+	    			    		plotOutput('analysis_output_plot_singles', height=270, width='100%')
 		    		    	)
 						)
 					),

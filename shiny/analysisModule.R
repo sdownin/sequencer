@@ -87,12 +87,12 @@ checkboxGroupUImeasures <- function(id, label) {
 		checkboxGroupInput(id, label = h3(label), 
 			choices = list(
 				  'Distance' = 'distance' 
+				, 'Predictability' = 'predictability'
 				, 'Simplicity' = 'simplicity' 
 				, 'Grouping' = 'grouping'
-				, 'Predictability' = 'predictability'
 				, 'Motif' = 'motif'
 			),
-			selected = c('distance','simplicity','grouping','predictability','motif')),
+			selected = c('distance','predictability','simplicity','grouping','motif')),
 		textOutput(paste0(id,'_value'))
 	)
 }
