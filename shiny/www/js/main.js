@@ -81,19 +81,20 @@ $(document).ready(function(){
 	 //    $img.height( 290 * Math.ceil(nplots/3) );
 
 
-    	let measures = $('#analysis_measures_group input:checkbox:checked').map(function(){
-          return $(this).val();
-        }).get();
-    	if (measures.includes('distance')) { $('#analysis_output_plot_distance').show(); }
-    	if (measures.includes('predictability')) { $('#analysis_output_plot_predictability').show(); }
-    	if (measures.includes('motif')) { $('#analysis_output_plot_singles').show(); }
-    	if (measures.includes('grouping')) { $('#analysis_output_plot_singles').show(); }
-    	if (measures.includes('simplicity')) { $('#analysis_output_plot_singles').show(); }
+    	// let measures = $('#analysis_measures_group input:checkbox:checked').map(function(){
+     //      return $(this).val();
+     //    }).get();
+    	// if (measures.includes('distance')) { $('#analysis_output_plot_distance').show(); }
+    	// if (measures.includes('predictability')) { $('#analysis_output_plot_predictability').show(); }
+    	// if (measures.includes('motif')) { $('#analysis_output_plot_singles').show(); }
+    	// if (measures.includes('grouping')) { $('#analysis_output_plot_singles').show(); }
+    	// if (measures.includes('simplicity')) { $('#analysis_output_plot_singles').show(); }
 
+    	$('#analysis_output_plots').show(); 
 	});
 
 	// $('#analysis_output_plots_button').on('click', function(){
-		
+
 	// })
 
 });

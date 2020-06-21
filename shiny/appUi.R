@@ -136,9 +136,10 @@
 						column(width = 12,
 							h3("Sequence Analysis Plots"),
 							tagList(
-	    			    		plotOutput('analysis_output_plot_distance', height=270, width='100%'),
-	    			    		plotOutput('analysis_output_plot_predictability', height=270, width='100%'),
-	    			    		plotOutput('analysis_output_plot_singles', height=270, width='100%')
+	    			    		plotOutput('analysis_output_plots', height=600, width='100%')
+	    			    		# plotOutput('analysis_output_plot_distance', height=270, width='100%'),
+	    			    		# plotOutput('analysis_output_plot_predictability', height=270, width='100%'),
+	    			    		# plotOutput('analysis_output_plot_singles', height=270, width='100%')
 		    		    	)
 						)
 					),
