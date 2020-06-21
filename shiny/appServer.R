@@ -9,8 +9,6 @@
 	MODEL_FILE <- './../R-Portable/tmp_sequencer_data_model.rds'
 	## INPUT FILE
 	INPUT_FILE <- './../R-Portable/tmp_sequencer_input.rds'
-	## INPUT FILE
-	NUM_PLOTS_FILE <- './../R-Portable/tmp_sequencer_num_plots.rds'
 
 	##
 	# Init Model Object
@@ -586,9 +584,9 @@
 				model$analysis_run <- 'ANALYSIS RUN COMPLETED'
 				saveRDS(model, file=MODEL_FILE)
 
-				## SAVE NUM PLOTS
-				numplots <- length(model$seqdefs) * length(model$analysis_alphabet$x$firm)
-				saveRDS(list(num_plots=numplots), file=NUM_PLOTS_FILE)
+				# ## SAVE NUM PLOTS
+				# numplots <- length(model$seqdefs) * length(model$analysis_alphabet$x$firm)
+				# saveRDS(list(num_plots=numplots), file=NUM_PLOTS_FILE)
 
 				## Print selected measures
 				printModel <- list()
