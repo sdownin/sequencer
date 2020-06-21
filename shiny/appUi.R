@@ -57,7 +57,7 @@
 				
 				## 1. Tab 2. Measures ------------
 				tabPanel("Measures", 
-						titlePanel("Select Measures to Compute"),
+						titlePanel("Select Measures"),
 						wellPanel(fluidRow(
 						      column(width = 6,
 						      	checkboxGroupUImeasures('analysis_measures_group', 'Select Measures to Compute')

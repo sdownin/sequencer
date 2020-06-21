@@ -7,10 +7,11 @@
 
 | Stage | Version | Date | Download Link |
 | ----------- | ----------- | ----------- | ----------- |
-| Under Development | 0.3.1 | 2019-12-04 | [SequenceR v0.3.1 2019-12-02](https://drive.google.com/file/d/12HogXAbeZAW_VOwthCMD70ZgbkX3_ee9/view?usp=sharing, 'SequenceR v0.3.1') |
+| MVP | 0.4.1 | 2020-06-21 | [SequenceR v0.4.1 2020-06-21](https://drive.google.com/file/d/12HogXAbeZAW_VOwthCMD70ZgbkX3_ee9/view?usp=sharing, 'SequenceR v0.4.1') |
 
 Archived
- - [v0.2.0 2019-11-12](https://drive.google.com/file/d/1w94bUbP7NhzbSSg9DLZNqnQPIxvt7BIX/view?usp=sharing, 'SequenceR v0.2.0')
+ - [v0.3.1 2019-12-04](https://drive.google.com/file/d/1xcJQGmt3eQMiv9LAodLvkmEsbiDc-75w/view?usp=sharing, 'SequenceR v0.3.1')
+ - [v0.2.0 2019-11-12](https://drive.google.com/file/d/1FHvMK6yUAgqSjJkYDJlBiXKpNrMti1QF/view?usp=sharing, 'SequenceR v0.2.0')
 
 
 ## Getting Started
@@ -21,16 +22,20 @@ Archived
 
 ```
 SequenceR
-    |--GoogleChromePortable
-    |--R-Portable
-    |--shiny
-    |    └--www
-    |        └--js
+    |--GoogleChromePortable/
+    |--R-Portable/
+    |--shiny/
+    |    └--www/
+    |        └--js/
     |            └--main.js
     |    |--analysisModule.R
     |    |--app.R
     |    |--appServer.R
     |    |--appUi.R
+    |--TestData/
+    |    |--test_alphabet.csv
+    |    |--test_data.csv
+    |    └--test_subcostmat.csv
     |--run.vbs
     └--runShinyApp.R
 ```
@@ -72,6 +77,36 @@ SequenceR
 ## Changelog
 
 All notable changes to this project will be documented in this section.
+
+
+#### [0.4.1] - 2020-06-21
+```
+Added
+ - Test data
+
+Changed
+ - Updated README
+ - Moved archived SequenceR packages out of this reposity into Google Drive only
+
+Removed
+ (none)
+```
+
+#### [0.4.0] - 2020-06-20
+```
+Added
+ - Sequence measures: predictability, grouping, motif
+ - Plot image resize in app
+ - Plot save
+ - Progress spinner icons
+
+Changed
+ - Results save; fixed zip bug when saving only a subset of possible measures
+
+Removed
+ (none)
+```
+
 
 #### [0.3.0] - 2019-12-02
 ```
