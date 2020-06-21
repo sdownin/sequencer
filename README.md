@@ -7,7 +7,7 @@
 
 | Stage | Version | Date | Download Link |
 | ----------- | ----------- | ----------- | ----------- |
-| MVP | 0.4.1 | 2020-06-21 | [SequenceR v0.4.1 2020-06-21](https://drive.google.com/file/d/12HogXAbeZAW_VOwthCMD70ZgbkX3_ee9/view?usp=sharing, 'SequenceR v0.4.1') |
+| MVP | 0.4.1 | 2020-06-21 | [SequenceR v0.4.1 2020-06-21](https://drive.google.com/file/d/1FUttl4FQU_MxWfBPJFvKLJR4GXDN5ZoQ/view?usp=sharing, 'SequenceR v0.4.1') |
 
 Archived
  - [v0.3.1 2019-12-04](https://drive.google.com/file/d/1xcJQGmt3eQMiv9LAodLvkmEsbiDc-75w/view?usp=sharing, 'SequenceR v0.3.1')
@@ -23,6 +23,8 @@ Archived
 ```
 SequenceR
     |--GoogleChromePortable/
+    |--logs/
+    |    └--SequenceRlog.txt
     |--R-Portable/
     |--shiny/
     |    └--www/
