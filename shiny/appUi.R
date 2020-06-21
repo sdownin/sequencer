@@ -59,18 +59,20 @@
 						titlePanel("Select Measures to Compute"),
 						wellPanel(fluidRow(
 						      column(width = 6,
-						      	h3("Sequence Distance Measurement Settings"),
-						      	tagList(
-						      		icon('question-circle'),
-									a("Sequence distance function details", href="https://rdrr.io/cran/TraMineR/man/seqdist.html", target="_blank"),
-						      		br(),br()
-						      	),
-								selectInputUIdistance('analysis_distance_function', 'Distance Function'),
-								selectInputUInorm('analysis_distance_norm', 'Normalization') #,
-								# sliderTextUItenths('analysis_indel_cost', "INDEL Cost")
+						      	checkboxGroupUImeasures('analysis_measures_group', 'Select Measures to Compute')
 						      ),
 						      column(width = 6,
-						      	checkboxGroupUImeasures('analysis_measures_group', 'Select Measures to Compute')
+						      	conditionalPanel(condition = "input.analysis_measures_group.includes('distance')",
+							      	h3("Sequence Distance Measurement Settings"),
+							      	tagList(
+							      		icon('question-circle'),
+										a("Sequence distance function details", href="https://rdrr.io/cran/TraMineR/man/seqdist.html", target="_blank"),
+							      		br(),br()
+							      	),
+									selectInputUIdistance('analysis_distance_function', 'Distance Function'),
+									selectInputUInorm('analysis_distance_norm', 'Normalization') #,
+									# sliderTextUItenths('analysis_indel_cost', "INDEL Cost")
+						      	)
 						      )
 						 )),
 						fluidRow(

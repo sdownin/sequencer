@@ -37,13 +37,14 @@ selectInputUIdistance <- function(id, label) {
 			# ,`OM of Spell Sequences`='OMspell'
 			# ,`OM of Transition Sequences`='OMstran'
 			# ,`Hamming`='OMstran'
+			# ,`Hamming`='HAM'
 			# ,`Dynamic Hamming`='DHD'
 			# ,`Time Warp`='TWED'
 		),
 		`Common Attriute Count Metrics`=list(
-			#  `Longest Common Subsequence`='LCS'
-			# ,`Longest Common Prefix`='LCP'
-			# ,`Longest Common Suffix`='RLCP'
+			 `Longest Common Subsequence`='LCS'
+			,`Longest Common Prefix`='LCP'
+			,`Longest Common Suffix`='RLCP'
 			# ,`Number of Matching Subsequences (NMS)`='NMS'
 			# ,`NMS Weighted by Minimum Shared Time`='NMSMST'
 			# ,`Subsequence Vectorial Representation`='SVRspell'
@@ -55,6 +56,7 @@ selectInputUIdistance <- function(id, label) {
 	)
 	selectInputUI(id, label, optList)
 }
+
 
 selectInputUInorm <- function(id, label) {
 	optList <- list(`None` = "none", `Auto`= "auto")

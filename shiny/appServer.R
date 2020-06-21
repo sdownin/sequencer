@@ -393,12 +393,13 @@
 		## seqdef - define missing values on right (NA or DEL)
 		##   --> compute dist from OM  (or selected dist metric)
 		## simplicity - HHI
-		## unpredictability - levdist from own firm previous period
+		## unpredictability - levdist from own firm previous period(s)
 		## grouping - mean { gamma analysis separation score } across all actions
 		## motif - variance of the averages in the pair-wise gamma analysis precedence scores across all action types
 		##
 		## MAIN ANALYSIS FUNCTION CALLED FROM MEASURES TAB
 		output$analysis_run_value <- renderPrint({
+
 			if (input$analysis_run) {
 				library(TraMineR)
 				library(reshape2)
@@ -438,6 +439,16 @@
 
 				measures <- input$analysis_measures_group
 
+				## clear existing measures from model (in case user reruns analysis with different subset of measures selected)
+				for (measure in c('distance','simplicity','grouping','predictability','motif', 'gamma')) {
+					if (measure %in% names(model))
+						model[[measure]] <- NULL
+				}
+
+				##-----------------------------------
+				## COMPUTE SELECTED MEASURES BY PERIOD
+				##-----------------------------------
+				## loop over periods (per firm)
 				for (t in 1:length(periods))  #length(periods)
 				{
 					pd <- periods[t]
@@ -450,9 +461,6 @@
 					}
 					# names(gamma) <- firms
 
-					##-----------------------------------
-					## COMPUTE SELECTED MEASURES
-					##-----------------------------------
 					## loop over firms  (per period)
 					if ('distance' %in% measures) 
 					{
@@ -522,7 +530,7 @@
 						simplicity[[pd]] <- t.simp
 
 					}
-				}
+				} ##/end period loop
 
 				## loop over firms  (per period)
 				if ('predictability' %in% measures) 
@@ -552,17 +560,20 @@
 				## list names by firm
 				if (length(predictability) == nfirms) names(predictability) <- firms
 
+				## add selected measures to model object
 				if('distance' %in% measures)  		model$distance <- distance
 				if('grouping' %in% measures) 		model$grouping <- grouping
 				if('motif' %in% measures) 			model$motif <- motif
 				if('predictability' %in% measures)  model$predictability <- predictability
 				if('simplicity' %in% measures)  	model$simplicity <- simplicity
 				## add gamma if used by other measure
-				if (any('grouping','motif' %in% measures))	model$gamma <- gamma
+				if (any(c('grouping','motif') %in% measures))	model$gamma <- gamma
 				
+				## Save Model
 				model$analysis_run <- 'ANALYSIS RUN COMPLETED'
 				saveRDS(model, file=MODEL_FILE)
 
+				## Print selected measures
 				printModel <- list()
 				for (measure in measures) {
 					printModel[[measure]] <- model[[measure]]
@@ -574,15 +585,23 @@
 		})
 
 		output$analysis_output_plots <- renderPlot({
+
 			if(input$analysis_output_plots_button) {
+
 				library(tidyverse)
 				library(ggpubr)
 				library(reshape2)
 				model <- readRDS(MODEL_FILE)
-				measuresAll <- c('seqdefs', 'distance')
+				measuresAll <- c('distance', '')
 				modelNames <- names(model)
 				measures <- measuresAll[measuresAll %in% modelNames]
-				if (length(measures) > 0) {
+
+				if ( length(measures) == 0 ) {
+					return('Nothing to plot.')
+				}
+
+				if ('distance' %in% measures) 
+				{
 					nall <- sum(sapply(measures, function(x) length(model[[x]]) ))
 					par(mfrow=c(ceiling(nall/3),3), mar=c(2,3,2,1))
 					# #DEBUG
@@ -600,18 +619,19 @@
 							plots[[length(plots)+1]] <- plt
 						}
 
-					# }
 						ncols <- 3
 						nrows <- ceiling(length(plots) / ncols)
 						ggarrange(plotlist = plots, ncol=ncols, nrow = nrows #,
 					        	# labels = c("A", "B", "C")
-					        )
-				} else {
-					return('Notion to plot.')
-				}
-			} else {
-				return()
-			}
+					    )
+				} 
+
+				# if ('motif' %in% measures)
+				# {
+					
+				# }
+
+			} 
 		})
 	 
 		# output$analysis_output_distance_plot <- renderPlot({
