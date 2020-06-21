@@ -62,13 +62,14 @@ SequenceR
 ### 3. Output Results
 
 - Sequence measures summary
-- Download results
+- Save results
 
 [![](/_img/readme_analysis_outputs.png "Outputs")](#3-output-results)
 
 ### 4. Plots
 
 - Plots
+- Save plot
 
 [![](/_img/readme_analysis_plots.png "Plots")](#4-plots)
 
