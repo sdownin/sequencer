@@ -54,8 +54,8 @@ SequenceR
 
 ### 2. Select Measures
 
-- Sequence distance cost settings
 - Measures to compute
+- Sequence distance cost settings
 
 [![](/_img/readme_analysis_measures.png "Measures")](#2-select-measures)
 
