@@ -7,9 +7,9 @@
 
 | Stage | Version | Date | Download Link |
 | ----------- | ----------- | ----------- | ----------- |
-| MVP | 0.4.1 | 2020-06-21 | [SequenceR v0.4.1 2020-06-21](https://drive.google.com/file/d/1FUttl4FQU_MxWfBPJFvKLJR4GXDN5ZoQ/view?usp=sharing, 'SequenceR v0.4.1') |
+| MVP | 0.4.2 | 2020-06-24 | [SequenceR v0.4.2 2020-06-24](https://drive.google.com/file/d/1FYmnKIbPVZwyWdWPWWI5TLa1u4dG407n/view?usp=sharing, 'SequenceR v0.4.2') |
 
-Archived
+Archived Minor Versions
  - [v0.3.1 2019-12-04](https://drive.google.com/file/d/1xcJQGmt3eQMiv9LAodLvkmEsbiDc-75w/view?usp=sharing, 'SequenceR v0.3.1')
  - [v0.2.0 2019-11-12](https://drive.google.com/file/d/1FHvMK6yUAgqSjJkYDJlBiXKpNrMti1QF/view?usp=sharing, 'SequenceR v0.2.0')
 
@@ -68,8 +68,8 @@ SequenceR
 
 ### 4. Plots
 
-- Plots
-- Save plot
+- Render plots
+- Save plot image
 
 [![](/_img/readme_analysis_plots.png "Plots")](#4-plots)
 
@@ -81,6 +81,19 @@ SequenceR
 
 All notable changes to this project will be documented in this section.
 
+
+#### [0.4.2] - 2020-06-24
+```
+Added
+ (none)
+
+Changed
+ - Predictability measure multiplied by -1.0 (see Rindova, Ferrier, & Wiltbank, 2010)
+   (note: grouping measure was already correct, multiplied by -1.0, in v0.4.1)
+
+Removed
+ (none)
+```
 
 #### [0.4.1] - 2020-06-21
 ```
@@ -110,6 +123,18 @@ Removed
  (none)
 ```
 
+#### [0.3.1] - 2019-12-04
+```
+Added
+ - Sequence distance measure via optimal matching
+ - Simplicity measure via HHI
+
+Changed
+ (none)
+
+Removed
+ (none)
+```
 
 #### [0.3.0] - 2019-12-02
 ```

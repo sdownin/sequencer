@@ -496,7 +496,8 @@
 							## We reversed the direction of the scores (multiplying them by −1.0) 
 							## so that higher scores indicate higher levels of grouping 
 							## among actions in a sequence.
-							t.i.group <- data.frame(firm=firm, grouping=mean(separation, na.rm = T) * -1 )
+							groupingMeasure <- mean(separation, na.rm = T) * -1 
+							t.i.group <- data.frame(firm=firm, grouping = groupingMeasure)
 							t.group <- rbind(t.group, t.i.group)
 						}
 						grouping[[pd]] <- t.group
@@ -521,7 +522,8 @@
 							## in which the particular type of action appears. 
 							## Variance in average precedence scores captures the ordinal specificity 
 							## and stability of elements in a sequence.
-							t.i.motif <- data.frame(firm=firm, motif=var(precedence, na.rm = TRUE))
+							motifMeasure <- var(precedence, na.rm = TRUE)
+							t.i.motif <- data.frame(firm=firm, motif = motifMeasure)
 							t.motif <- rbind(t.motif, t.i.motif)
 						}
 						motif[[pd]] <- t.motif
@@ -530,12 +532,12 @@
 					if ('simplicity' %in% measures) 
 					{
 						## simplicity HHI score
-
 						t.dat <- dat[dat[,periodCol]==pd, ]
 						t.simp <- data.frame()
 						for (i in 1:length(firms)) {
 							t.i.cnt <- plyr::count( t.dat[ t.dat[,firmCol]==firms[i] , actionCol] )
-							t.i.cntdf <- data.frame(firm=firms[i], simplicity=hhi(t.i.cnt$freq))
+							simplicityMeasure <- hhi(t.i.cnt$freq)
+							t.i.cntdf <- data.frame(firm=firms[i], simplicity = simplicityMeasure)
 							t.simp <- rbind(t.simp,  t.i.cntdf)
 						}
 						simplicity[[pd]] <- t.simp
@@ -557,7 +559,7 @@
 					  }
 					  tlagseq <- seqList2Df(seqlaglist[[firm]])
 					  seqdeflag <- seqdef(tlagseq, alphabet=actionAlphabet, right=right)
-					  predictability[[firm]] <- seqdist(seqdeflag,  method=method, norm=norm, sm=sm)
+					  predictability[[firm]] <- seqdist(seqdeflag,  method=method, norm=norm, sm=sm) * -1
 					  dimnames(predictability[[firm]]) <- list(periods, periods)
 					}
 				}
