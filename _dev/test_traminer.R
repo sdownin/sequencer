@@ -348,6 +348,8 @@ input <- .checkInput()
 # mvad.dist.custom <- seqdist(mvad.seq, method = "OM",
 #                             indel = 1.5, sm = subm.custom)
 
+"latin1","UTF-8","UTF-8-BOM","UCS-2LE", "UTF-16LE", "UCS-2", "UTF-16"
+
 
 settings <- model$analysis_dist_settings
 dat <- model$analysis_data$x

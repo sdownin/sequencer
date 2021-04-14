@@ -256,7 +256,10 @@
 				return(NULL)
 			
 			## INPUT
-			df <- read.csv(inFile$datapath, header = input$header, na.strings=c('','""'), stringsAsFactors=FALSE)
+			df <- read.csv(inFile$datapath, header = input$header, na.strings=c('','""'), stringsAsFactors=FALSE, 
+				fileEncoding=input$alphabet_fileEncoding, #'UTF-8',
+				# encoding= 'UTF-8', fileEncoding="UTF-8-BOM", #'UTF-8',
+				check.names=TRUE, strip.white=TRUE)
 			li <- apply(df, 2, function(col){
 				# as.factor(unique(col[which(!is.null(col) & !is.nan(col) & !is.na(col))]))
 				unique(col[which(!is.null(col) & !is.nan(col) & !is.na(col))])
@@ -280,7 +283,9 @@
 				return(NULL)
 			
 			## INPUT
-			df <- read.csv(inFile$datapath, header = T, na.strings=c('','""'), stringsAsFactors=FALSE)
+			df <- read.csv(inFile$datapath, header = T, na.strings=c('','""'), stringsAsFactors=FALSE,
+				# fileEncoding=input$subcostmat_fileEncoding, #'UTF-8',
+				check.names=TRUE, strip.white=TRUE)
 			
 			# if (input$rownames) {
 				row.names <- df[,1]
@@ -340,7 +345,9 @@
 			model <- loadModel()
 			
 			## INPUT
-			df <- read.csv(inFile$datapath, header = T, sep=',', fill=TRUE, stringsAsFactors=FALSE)
+			df <- read.csv(inFile$datapath, header = T, sep=',', fill=TRUE, stringsAsFactors=FALSE,
+				# fileEncoding=input$seqdata_fileEncoding, #'UTF-8',
+				check.names=TRUE, strip.white=TRUE)
 			model$analysis_data <- list(x=df, xpath=inFile$datapath)
 			saveRDS(model, file=MODEL_FILE)
 			# saveModel(model, xname='analysis_data', x=df, xpath=inFile$datapath)
@@ -475,7 +482,7 @@
 					## loop over firms  (per period)
 					if ('distance' %in% measures) 
 					{
-						t.xdist <- seqdist(seqdefs[[t]], method=method, norm=norm, sm=sm)
+						t.xdist <- seqdist(seqdefs[[t]], method=method, norm=norm, sm=sm, with.missing=TRUE)
 						dimnames(t.xdist) <- list(firms, firms)
 						distance[[pd]] <- t.xdist
 					}
@@ -559,7 +566,7 @@
 					  }
 					  tlagseq <- seqList2Df(seqlaglist[[firm]])
 					  seqdeflag <- seqdef(tlagseq, alphabet=actionAlphabet, right=right)
-					  predictability[[firm]] <- seqdist(seqdeflag,  method=method, norm=norm, sm=sm) * -1
+					  predictability[[firm]] <- seqdist(seqdeflag,  method=method, norm=norm, sm=sm, with.missing = TRUE) * -1
 					  dimnames(predictability[[firm]]) <- list(periods, periods)
 					}
 				}

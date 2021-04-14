@@ -2,6 +2,17 @@
 library(shiny)
 #library(shinydashboard)
 
+fileEncodingVec <- c(
+	"latin1"="latin1",
+	"UTF-8"="UTF-8",
+	"UTF-8-BOM"="UTF-8-BOM",
+	"(none)"=NA,
+	"UCS-2LE"="UCS-2LE", 
+	"UTF-16LE"="UTF-16LE", 
+	"UCS-2"="UCS-2", 
+	"UTF-16"="UTF-16"
+)
+
 ## UI #####################################
 sliderTextUI <- function(id){
 	ns <- NS(id)
@@ -120,7 +131,7 @@ actionButtonUIcheckdata <- function(id, label) {
 	)
 }
 
-fileInputUI <- function(fileId, heading) {
+fileInputUI <- function(fileId, heading, fileEncodingId) {
 	tagList(
 		fileInput(fileId, h3(heading),
 			multiple = F,
@@ -128,11 +139,12 @@ fileInputUI <- function(fileId, heading) {
 			  "text/csv",
 			  "text/comma-separated-values,text/plain",
 			  ".csv")
-		)
+		),
+		# selectInput(fileEncodingId "File Encoding", fileEncodingVec)
 	)
 }
 
-fileInputUIheader <- function(fileId, heading) {
+fileInputUIAlphabet <- function(fileId, heading) {
 	tagList(
 		fileInput(fileId, h3(heading),
 			multiple = F,
@@ -143,6 +155,8 @@ fileInputUIheader <- function(fileId, heading) {
 		),
 		#tags$hr(),
 		checkboxInput("header", "Header", TRUE),
+		# selectInput("alphabet_encoding", "Encoding", c()),
+		selectInput("alphabet_fileEncoding", "File Encoding", fileEncodingVec)
 	)
 }
 

@@ -21,7 +21,7 @@ Archived Minor Versions
 - Run app by executing runfile: `run.vbs`
 
 ```
-SequenceR
+SequenceR/
     |--GoogleChromePortable/
     |--logs/
     |    └--SequenceRlog.txt
