@@ -27,7 +27,7 @@
 						hr(),
 						sidebarLayout(
 							sidebarPanel(
-								fileInputUI("analysis_file_subcostmat", '2. Substitution Costs', 'subcostmat_fileEncoding')
+								fileInputUI("analysis_file_subcostmat", '2. Substitution Costs', 'subcostmat_header', 'subcostmat_rownames', 'subcostmat_fileEncoding')
 							),
 							mainPanel(
 								tableOutputSummaryUI("analysis_file_subcostmat_summary", "Substitution Cost Matrix")
@@ -37,7 +37,7 @@
 						hr(),
 						sidebarLayout(
 							sidebarPanel(
-								fileInputUI("analysis_file_data", '3. Sequence Data', 'seqdata_fileEncoding')
+								fileInputUI("analysis_file_data", '3. Sequence Data', 'seqdata_header', 'seqdata_rownames', 'seqdata_fileEncoding')
 							),
 							mainPanel(
 								tableOutputUI("analysis_file_data_table"),

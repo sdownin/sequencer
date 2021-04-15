@@ -17,7 +17,7 @@
 	{
 		return(list(
 			## Sequence Alphabet
-			analysis_alphabet = list(x=NA, xpath='', varnamemap=NA), 
+			analysis_alphabet = list(x=NA, xpath='', categoryvarname=NA, varnamemap=NA), 
 			## Substitution Cost Matrix
 			analysis_subcostmat = list(x=NA, xpath=''),
 			## Sequence Data Series
@@ -290,12 +290,11 @@
 				unique(col[which(!is.null(col) & !is.nan(col) & !is.na(col))])
 			})
 
-			## BREAK SCOPE TO SAVE 
-			## (both alphabet and var name mapping for alphabet)
+			## BREAK SCOPE TO SAVE (both alphabet and var name mapping for alphabet)
 			saveModel(loadModel(), xname='analysis_alphabet', x=li, xpath=inFile$datapath)
 			
 			## UPDATE SELECTION OF ACTION COLUMN
-			updateSelectInput(session, "alphabet_selectActionColumn", label = "Action Column", choices = colnames(df), 
+			updateSelectInput(session, "alphabet_selectActionColumn", label = "Category Column", choices = colnames(df), 
 				selected = ifelse(exists(input$alphabet_selectActionColumn) & input$alphabet_selectActionColumn %in% colnames(df), input$alphabet_selectActionColumn, colnames(df)[1])
 				# selected = input$alphabet_selectActionColumn
 				)
@@ -310,16 +309,14 @@
 			## OUTPUT: list of alphabet items (action, firm, etc.) 
 			str(li)
 			if (length(varnamemap) > 0) {
-				## update model
 				model <- loadModel()
+				model[['analysis_alphabet']]$categoryvarname <- input$alphabet_selectActionColumn
 				model[['analysis_alphabet']]$varnamemap <- varnamemap
 				saveRDS(model, file=MODEL_FILE)
-				cat(sprintf('\nAbbreviations for Actions in Column: `%s`\n %s', 
+				cat(sprintf('\nAbbreviations for Column: `%s`\n %s', 
 					input$alphabet_selectActionColumn, printNamedList(varnamemap)))
 			}
-			# cat(sprintf('\n Abbreviations for Actions in Column: `%s`\n',printNamedList(varnamemap)))
 
-			# print('FINISHED')
 		})
 
 
@@ -333,31 +330,42 @@
 			if (is.null(inFile)) 
 				return(NULL)
 			
+			model <- loadModel()
+
 			## INPUT
-			df <- read.csv(inFile$datapath, header = T, na.strings=c('','""'), stringsAsFactors=FALSE,
+			df <- read.csv(inFile$datapath, header = input$subcostmat_header, na.strings=c('','""'), stringsAsFactors=FALSE,
+				# row.names=input$subcostmat_rownames,
 				fileEncoding=input$subcostmat_fileEncoding, #'UTF-8',
 				check.names=TRUE, strip.white=TRUE)
+
+			alphabet <- model$analysis_alphabet$x
+			categoryvarname <- model$analysis_alphabet$categoryvarname
+			varnamemap <- model$analysis_alphabet$varnamemap
+			ncats <- length(varnamemap)
+			# print(alphabet)
+			# print(categoryvarname)
+			# print(varnamemap)
 
 			## automatically determine column names
 			nrows <- nrow(df)
 			ncols <- ncol(df)
-			if (nrows != ncols) {
-				if (nrows > ncols) {   ## var names as column headers (but no rownames)
-					row.names <- df[,1]
-					df <- df[,-1]
-					row.names(df) <- row.names
-				} else { ## var names as rownames (but no column headers)
+			hasColNames <- nrows > ncats ## if 1 more row than #cats --> has col name
+			hasRowNames <- ncols > ncats ## if 1 more col than #cats --> has row name
 
+			df <- if (hasColNames & hasRowNames) { # is Square
+				# .rownames <-  df[,1]; # .colnames <-  df[1,]
+					df <- df[-1,-1]
+				} else if (nrows > ncols) {
+					## varnames in 1st row  (as column headers)
+					df <- df[-1, ]
+				} else if (ncols > nrows) {
+					## varnames in 1st col (as row names)
+					df <- df[ ,-1]
+				} else {
+					df ## NO CHANGE (no col names and no row names)
 				}
-			}
-			
-			# if (input$rownames) {
-				row.names <- df[,1]
-				df <- df[,-1]
-				row.names(df) <- row.names
-			# } else {
-			# 	row.names <- names(df)
-			# }
+			colnames(df) <- names(varnamemap)
+			rownames(df) <- names(varnamemap)
 
 			mat <- as.matrix(df)
 
@@ -409,7 +417,7 @@
 			model <- loadModel()
 			
 			## INPUT
-			df <- read.csv(inFile$datapath, header = T, sep=',', fill=TRUE, stringsAsFactors=FALSE,
+			df <- read.csv(inFile$datapath, header = input$seqdata_header, sep=',', fill=TRUE, stringsAsFactors=FALSE,
 				fileEncoding=input$seqdata_fileEncoding, #'UTF-8',
 				check.names=TRUE, strip.white=TRUE)
 			model$analysis_data <- list(x=df, xpath=inFile$datapath)

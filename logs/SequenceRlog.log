@@ -16,12 +16,12 @@ The following objects are masked from 'package:base':
 
 Warning: jqui_resizabled() will be deprecated, please use jqui_resizable() instead.
 
-Listening on http://127.0.0.1:5787
+Listening on http://127.0.0.1:6411
 Browser path: "C:/Users/steph/Google Drive/Rapp/SequenceR/GoogleChromePortable/App/Chrome-bin/chrome.exe"
-[1856:22812:0414/193315.375:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
-[1856:22812:0414/193315.376:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
-[1856:22812:0414/193315.376:ERROR:disk_cache.cc(178)] Unable to create cache
-[1856:22812:0414/193315.376:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
+[17524:6356:0414/203943.089:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
+[17524:6356:0414/203943.089:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
+[17524:6356:0414/203943.089:ERROR:disk_cache.cc(178)] Unable to create cache
+[17524:6356:0414/203943.089:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
 Opening in existing browser session.
 
 SERVER:  MODEL STRUCT
@@ -31,6 +31,9 @@ $analysis_alphabet$x
 
 $analysis_alphabet$xpath
 [1] ""
+
+$analysis_alphabet$categoryvarname
+[1] NA
 
 $analysis_alphabet$varnamemap
 [1] NA
@@ -66,11 +69,3 @@ $analysis_dist_settings$indel
 [1] 1
 
 
-Warning in read.table(file = file, header = header, sep = sep, quote = quote,  :
-  invalid input found on input connection 'C:\Users\steph\AppData\Local\Temp\Rtmp8UewBC/c26e04ec41026bdf734d94b1/0.csv'
-Warning in read.table(file = file, header = header, sep = sep, quote = quote,  :
-  incomplete final line found by readTableHeader on 'C:\Users\steph\AppData\Local\Temp\Rtmp8UewBC/c26e04ec41026bdf734d94b1/0.csv'
-Warning in read.table(file = file, header = header, sep = sep, quote = quote,  :
-  invalid input found on input connection 'C:\Users\steph\AppData\Local\Temp\Rtmp8UewBC/c26e04ec41026bdf734d94b1/0.csv'
-Warning in read.table(file = file, header = header, sep = sep, quote = quote,  :
-  incomplete final line found by readTableHeader on 'C:\Users\steph\AppData\Local\Temp\Rtmp8UewBC/c26e04ec41026bdf734d94b1/0.csv'

@@ -7,10 +7,10 @@ fileEncodingVec <- c(
 	"latin1"="latin1",
 	"UTF-8"="UTF-8",
 	"UTF-8-BOM"="UTF-8-BOM",
-	"UCS-2LE"="UCS-2LE", 
+	"UTF-16"="UTF-16",
 	"UTF-16LE"="UTF-16LE", 
 	"UCS-2"="UCS-2", 
-	"UTF-16"="UTF-16"
+	"UCS-2LE"="UCS-2LE"
 )
 
 ## UI #####################################
@@ -131,7 +131,7 @@ actionButtonUIcheckdata <- function(id, label) {
 	)
 }
 
-fileInputUI <- function(fileId, heading, fileEncodingId) {
+fileInputUI <- function(fileId, heading, headerId, rownamesId, fileEncodingId) {
 	tagList(
 		fileInput(fileId, h3(heading),
 			multiple = F,
@@ -140,6 +140,8 @@ fileInputUI <- function(fileId, heading, fileEncodingId) {
 			  "text/comma-separated-values,text/plain",
 			  ".csv")
 		),
+		checkboxInput(headerId, "Header", TRUE), 
+		# checkboxInput(rownamesId, "Row Names", TRUE),
 		selectInput(fileEncodingId, "File Encoding", fileEncodingVec)
 	)
 }
@@ -211,7 +213,7 @@ tableOutputSummaryAlphabet <- function(id, title) {
 	tagList(
 		h4(title),
 		verbatimTextOutput(id),
-		selectInput("alphabet_selectActionColumn", "Action Column", c())
+		selectInput("alphabet_selectActionColumn", "Category Column", c())
 	) 
 }
 
