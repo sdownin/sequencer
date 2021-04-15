@@ -81,6 +81,19 @@ SequenceR/
 
 All notable changes to this project will be documented in this section.
 
+#### [0.4.3] - 2021-04-14
+```
+Added
+ - File encoding selection for input files (alphabet, substitution cost matrix, sequence data)
+ - Category column selection for sequence alphabet input
+
+Changed
+ - Substitute abbreviations for category (action) names: A,...,Z,A2,...,Z2,A3,...,Z3,...
+ - Alphabet summary (data input step 1) to include sequence category abbreviations 
+
+Removed
+ (none)
+```
 
 #### [0.4.2] - 2020-06-24
 ```

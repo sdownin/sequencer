@@ -351,9 +351,6 @@
 			actionCol <- model$analysis_alphabet$actionCol
 			varnamemap <- model$analysis_alphabet$varnamemap
 			ncats <- length(varnamemap)
-			# print(alphabet)
-			# print(actionCol)
-			# print(varnamemap)
 
 			## automatically determine column names
 			nrows <- nrow(df)
@@ -377,11 +374,6 @@
 			rownames(df) <- names(varnamemap)
 
 			mat <- as.matrix(df)
-
-			# if (nrow(mat) != ncol(mat)) {
-			# 	print('Rows and Columns are different dimensions. Are you sure you selected a substitution cost matrix?')
-			# 	return()
-			# }
 
 			## SAVE
 			saveModel(loadModel(), xname='analysis_subcostmat', x=mat, xpath=inFile$datapath)
@@ -450,25 +442,12 @@
 			model[['analysis_alphabet']]$periodCol <- periodCol
 			saveRDS(model, file=MODEL_FILE)
 
-			# print(actionCol)
-			# print(firmCol)
-			# print(periodCol)
-			# print(varnamemap)
-			# print(df)
-			# return();
-			# if ( ! actionCol %in% names(df)) {
-			# 	print('actionCol not in names(df)');
-			# 	return();
-			# }
 
 			## REPLACE ACTION NAMES WITH ABBREVIATIONS
 			for (i in 1:length(varnamemap)) {
 				idx <- which(df[,actionCol] == varnamemap[[i]])
 				df[idx,actionCol] <- names(varnamemap)[i]
 			}
-
-			# print(df)
-			# return();
 
 			## Data based on df, alphabet, and main variable names
 			periods <- unique(df[,periodCol])

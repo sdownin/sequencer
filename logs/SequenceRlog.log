@@ -16,12 +16,12 @@ The following objects are masked from 'package:base':
 
 Warning: jqui_resizabled() will be deprecated, please use jqui_resizable() instead.
 
-Listening on http://127.0.0.1:6757
+Listening on http://127.0.0.1:7952
 Browser path: "C:/Users/steph/Google Drive/Rapp/SequenceR/GoogleChromePortable/App/Chrome-bin/chrome.exe"
-[11468:16656:0414/214709.651:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
-[11468:16656:0414/214709.651:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
-[11468:16656:0414/214709.651:ERROR:disk_cache.cc(178)] Unable to create cache
-[11468:16656:0414/214709.651:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
+[22504:13052:0414/215942.154:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
+[22504:13052:0414/215942.154:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
+[22504:13052:0414/215942.155:ERROR:disk_cache.cc(178)] Unable to create cache
+[22504:13052:0414/215942.155:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
 Opening in existing browser session.
 
 SERVER:  MODEL STRUCT
@@ -74,4 +74,233 @@ $analysis_dist_settings$norm
 $analysis_dist_settings$indel
 [1] 1
 
+
+
+TraMineR stable version 2.0-12 (Built: 2019-11-07)
+Website: http://traminer.unige.ch
+Please type 'citation("TraMineR")' for citation information.
+
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 4 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 7 distinct states appear in the data: 
+     1 = A
+     2 = B
+     3 = C
+     4 = D
+     5 = E
+     6 = F
+     7 = G
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+ [>] 4 sequences in the data set
+ [>] min/max sequence length: 74/262
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 4 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 7 distinct states appear in the data: 
+     1 = A
+     2 = B
+     3 = C
+     4 = D
+     5 = E
+     6 = F
+     7 = G
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+ [>] 4 sequences in the data set
+ [>] min/max sequence length: 108/283
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 4 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 7 distinct states appear in the data: 
+     1 = A
+     2 = B
+     3 = C
+     4 = D
+     5 = E
+     6 = F
+     7 = G
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+ [>] 4 sequences in the data set
+ [>] min/max sequence length: 70/250
+-- Attaching packages --------------------------------------- tidyverse 1.2.1 --
+v ggplot2 3.2.1     v readr   1.3.1
+v tibble  2.1.3     v purrr   0.3.3
+v tidyr   1.0.0     v stringr 1.4.0
+v ggplot2 3.2.1     v forcats 0.4.0
+-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()
+ [!] 'with.missing' set to FALSE as 'seqdata' doesn't contain missing values
+ [>] 4 sequences with 7 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+ [>] 4 distinct sequences
+ [>] min/max sequence length: 74/262
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.12 secs
+ [!] 'with.missing' set to FALSE as 'seqdata' doesn't contain missing values
+ [>] 4 sequences with 7 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+ [>] 4 distinct sequences
+ [>] min/max sequence length: 108/283
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.16 secs
+ [!] 'with.missing' set to FALSE as 'seqdata' doesn't contain missing values
+ [>] 4 sequences with 7 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+ [>] 4 distinct sequences
+ [>] min/max sequence length: 70/250
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.14 secs
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 3 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 7 distinct states appear in the data: 
+     1 = A
+     2 = B
+     3 = C
+     4 = D
+     5 = E
+     6 = F
+     7 = G
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+ [>] 3 sequences in the data set
+ [>] min/max sequence length: 70/143
+ [!] 'with.missing' set to FALSE as 'seqdata' doesn't contain missing values
+ [>] 3 sequences with 7 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 70/143
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.08 secs
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 3 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 7 distinct states appear in the data: 
+     1 = A
+     2 = B
+     3 = C
+     4 = D
+     5 = E
+     6 = F
+     7 = G
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+ [>] 3 sequences in the data set
+ [>] min/max sequence length: 100/116
+ [!] 'with.missing' set to FALSE as 'seqdata' doesn't contain missing values
+ [>] 3 sequences with 7 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 100/116
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.07 secs
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 3 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 7 distinct states appear in the data: 
+     1 = A
+     2 = B
+     3 = C
+     4 = D
+     5 = E
+     6 = F
+     7 = G
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+ [>] 3 sequences in the data set
+ [>] min/max sequence length: 122/162
+ [!] 'with.missing' set to FALSE as 'seqdata' doesn't contain missing values
+ [>] 3 sequences with 7 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 122/162
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.09 secs
+ [>] found missing values ('NA') in sequence data
+ [>] preparing 3 sequences
+ [>] coding void elements with '%' and missing values with '*'
+ [>] 7 distinct states appear in the data: 
+     1 = A
+     2 = B
+     3 = C
+     4 = D
+     5 = E
+     6 = F
+     7 = G
+ [>] state coding:
+       [alphabet]  [label]  [long label] 
+     1  A           A        A
+     2  B           B        B
+     3  C           C        C
+     4  D           D        D
+     5  E           E        E
+     6  F           F        F
+     7  G           G        G
+ [>] 3 sequences in the data set
+ [>] min/max sequence length: 250/283
+ [!] 'with.missing' set to FALSE as 'seqdata' doesn't contain missing values
+ [>] 3 sequences with 7 distinct states
+ [>] checking 'sm' (one value for each state, triangle inequality)
+ [>] 3 distinct sequences
+ [>] min/max sequence length: 250/283
+ [>] computing distances using the OM metric
+ [>] elapsed time: 0.15 secs
+Loading required package: ggpubr
+Loading required package: magrittr
+
+Attaching package: 'magrittr'
+
+The following object is masked from 'package:purrr':
+
+    set_names
+
+The following object is masked from 'package:tidyr':
+
+    extract
 
