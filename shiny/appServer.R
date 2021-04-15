@@ -17,7 +17,7 @@
 	{
 		return(list(
 			## Sequence Alphabet
-			analysis_alphabet = list(x=NA, xpath='', categoryvarname=NA, varnamemap=NA), 
+			analysis_alphabet = list(x=NA, xpath='', varnamemap=NA, actionCol=NA, firmCol=NA, periodCol=NA), 
 			## Substitution Cost Matrix
 			analysis_subcostmat = list(x=NA, xpath=''),
 			## Sequence Data Series
@@ -289,9 +289,6 @@
 				# as.factor(unique(col[which(!is.null(col) & !is.nan(col) & !is.na(col))]))
 				unique(col[which(!is.null(col) & !is.nan(col) & !is.na(col))])
 			})
-
-			## BREAK SCOPE TO SAVE (both alphabet and var name mapping for alphabet)
-			saveModel(loadModel(), xname='analysis_alphabet', x=li, xpath=inFile$datapath)
 			
 			## UPDATE SELECTION OF ACTION COLUMN
 			updateSelectInput(session, "alphabet_selectActionColumn", label = "Category Column", choices = colnames(df), 
@@ -300,22 +297,34 @@
 				)
 
 			## add var name abbreviations
-			varnamemap <- if (input$alphabet_selectActionColumn %in% names (li)) {
+			varnamemap <- if (input$alphabet_selectActionColumn %in% names(li)) {
 					getNameAbbrevList(li[[input$alphabet_selectActionColumn]])
 				} else {
-					varnamemap <- list()
+					x <- li[[1]]
+					names(x) <- li[[1]]
+					x
 				}
 
 			## OUTPUT: list of alphabet items (action, firm, etc.) 
 			str(li)
 			if (length(varnamemap) > 0) {
 				model <- loadModel()
-				model[['analysis_alphabet']]$categoryvarname <- input$alphabet_selectActionColumn
+				model[['analysis_alphabet']]$actionCol <- input$alphabet_selectActionColumn
 				model[['analysis_alphabet']]$varnamemap <- varnamemap
 				saveRDS(model, file=MODEL_FILE)
 				cat(sprintf('\nAbbreviations for Column: `%s`\n %s', 
 					input$alphabet_selectActionColumn, printNamedList(varnamemap)))
 			}
+
+			## REPLACE ACTION NAMES WITH ABBREVIATIONS
+			if (input$alphabet_selectActionColumn %in% names(li)) {
+				for (i in 1:length(varnamemap)) {
+					idx <- which(li[[input$alphabet_selectActionColumn]] == varnamemap[[i]])
+					li[[input$alphabet_selectActionColumn]][idx] <- names(varnamemap)[i]
+				}
+			}
+			## BREAK SCOPE TO SAVE (both alphabet and var name mapping for alphabet)
+			saveModel(loadModel(), xname='analysis_alphabet', x=li, xpath=inFile$datapath)
 
 		})
 
@@ -339,11 +348,11 @@
 				check.names=TRUE, strip.white=TRUE)
 
 			alphabet <- model$analysis_alphabet$x
-			categoryvarname <- model$analysis_alphabet$categoryvarname
+			actionCol <- model$analysis_alphabet$actionCol
 			varnamemap <- model$analysis_alphabet$varnamemap
 			ncats <- length(varnamemap)
 			# print(alphabet)
-			# print(categoryvarname)
+			# print(actionCol)
 			# print(varnamemap)
 
 			## automatically determine column names
@@ -351,7 +360,7 @@
 			ncols <- ncol(df)
 			hasColNames <- nrows > ncats ## if 1 more row than #cats --> has col name
 			hasRowNames <- ncols > ncats ## if 1 more col than #cats --> has row name
-
+			## remove name row or col if present, and then assign rownames(), colnames()
 			df <- if (hasColNames & hasRowNames) { # is Square
 				# .rownames <-  df[,1]; # .colnames <-  df[1,]
 					df <- df[-1,-1]
@@ -417,17 +426,51 @@
 			model <- loadModel()
 			
 			## INPUT
-			df <- read.csv(inFile$datapath, header = input$seqdata_header, sep=',', fill=TRUE, stringsAsFactors=FALSE,
+			df <- read.csv(inFile$datapath, header = TRUE, sep=',', fill=TRUE, stringsAsFactors=FALSE,
 				fileEncoding=input$seqdata_fileEncoding, #'UTF-8',
 				check.names=TRUE, strip.white=TRUE)
+
+			## Input
 			model$analysis_data <- list(x=df, xpath=inFile$datapath)
 			saveRDS(model, file=MODEL_FILE)
 			# saveModel(model, xname='analysis_data', x=df, xpath=inFile$datapath)
 
+			## Main model attributes
 			alphabet <- model$analysis_alphabet$x
-			periodCol <- 'period'
-			firmCol <- 'firm'
-			actionCol <- 'action'
+			varnamemap <- model$analysis_alphabet$varnamemap
+			ncats <- length(varnamemap)
+			## Main variable names
+			actionCol <- model$analysis_alphabet$actionCol
+			firmCol <- names(alphabet)[ ! names(alphabet) %in%  actionCol ][1] ## 'firm'
+			.remainingCols <- names(df)[! names(df) %in% c(actionCol,firmCol) ]
+			periodCol <- .remainingCols[length(.remainingCols)] ##'period'
+
+			## UPDATE MODEL
+			model[['analysis_alphabet']]$firmCol <- firmCol
+			model[['analysis_alphabet']]$periodCol <- periodCol
+			saveRDS(model, file=MODEL_FILE)
+
+			# print(actionCol)
+			# print(firmCol)
+			# print(periodCol)
+			# print(varnamemap)
+			# print(df)
+			# return();
+			# if ( ! actionCol %in% names(df)) {
+			# 	print('actionCol not in names(df)');
+			# 	return();
+			# }
+
+			## REPLACE ACTION NAMES WITH ABBREVIATIONS
+			for (i in 1:length(varnamemap)) {
+				idx <- which(df[,actionCol] == varnamemap[[i]])
+				df[idx,actionCol] <- names(varnamemap)[i]
+			}
+
+			# print(df)
+			# return();
+
+			## Data based on df, alphabet, and main variable names
 			periods <- unique(df[,periodCol])
 			firms <- as.character(alphabet[[firmCol]])
 			actionAlphabet <- as.character(alphabet[[actionCol]])
@@ -438,7 +481,7 @@
 				pd <- periods[t]
 				tidx <- which(df[,periodCol] == pd)
 				t.df <- df[tidx, ]
-				t.l <- longDf2SeqList(t.df, firms, 'firm', 'action')
+				t.l <- longDf2SeqList(t.df, firms, firmCol, actionCol)
 				t.ldf <- seqList2Df(t.l)
 				right <- 'DEL'  # left <- 'NA' # gaps <- 'NA'
 				seqdefs[[pd]] <- seqdef(t.ldf, alphabet=actionAlphabet, right=right)
@@ -507,9 +550,9 @@
 				sm <- model$analysis_subcostmat$x
 				storage.mode(sm) <- "numeric"
 
-				actionCol <- 'action'
-				periodCol <- 'period'
-				firmCol <- 'firm'
+				actionCol <- model$analysis_alphabet$actionCol
+				firmCol <- model$analysis_alphabet$firmCol
+				periodCol <- model$analysis_alphabet$periodCol
 				right <- 'DEL'  # left <- 'NA' # gaps <- 'NA' ## seqdef parameter
 
 				periods <- unique(dat[,periodCol])

@@ -131,20 +131,6 @@ actionButtonUIcheckdata <- function(id, label) {
 	)
 }
 
-fileInputUI <- function(fileId, heading, headerId, rownamesId, fileEncodingId) {
-	tagList(
-		fileInput(fileId, h3(heading),
-			multiple = F,
-			accept = c(
-			  "text/csv",
-			  "text/comma-separated-values,text/plain",
-			  ".csv")
-		),
-		checkboxInput(headerId, "Header", TRUE), 
-		# checkboxInput(rownamesId, "Row Names", TRUE),
-		selectInput(fileEncodingId, "File Encoding", fileEncodingVec)
-	)
-}
 
 fileInputUIAlphabet <- function(fileId, heading) {
 	tagList(
@@ -160,6 +146,35 @@ fileInputUIAlphabet <- function(fileId, heading) {
 		# selectInput("alphabet_encoding", "Encoding", c()),
 		selectInput("alphabet_fileEncoding", "File Encoding", fileEncodingVec) #,
 		# selectInput("alphabet_selectActionColumn", "Select Action Column", c())
+	)
+}
+
+fileInputUISubcostmat <- function(fileId, heading, headerId, fileEncodingId) {
+	tagList(
+		fileInput(fileId, h3(heading),
+			multiple = F,
+			accept = c(
+			  "text/csv",
+			  "text/comma-separated-values,text/plain",
+			  ".csv")
+		),
+		checkboxInput(headerId, "Header", TRUE),
+		selectInput(fileEncodingId, "File Encoding", fileEncodingVec)
+	)
+}
+
+fileInputUI <- function(fileId, heading, headerId, fileEncodingId) {
+	tagList(
+		fileInput(fileId, h3(heading),
+			multiple = F,
+			accept = c(
+			  "text/csv",
+			  "text/comma-separated-values,text/plain",
+			  ".csv")
+		),
+		checkboxInput(headerId, "Header", TRUE), 
+		# checkboxInput(rownamesId, "Row Names", TRUE),
+		selectInput(fileEncodingId, "File Encoding", fileEncodingVec)
 	)
 }
 

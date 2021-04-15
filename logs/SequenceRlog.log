@@ -16,12 +16,12 @@ The following objects are masked from 'package:base':
 
 Warning: jqui_resizabled() will be deprecated, please use jqui_resizable() instead.
 
-Listening on http://127.0.0.1:6411
+Listening on http://127.0.0.1:6757
 Browser path: "C:/Users/steph/Google Drive/Rapp/SequenceR/GoogleChromePortable/App/Chrome-bin/chrome.exe"
-[17524:6356:0414/203943.089:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
-[17524:6356:0414/203943.089:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
-[17524:6356:0414/203943.089:ERROR:disk_cache.cc(178)] Unable to create cache
-[17524:6356:0414/203943.089:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
+[11468:16656:0414/214709.651:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
+[11468:16656:0414/214709.651:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
+[11468:16656:0414/214709.651:ERROR:disk_cache.cc(178)] Unable to create cache
+[11468:16656:0414/214709.651:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
 Opening in existing browser session.
 
 SERVER:  MODEL STRUCT
@@ -32,10 +32,16 @@ $analysis_alphabet$x
 $analysis_alphabet$xpath
 [1] ""
 
-$analysis_alphabet$categoryvarname
+$analysis_alphabet$varnamemap
 [1] NA
 
-$analysis_alphabet$varnamemap
+$analysis_alphabet$actionCol
+[1] NA
+
+$analysis_alphabet$firmCol
+[1] NA
+
+$analysis_alphabet$periodCol
 [1] NA
 
 

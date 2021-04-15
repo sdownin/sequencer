@@ -339,12 +339,22 @@ write.table(data.frame(time=systime, measures=paste(measures, collapse=', ')), f
     return(list())
   }
 }
+
 model <- .checkModel()
 summary(model)
 print(model$analysis_alphabet)
 
 print(model$analysis_dist_settings)
 input <- .checkInput()
+
+
+# varnamemap <- if (FALSE) {
+#   'eval False'
+# } else {
+#   x <- 1:3
+#   names(x) <- 1:3
+#   x
+# }
 
 
 actions <- c("Small", "Quest", "Task",  "Idea",  "Elab",  "Chal",  "Agr" )
