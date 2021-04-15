@@ -46,7 +46,6 @@ $(document).ready(function(){
 	deactivateTab('Outputs');
 	deactivateTab('Plots');
 
-
 	// NAVIGATION
 	// 2. Measures
 	$('button[id^=analysis_measures_goto]').click(function(){
@@ -65,13 +64,20 @@ $(document).ready(function(){
 	// DEBUG FEATURES
 	$('select[id^=analysis_distance_norm]').attr('disabled',true);
 
-	// Disable Alphabet Action Column Selection
-	if ($("#pizza").is(":checked")) {
-	    $('#pizza_kind').prop('disabled', false);
-	}
-	else {
-	    $('#pizza_kind').prop('disabled', 'disabled');
-	}
+	// DISABLE ALPHABET ACTION Column Selection
+	$("#alphabet_selectActionColumn").prop('disabled', true);
+	$(document).on("shiny:value", function(){
+		let $sel = $("#alphabet_selectActionColumn");
+		let hasSelections = $sel.val() || $sel.children('option').length;
+		$sel.prop('disabled', hasSelections ? false : true)
+	})
+
+	// if ($("#pizza").is(":checked")) {
+	//     $('#pizza_kind').prop('disabled', false);
+	// }
+	// else {
+	//     $('#pizza_kind').prop('disabled', 'disabled');
+	// }
 
 	// // update plot region height
 	// $('#analysis_run').on('click', function(){

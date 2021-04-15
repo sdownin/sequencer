@@ -294,33 +294,30 @@
 			## (both alphabet and var name mapping for alphabet)
 			saveModel(loadModel(), xname='analysis_alphabet', x=li, xpath=inFile$datapath)
 			
-			## Update
+			## UPDATE SELECTION OF ACTION COLUMN
 			updateSelectInput(session, "alphabet_selectActionColumn", label = "Action Column", choices = colnames(df), 
 				selected = ifelse(exists(input$alphabet_selectActionColumn) & input$alphabet_selectActionColumn %in% colnames(df), input$alphabet_selectActionColumn, colnames(df)[1])
 				# selected = input$alphabet_selectActionColumn
 				)
 
-			print('called updateSelectInput()')
-			print(li)
-			print(input$alphabet_selectActionColumn)
-			print(li[[input$alphabet_selectActionColumn]])
-			# cat("updateSelectInput")
-			# cat(input$alphabet_selectActionColumn)
-
 			## add var name abbreviations
-			# varnamemap <- getNameAbbrevList(li[[input$alphabet_selectActionColumn]])
+			varnamemap <- if (input$alphabet_selectActionColumn %in% names (li)) {
+					getNameAbbrevList(li[[input$alphabet_selectActionColumn]])
+				} else {
+					varnamemap <- list()
+				}
 
-			# ## update model
-			# model <- loadModel()
-			# model[['analysis_alphabet']]$varnamemap <- varnamemap
-			# saveRDS(model, file=MODEL_FILE)
-
-			# print('saved model with varnamemap')
-
-			# str(li)
-			# # cat(sprintf('\nAbbreviations for Actions in Column: `%s`\n%s', 
-			# # 	input$alphabet_selectActionColumn, printNamedList(varnamemap)))
-			# # cat(sprintf('\n Abbreviations for Actions in Column: `%s`\n',printNamedList(varnamemap)))
+			## OUTPUT: list of alphabet items (action, firm, etc.) 
+			str(li)
+			if (length(varnamemap) > 0) {
+				## update model
+				model <- loadModel()
+				model[['analysis_alphabet']]$varnamemap <- varnamemap
+				saveRDS(model, file=MODEL_FILE)
+				cat(sprintf('\nAbbreviations for Actions in Column: `%s`\n %s', 
+					input$alphabet_selectActionColumn, printNamedList(varnamemap)))
+			}
+			# cat(sprintf('\n Abbreviations for Actions in Column: `%s`\n',printNamedList(varnamemap)))
 
 			# print('FINISHED')
 		})

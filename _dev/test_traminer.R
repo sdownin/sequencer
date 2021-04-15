@@ -341,6 +341,8 @@ write.table(data.frame(time=systime, measures=paste(measures, collapse=', ')), f
 }
 model <- .checkModel()
 summary(model)
+print(model$analysis_alphabet)
+
 print(model$analysis_dist_settings)
 input <- .checkInput()
 
