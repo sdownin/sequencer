@@ -17,7 +17,7 @@
 	{
 		return(list(
 			## Sequence Alphabet
-			analysis_alphabet = list(x=NA, xpath=''), 
+			analysis_alphabet = list(x=NA, xpath='', varnamemap=NA), 
 			## Substitution Cost Matrix
 			analysis_subcostmat = list(x=NA, xpath=''),
 			## Sequence Data Series
@@ -79,7 +79,7 @@
 	exists <- function(x)
 	{
 		if(any(is.null(x))) return(FALSE)
-		if(class(x) %in% c('list','data.frame')) return(TRUE)
+		if(class(x) %in% c('list','data.frame') & length(x)==0) return(FALSE)
 		if(all(is.nan(x))) return(FALSE)
 		if(all(is.na(x))) return(FALSE)
 		if(all(x == '')) return(FALSE)
@@ -94,6 +94,37 @@
 			# }
 			image(model$analysis_subcostmat$x)
 		})
+	}
+
+
+	##
+	# Get list of action name abbreviations 
+	#  (for compact display of subcostmat)
+	##
+	getNameAbbrevList <- function(actions) {
+	  num.categories <- length(actions)
+	  out <- as.list(actions)
+	  abbs <- LETTERS
+	  i <- 1
+	  while( length(abbs) < num.categories) {
+	    i <- i+1
+	    abbs <- c(abbs, sapply(LETTERS, function(x)paste(c(x,i),collapse = '')))
+	  }
+	  names(out) <- abbs[1:length(out)]
+	  
+	  return(out)
+	}
+
+	##
+	#
+	##
+	printNamedList <- function(li){
+	  names <- names(li)
+	  if (length(names)==0 | is.null(names) | all(is.na(names))) {
+	    names(li) <- as.character(1:length(li))
+	  }
+	  items <- sapply(1:length(li), function(i)paste(c(names(li)[i],li[[i]]),collapse = ' = '))
+	  return(paste(items, collapse = '; '))
 	}
 
 
@@ -241,12 +272,6 @@
 		cat('\nSERVER:  MODEL STRUCT\n')
 		print(model)
 
-		# server logic
-		# callModule(sliderTextServer, "one")
-		# callModule(sliderTextServer, "two")
-		# callModule(actionButtonServer, "one")
-		# callModule(checkboxGroupServer, "one")
-
 		# alphabet table input #TODO: find why cannot call from external module?
 		output$analysis_file_alphabet_summary <- renderPrint({
 			inFile <- input$analysis_file_alphabet
@@ -265,10 +290,39 @@
 				unique(col[which(!is.null(col) & !is.nan(col) & !is.na(col))])
 			})
 
-			## BREAK SCOPE TO SAVE
+			## BREAK SCOPE TO SAVE 
+			## (both alphabet and var name mapping for alphabet)
 			saveModel(loadModel(), xname='analysis_alphabet', x=li, xpath=inFile$datapath)
 			
-			str(li)
+			## Update
+			updateSelectInput(session, "alphabet_selectActionColumn", label = "Action Column", choices = colnames(df), 
+				selected = ifelse(exists(input$alphabet_selectActionColumn) & input$alphabet_selectActionColumn %in% colnames(df), input$alphabet_selectActionColumn, colnames(df)[1])
+				# selected = input$alphabet_selectActionColumn
+				)
+
+			print('called updateSelectInput()')
+			print(li)
+			print(input$alphabet_selectActionColumn)
+			print(li[[input$alphabet_selectActionColumn]])
+			# cat("updateSelectInput")
+			# cat(input$alphabet_selectActionColumn)
+
+			## add var name abbreviations
+			# varnamemap <- getNameAbbrevList(li[[input$alphabet_selectActionColumn]])
+
+			# ## update model
+			# model <- loadModel()
+			# model[['analysis_alphabet']]$varnamemap <- varnamemap
+			# saveRDS(model, file=MODEL_FILE)
+
+			# print('saved model with varnamemap')
+
+			# str(li)
+			# # cat(sprintf('\nAbbreviations for Actions in Column: `%s`\n%s', 
+			# # 	input$alphabet_selectActionColumn, printNamedList(varnamemap)))
+			# # cat(sprintf('\n Abbreviations for Actions in Column: `%s`\n',printNamedList(varnamemap)))
+
+			# print('FINISHED')
 		})
 
 
@@ -284,8 +338,21 @@
 			
 			## INPUT
 			df <- read.csv(inFile$datapath, header = T, na.strings=c('','""'), stringsAsFactors=FALSE,
-				# fileEncoding=input$subcostmat_fileEncoding, #'UTF-8',
+				fileEncoding=input$subcostmat_fileEncoding, #'UTF-8',
 				check.names=TRUE, strip.white=TRUE)
+
+			## automatically determine column names
+			nrows <- nrow(df)
+			ncols <- ncol(df)
+			if (nrows != ncols) {
+				if (nrows > ncols) {   ## var names as column headers (but no rownames)
+					row.names <- df[,1]
+					df <- df[,-1]
+					row.names(df) <- row.names
+				} else { ## var names as rownames (but no column headers)
+
+				}
+			}
 			
 			# if (input$rownames) {
 				row.names <- df[,1]
@@ -346,7 +413,7 @@
 			
 			## INPUT
 			df <- read.csv(inFile$datapath, header = T, sep=',', fill=TRUE, stringsAsFactors=FALSE,
-				# fileEncoding=input$seqdata_fileEncoding, #'UTF-8',
+				fileEncoding=input$seqdata_fileEncoding, #'UTF-8',
 				check.names=TRUE, strip.white=TRUE)
 			model$analysis_data <- list(x=df, xpath=inFile$datapath)
 			saveRDS(model, file=MODEL_FILE)

@@ -21,7 +21,7 @@
 								fileInputUIAlphabet("analysis_file_alphabet", '1. Sequence Alphabet')
 							),
 							mainPanel(
-								tableOutputSummaryUI("analysis_file_alphabet_summary", "Alphabet Summary") 
+								tableOutputSummaryAlphabet("analysis_file_alphabet_summary", "Alphabet Summary") 
 							),		
 						),
 						hr(),

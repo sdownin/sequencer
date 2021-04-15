@@ -65,6 +65,14 @@ $(document).ready(function(){
 	// DEBUG FEATURES
 	$('select[id^=analysis_distance_norm]').attr('disabled',true);
 
+	// Disable Alphabet Action Column Selection
+	if ($("#pizza").is(":checked")) {
+	    $('#pizza_kind').prop('disabled', false);
+	}
+	else {
+	    $('#pizza_kind').prop('disabled', 'disabled');
+	}
+
 	// // update plot region height
 	// $('#analysis_run').on('click', function(){
 

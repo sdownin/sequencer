@@ -345,6 +345,46 @@ print(model$analysis_dist_settings)
 input <- .checkInput()
 
 
+actions <- c("Small", "Quest", "Task",  "Idea",  "Elab",  "Chal",  "Agr" )
+
+num.categories <- length(actions)
+out <- as.list(actions)
+abbs <- LETTERS
+i <- 1
+while( length(abbs) < num.categories) {
+  i <- i+1
+  abbs <- c(abbs, sapply(LETTERS, function(x)paste(c(x,i),collapse = '')))
+}
+
+names(out) <- abbs[1:num.categories]
+print(out)
+
+getNameMapList <- function(actions) {
+  num.categories <- length(actions)
+  out <- as.list(actions)
+  abbs <- LETTERS
+  i <- 1
+  while( length(abbs) < num.categories) {
+    i <- i+1
+    abbs <- c(abbs, sapply(LETTERS, function(x)paste(c(x,i),collapse = '')))
+  }
+  names(out) <- abbs[1:num.categories]
+  
+  return(out)
+}
+
+printNamedList <- function(li){
+  names <- names(li)
+  if (length(names)==0 | is.null(names) | all(is.na(names))) {
+    names(li) <- as.character(1:length(li))
+  }
+  items <- sapply(1:length(li), function(i)paste(c(names(li)[i],li[[i]]),collapse = ' = '))
+  return(paste(items, collapse = '; '))
+}
+
+getNameMapList(c(actions,'hye','ho','lets','go','you','say','ok','eye','noway'))
+
+
 # mvad.dist.custom <- seqdist(mvad.seq, method = "OM",
 #                             indel = 1.5, sm = subm.custom)
 

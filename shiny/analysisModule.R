@@ -3,10 +3,10 @@ library(shiny)
 #library(shinydashboard)
 
 fileEncodingVec <- c(
+	"(default)"='',
 	"latin1"="latin1",
 	"UTF-8"="UTF-8",
 	"UTF-8-BOM"="UTF-8-BOM",
-	"(none)"=NA,
 	"UCS-2LE"="UCS-2LE", 
 	"UTF-16LE"="UTF-16LE", 
 	"UCS-2"="UCS-2", 
@@ -140,7 +140,7 @@ fileInputUI <- function(fileId, heading, fileEncodingId) {
 			  "text/comma-separated-values,text/plain",
 			  ".csv")
 		),
-		# selectInput(fileEncodingId "File Encoding", fileEncodingVec)
+		selectInput(fileEncodingId, "File Encoding", fileEncodingVec)
 	)
 }
 
@@ -156,7 +156,8 @@ fileInputUIAlphabet <- function(fileId, heading) {
 		#tags$hr(),
 		checkboxInput("header", "Header", TRUE),
 		# selectInput("alphabet_encoding", "Encoding", c()),
-		selectInput("alphabet_fileEncoding", "File Encoding", fileEncodingVec)
+		selectInput("alphabet_fileEncoding", "File Encoding", fileEncodingVec) #,
+		# selectInput("alphabet_selectActionColumn", "Select Action Column", c())
 	)
 }
 
@@ -206,6 +207,13 @@ tableOutputSummaryUI <- function(id, title) {
 	) 
 }
 
+tableOutputSummaryAlphabet <- function(id, title) {
+	tagList(
+		h4(title),
+		verbatimTextOutput(id),
+		selectInput("alphabet_selectActionColumn", "Action Column", c())
+	) 
+}
 
 tableOutputSummaryUIwithSpinner <- function(id, title) {
 	tagList(

@@ -16,12 +16,12 @@ The following objects are masked from 'package:base':
 
 Warning: jqui_resizabled() will be deprecated, please use jqui_resizable() instead.
 
-Listening on http://127.0.0.1:4984
+Listening on http://127.0.0.1:4527
 Browser path: "C:/Users/steph/Google Drive/Rapp/SequenceR/GoogleChromePortable/App/Chrome-bin/chrome.exe"
-[20764:6496:0414/170441.675:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
-[20764:6496:0414/170441.676:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
-[20764:6496:0414/170441.676:ERROR:disk_cache.cc(178)] Unable to create cache
-[20764:6496:0414/170441.676:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
+[19132:20776:0414/191224.617:ERROR:cache_util_win.cc(21)] Unable to move the cache: Access is denied. (0x5)
+[19132:20776:0414/191224.617:ERROR:cache_util.cc(141)] Unable to move cache folder C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\GPUCache to C:\Users\steph\AppData\Local\Google\Chrome\User Data\ShaderCache\old_GPUCache_000
+[19132:20776:0414/191224.617:ERROR:disk_cache.cc(178)] Unable to create cache
+[19132:20776:0414/191224.617:ERROR:shader_disk_cache.cc(620)] Shader Cache Creation failed: -2
 Opening in existing browser session.
 
 SERVER:  MODEL STRUCT
@@ -31,6 +31,9 @@ $analysis_alphabet$x
 
 $analysis_alphabet$xpath
 [1] ""
+
+$analysis_alphabet$varnamemap
+[1] NA
 
 
 $analysis_subcostmat
@@ -63,7 +66,3 @@ $analysis_dist_settings$indel
 [1] 1
 
 
-Warning in read.table(file = file, header = header, sep = sep, quote = quote,  :
-  invalid input found on input connection 'C:\Users\steph\AppData\Local\Temp\RtmpgRZP6h/808ed0a368e80a1f88a32754/0.csv'
-Warning in read.table(file = file, header = header, sep = sep, quote = quote,  :
-  incomplete final line found by readTableHeader on 'C:\Users\steph\AppData\Local\Temp\RtmpgRZP6h/808ed0a368e80a1f88a32754/0.csv'
