@@ -7,15 +7,15 @@
 
 | Stage | Platform | Version | Date | Type | Access Link |
 | ------- | ------- | ------- | ------- | ------- | ------- |
-| AOM2022 | Web (any computer with internet access) | 0.5.0 | 2022-07-30 | link | [SequenceR v0.5.0 Web App](https://sdowning.shinyapps.io/sequencer-webhost/, 'SequenceR v0.5.0 Web App') |
-| AOM2022 | Windows PC | 0.5.0 | 2022-07-30 | download | [SequenceR v0.5.0 Windows](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/EecDeADx3GlNsa99lq2dojkBsYn_6sf0wW3hg5GIFquHFw, 'SequenceR v0.5.0 Windows')  |
+| AOM2022 | Web (any computer with internet access) | 0.5.0 | 2022-07-30 | link | [SequenceR Web App](https://sdowning.shinyapps.io/sequencer-webhost/) |
+| AOM2022 | Windows PC | 0.5.0 | 2022-07-30 | download | [SequenceR Windows Portable App](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/EecDeADx3GlNsa99lq2dojkBsYn_6sf0wW3hg5GIFquHFw)  |
 | AOM2022 | Mac OS | - | - | - | Currently unsupported. Use web app.  |
 
-#### Web App Getting Started
+##### Web App Getting Started
 
 - Follow the link above and use the app online without download.
 
-#### Download Getting Started
+##### Download Getting Started
 
 - Download zipped file
 - Unzip, keeping all files inside same directory
@@ -23,11 +23,15 @@
 
 
 
+## Sequence Analysis Steps
+
 ### 1. Import Data
 
 1. Alphabet
 2. Substitution cost matrix
 3. Sequence data
+
+Example CSV files for formatting your input data are included in the `TestData/` directory in this repository. 
 
 [![](/_img/readme_analysis_data_import.png "Import data files")](#1-import-data)
 
