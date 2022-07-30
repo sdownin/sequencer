@@ -5,7 +5,7 @@
 
 ## Accessing the Software
 
-| Platform | Software Access | Type | Version | Date | Stage |
+| Platform | Software | Type | Version | Date | Stage |
 | ------- | ------- | ------- | ------- | ------- | ------- |
 | Web | [**SequenceR Web App**](https://sdowning.shinyapps.io/sequencer-webhost/) | link | 0.5.0 | 2022-07-30 | AOM2022 |
 | Windows PC | [**SequenceR Portable App**](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/EecDeADx3GlNsa99lq2dojkBsYn_6sf0wW3hg5GIFquHFw) | download | 0.5.0 | 2022-07-30 | AOM2022 |
