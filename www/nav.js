@@ -2,7 +2,7 @@
  *
  * SequenceR App
  *
- * main.js
+ * nav.js
  *
  */
 
