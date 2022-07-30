@@ -1,51 +1,32 @@
-(*Depracated*) SequenceR is under development at https://github.com/sdownin/sequencer 
-
-
 **SequenceR**  
 ==============
 
-User-Friendly Sequence Analysis in **R**
+(*Under development*) User-Friendly Sequence Analysis in **R**
 
-## Download
+## Web App
 
-| Stage | Version | Date | Download Link |
-| ----------- | ----------- | ----------- | ----------- |
-| MVP | 0.4.3 | 2021-04-14 | [SequenceR v0.4.3 2021-04-14](https://drive.google.com/file/d/1G6Y9NVjebt3xUgllT1ZiekFnL9CIza5e/view?usp=sharing, 'SequenceR v0.4.3') |
+| Stage | Platform | Version | Date | Download Link |
+| --------- | --------- | --------- | --------- | --------- |
+| AOM2022 | Web App | 0.5.0 | 2022-07-30 | [SequenceR v0.5.0 Web App](https://sdowning.shinyapps.io/sequencer-webhost/, 'SequenceR v0.5.0 Web App') |
 
-Archived Minor Versions
- - [v0.3.1 2019-12-04](https://drive.google.com/file/d/1xcJQGmt3eQMiv9LAodLvkmEsbiDc-75w/view?usp=sharing, 'SequenceR v0.3.1')
- - [v0.2.0 2019-11-12](https://drive.google.com/file/d/1FHvMK6yUAgqSjJkYDJlBiXKpNrMti1QF/view?usp=sharing, 'SequenceR v0.2.0')
+## Download (portable app)
 
+| Stage | Platform | Version | Date | Download Link |
+| --------- | --------- | --------- | --------- | --------- |
+| AOM2022 | Windows PC | 0.5.0 | 2022-07-30 | [SequenceR v0.5.0 Windows](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/EecDeADx3GlNsa99lq2dojkBsYn_6sf0wW3hg5GIFquHFw, 'SequenceR v0.5.0 Windows')  |
+| AOM2022 | Mac OS | - | - | Currently unsupported. Use web app.  |
 
-## Getting Started
+### Download Getting Started
 
 - Download zipped file
 - Unzip, keeping all files inside same directory
-- Run app by executing runfile: `run.vbs`
+- Run app by double clicking: `sequencer.exe`
 
-```
-SequenceR/
-    |--GoogleChromePortable/
-    |--logs/
-    |    └--SequenceRlog.txt
-    |--R-Portable/
-    |--shiny/
-    |    └--www/
-    |        └--js/
-    |            └--main.js
-    |    |--analysisModule.R
-    |    |--app.R
-    |    |--appServer.R
-    |    |--appUi.R
-    |--TestData/
-    |    |--test_alphabet.csv
-    |    |--test_data.csv
-    |    └--test_subcostmat.csv
-    |--run.vbs
-    └--runShinyApp.R
-```
 
-[![](/_img/tutorial_screenvid_analysis.gif "SequenceR")](#getting-started)
+Archived (Deprecated) Versions: 
+ - see https://github.com/sdownin/sequencer-proto 
+
+
 
 ### 1. Import Data
 
@@ -84,112 +65,17 @@ SequenceR/
 
 All notable changes to this project will be documented in this section.
 
-#### [0.4.3] - 2021-04-14
-```
-Added
- - File encoding selection for input files (alphabet, substitution cost matrix, sequence data)
- - Category column selection for sequence alphabet input
-
-Changed
- - Substitute abbreviations for category (action) names: A,...,Z,A2,...,Z2,A3,...,Z3,...
- - Alphabet summary (data input step 1) to include sequence category abbreviations 
-
-Removed
- (none)
-```
-
-#### [0.4.2] - 2020-06-24
+#### [0.5.0] - 2022-07-30
 ```
 Added
  (none)
 
 Changed
- - Predictability measure multiplied by -1.0 (see Rindova, Ferrier, & Wiltbank, 2010)
-   (note: grouping measure was already correct, multiplied by -1.0, in v0.4.1)
+ - Switched to electron.js framework (Chromium browser; runs on node.js; npm for package management; electron-packager for distributions)
+ - Changes simplicity measure from HHI to [-1 * ShannonEntropy] 
 
 Removed
  (none)
 ```
 
-#### [0.4.1] - 2020-06-21
-```
-Added
- - Test data
-
-Changed
- - Updated README
- - Moved archived SequenceR packages out of this reposity into Google Drive only
-
-Removed
- (none)
-```
-
-#### [0.4.0] - 2020-06-20
-```
-Added
- - Sequence measures: predictability, grouping, motif
- - Plot image resize in app
- - Plot save
- - Progress spinner icons
-
-Changed
- - Results save; fixed zip bug when saving only a subset of possible measures
-
-Removed
- (none)
-```
-
-#### [0.3.1] - 2019-12-04
-```
-Added
- - Sequence distance measure via optimal matching
- - Simplicity measure via HHI
-
-Changed
- (none)
-
-Removed
- (none)
-```
-
-#### [0.3.0] - 2019-12-02
-```
-Added
- - Analysis outputs
- - Download link
- - Readme screenshots
-
-Changed
- - Resources directories
-
-Removed
- (none)
-```
-
-
-#### [0.2.0] - 2019-11-12
-```
-Added
- - Sequence analysis dependencies in R-Portable
-
-Changed
- - App UI tabs
-
-Removed
- (none)
-```
-
-
-#### [0.1.0] - 2019-11-01
-```
-Added
- - SequenceR main Shiny app
- - GoogleChromePortable
- - R-Portable
-
-Changed
- (none)
-
-Removed
- (none)
-```
+Refer to previous versions' changelog at https://github.com/sdownin/sequencer-proto
