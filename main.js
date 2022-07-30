@@ -6,7 +6,7 @@ const path = require('path')
 
 
 const url = require('url')
-const port = "9191"
+const port = "3013" /*"9191"*/
 const child = require('child_process');
 const MACOS = "darwin"
 const WINDOWS = "win32"
@@ -69,7 +69,7 @@ function createWindow () {
 
     loading.once('show', () => {
       console.log(new Date().toISOString()+'::show loading')
-      mainWindow = new BrowserWindow({webPreferences:{nodeIntegration:false}, show:false, width: 800, height: 600, title:""})
+      mainWindow = new BrowserWindow({webPreferences:{nodeIntegration:false}, show:false, width: 1000, height: 700, title:"SequenceR", autoHideMenuBar:true})
       /*
         mainWindow = new BrowserWindow({
           width: 800,
@@ -89,7 +89,7 @@ function createWindow () {
           loading.hide()
           loading.close()
 
-        }, 2000)
+        }, 2500)
 
       })
       console.log(port)

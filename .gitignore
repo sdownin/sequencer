@@ -1,3 +1,49 @@
+*.exe*
+#*.png
+*.doc*
+*.xls*
+*.ppt*
+*.jpg
+*.jpeg
+*.csv*
+*.zip*
+*.tar*
+*.gz*
+*.bz*
+*.pdf*
+*.tmp*
+*.RData
+*.RDataTmp
+*.RDat*
+*.rda*
+*.rds*
+*.Rhistory*
+*.graph*
+*.db
+*.bgs
+*.luu
+*.rhes
+*.shess
+*.swp*
+glmmadmb/*
+
+# Gif project file for screenvid 
+*.stg*
+
+# electron app ignore items
 .DS_Store
 node_modules
-ElectronShinyApp*
+
+## skip package output directories
+SequenceRApp*
+
+## skip external code
+#GoogleChromePortable/
+#R-Portable/
+R-Portable-Mac/
+R-Portable-Win/
+node_modules/
+
+# include test data
+!/TestData/test_*.csv
+.Rproj.user

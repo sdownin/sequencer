@@ -21,3 +21,6 @@
 #  if (interactive()) 
 #    fortunes::fortune()
 
+.First = function(){
+    .libPaths(.Library)
+}
