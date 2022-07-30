@@ -3,28 +3,23 @@
 
 (*Under development*) User-Friendly Sequence Analysis in **R**
 
-## Web App
+## Accessing the Software
 
-| Stage | Platform | Version | Date | Download Link |
-| --------- | --------- | --------- | --------- | --------- |
-| AOM2022 | Web App | 0.5.0 | 2022-07-30 | [SequenceR v0.5.0 Web App](https://sdowning.shinyapps.io/sequencer-webhost/, 'SequenceR v0.5.0 Web App') |
+| Stage | Platform | Version | Date | Type | Access Link |
+| ------- | ------- | ------- | ------- | ------- | ------- |
+| AOM2022 | Web (any computer with internet access) | 0.5.0 | 2022-07-30 | link | [SequenceR v0.5.0 Web App](https://sdowning.shinyapps.io/sequencer-webhost/, 'SequenceR v0.5.0 Web App') |
+| AOM2022 | Windows PC | 0.5.0 | 2022-07-30 | download | [SequenceR v0.5.0 Windows](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/EecDeADx3GlNsa99lq2dojkBsYn_6sf0wW3hg5GIFquHFw, 'SequenceR v0.5.0 Windows')  |
+| AOM2022 | Mac OS | - | - | - | Currently unsupported. Use web app.  |
 
-## Download (portable app)
+#### Web App Getting Started
 
-| Stage | Platform | Version | Date | Download Link |
-| --------- | --------- | --------- | --------- | --------- |
-| AOM2022 | Windows PC | 0.5.0 | 2022-07-30 | [SequenceR v0.5.0 Windows](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/EecDeADx3GlNsa99lq2dojkBsYn_6sf0wW3hg5GIFquHFw, 'SequenceR v0.5.0 Windows')  |
-| AOM2022 | Mac OS | - | - | Currently unsupported. Use web app.  |
+- Follow the link above and use the app online without download.
 
-### Download Getting Started
+#### Download Getting Started
 
 - Download zipped file
 - Unzip, keeping all files inside same directory
-- Run app by double clicking: `sequencer.exe`
-
-
-Archived (Deprecated) Versions: 
- - see https://github.com/sdownin/sequencer-proto 
+- Run app by double-clicking: `sequencer.exe`
 
 
 
@@ -78,4 +73,7 @@ Removed
  (none)
 ```
 
-Refer to previous versions' changelog at https://github.com/sdownin/sequencer-proto
+
+Archived (Deprecated) Versions: 
+ - see https://github.com/sdownin/sequencer-proto for changelog of previous versions before framework changed to electron.js 
+
