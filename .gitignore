@@ -47,3 +47,6 @@ node_modules/
 # include test data
 !/TestData/test_*.csv
 .Rproj.user
+
+!/_img/*
+!readme_*.png

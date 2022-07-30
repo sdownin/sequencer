@@ -1,0 +1,13 @@
+## TODO
+ [x] measures: grouping (compute measures based on input selected) 
+ [x] measures: simplicity, motif, unpredictibaility	
+ [x] UI measures conditional inputs (select, checkbox) from choice of distance method (index vs. sm)
+ [x] save plots (png, etc)
+ [x] check seqdist methods each work; compatibility with other input arguments (e.g., norm='auto')
+ ----------MVP v0.4.1--------------------------------------------
+ [ ] separate 1 model into models for each measure selected to be computed
+ [ ] Abbreviated alphabet (or state) name inputs
+ [ ] stress test different input data sizes/shapes to errors, bottlenecks
+ [ ] change render of plots to separate divs (dynamic UI render) for RWD, separate mouseover functions
+ [ ] add/use buttons with server-side event handlers observeEvent(), eventReactive()
+ [ ] add unit tests
