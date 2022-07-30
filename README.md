@@ -5,11 +5,11 @@
 
 ## Accessing the Software
 
-| Software | Platform | Type | Version | Date | Stage |
+| Platform | Software Access | Type | Version | Date | Stage |
 | ------- | ------- | ------- | ------- | ------- | ------- |
-| [SequenceR Web App](https://sdowning.shinyapps.io/sequencer-webhost/) | Web | link | 0.5.0 | 2022-07-30 | AOM2022 |
-| [SequenceR Portable App - Windows](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/EecDeADx3GlNsa99lq2dojkBsYn_6sf0wW3hg5GIFquHFw) | Windows PC | download | 0.5.0 | 2022-07-30 | AOM2022 |
-| Unsupported. Use web app. | Mac OS | - | - | - | AOM2022 |
+| Web | [**SequenceR Web App**](https://sdowning.shinyapps.io/sequencer-webhost/) | link | 0.5.0 | 2022-07-30 | AOM2022 |
+| Windows PC | [**SequenceR Portable App**](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/EecDeADx3GlNsa99lq2dojkBsYn_6sf0wW3hg5GIFquHFw) | download | 0.5.0 | 2022-07-30 | AOM2022 |
+| Mac OS | Unsupported - Use Web App | - | - | - | AOM2022 |
 
 ##### Web App Getting Started
 
