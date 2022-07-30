@@ -77,7 +77,9 @@ Removed
  (none)
 ```
 
+Development Versions (^0.5.0):
+ - based on electron.js framework from the electron-R/Shiny project: https://github.com/electron/electron-quick-start
 
-Archived (Deprecated) Versions: 
+Archived Versions (Deprecated): 
  - see https://github.com/sdownin/sequencer-proto for changelog of previous versions before framework changed to electron.js 
 
