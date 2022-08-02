@@ -25,7 +25,7 @@
 ## Test Data
 
 | Data Set | Data Table | Stage |
-| ------- | ------- | ------- | ------ |
+| ------- | ------- | ------- | 
 | Verbal utterances | [**Sequence Alphabet**](https://mailmissouri-my.sharepoint.com/:x:/g/personal/sdr8y_umsystem_edu/ESc9Bot0z99LvYFHQGlnuDMBTycy6ZWdAKEa2Sws3gRc0g?e=oRTj9v) | AOM2022 |
 | Verbal utterances | [**Substitution Cost Matrix**](https://mailmissouri-my.sharepoint.com/:x:/g/personal/sdr8y_umsystem_edu/ER_E904k2lpNvmmIshCX9JQBrCEZo9Rgiw2W9qK28eBJhA?e=xFej53) | AOM2022 |
 | Verbal utterances | [**Sequence Data**](https://mailmissouri-my.sharepoint.com/:x:/g/personal/sdr8y_umsystem_edu/EbhyoKeY7FJPrsXAJtyLCCUB0MvZe6OaQ9HwyOytlr_WjQ?e=PjSD6I) | AOM2022 |
