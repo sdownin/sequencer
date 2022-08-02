@@ -74,14 +74,14 @@ All notable changes to this project will be documented in this section.
 
 #### [0.5.0] - 2022-07-30
 ```
-Added
+**Added**
  (none)
 
-Changed
+**Changed**
  - Switched to electron.js framework (Chromium browser; runs on node.js; npm for package management; electron-packager for distributions)
  - Changes simplicity measure from HHI to [-1 * ShannonEntropy] 
 
-Removed
+**Removed**
  (none)
 ```
 
@@ -90,4 +90,5 @@ Development Versions (^0.5.0):
 
 Archived Versions (Deprecated): 
  - see https://github.com/sdownin/sequencer-proto for changelog of previous versions before framework changed to electron.js 
+
 

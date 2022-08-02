@@ -1,6 +1,4 @@
-*.exe*
-#*.png
-*.doc*
+*.png
 *.xls*
 *.ppt*
 *.jpg
@@ -27,6 +25,7 @@
 *.swp*
 glmmadmb/*
 
+
 # Gif project file for screenvid 
 *.stg*
 
@@ -50,3 +49,6 @@ node_modules/
 
 !/_img/*
 !readme_*.png
+
+# CPython bitcode cache
+python/__pycache__/*
