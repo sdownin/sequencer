@@ -24,7 +24,7 @@
 								tableOutputSummaryAlphabet("analysis_file_alphabet_summary", "Alphabet Summary") 
 							),		
 						),
-						hr(),
+						# hr(),
 						sidebarLayout(
 							sidebarPanel(
 								fileInputUISubcostmat("analysis_file_subcostmat", '2. Substitution Costs', 'subcostmat_header', 'subcostmat_fileEncoding')
@@ -34,7 +34,7 @@
 								# plotOutputUI("analysis_file_subcostmat_plot", "Substitution Cost Heatmap")
 							),		
 						),
-						hr(),
+						# hr(),
 						sidebarLayout(
 							sidebarPanel(
 								fileInputUI("analysis_file_data", '3. Sequence Data', 'seqdata_header', 'seqdata_fileEncoding')
@@ -44,7 +44,7 @@
 								tableOutputSummaryUIwithSpinner("analysis_file_data_table_summary", "Sequence Data Summary") 
 							),		
 						),
-						hr(),
+						# hr(),
 						fluidRow(
 						    column(width = 6, offset=6,
 						        actionButtonUIrun("analysis_measures_goto", "Select Measures", class='btn btn-primary btn-lg btn-block', icon=icon('sliders'))

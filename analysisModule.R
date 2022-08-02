@@ -78,7 +78,7 @@ selectInputUInorm <- function(id, label) {
 checkboxGroupUI <- function(id) {
 	ns <- NS(id)
 	tagList(
-		checkboxGroupInput(ns("checkGroup"), label = h3("Checkbox group"), 
+		checkboxGroupInput(ns("checkGroup"), label = h4("Checkbox group"), 
 			choices = list("Choice 1" = 1, "Choice 2" = 2, "Choice 3" = 3),
 			selected = 1),
 		textOutput(ns('checkGroupValue'))
@@ -95,7 +95,7 @@ checkboxGroupUI <- function(id) {
 
 checkboxGroupUImeasures <- function(id, label) {
 	tagList(
-		checkboxGroupInput(id, label = h3(label), 
+		checkboxGroupInput(id, label = h4(label), 
 			choices = list(
 				  'Distance' = 'distance' 
 				, 'Predictability' = 'predictability'
@@ -134,7 +134,7 @@ actionButtonUIcheckdata <- function(id, label) {
 
 fileInputUIAlphabet <- function(fileId, heading) {
 	tagList(
-		fileInput(fileId, h3(heading),
+		fileInput(fileId, h4(heading),
 			multiple = F,
 			accept = c(
 			  "text/csv",
@@ -144,14 +144,15 @@ fileInputUIAlphabet <- function(fileId, heading) {
 		#tags$hr(),
 		checkboxInput("header", "Header", TRUE),
 		# selectInput("alphabet_encoding", "Encoding", c()),
-		selectInput("alphabet_fileEncoding", "File Encoding", fileEncodingVec) #,
-		# selectInput("alphabet_selectActionColumn", "Select Action Column", c())
+		selectInput("alphabet_fileEncoding", "File Encoding", fileEncodingVec),
+		selectInput("alphabet_selectCategoryColumn", "Category Column", c())
+		# selectInput("alphabet_selectCategoryColumn", "Select Action Column", c())
 	)
 }
 
 fileInputUISubcostmat <- function(fileId, heading, headerId, fileEncodingId) {
 	tagList(
-		fileInput(fileId, h3(heading),
+		fileInput(fileId, h4(heading),
 			multiple = F,
 			accept = c(
 			  "text/csv",
@@ -165,7 +166,7 @@ fileInputUISubcostmat <- function(fileId, heading, headerId, fileEncodingId) {
 
 fileInputUI <- function(fileId, heading, headerId, fileEncodingId) {
 	tagList(
-		fileInput(fileId, h3(heading),
+		fileInput(fileId, h4(heading),
 			multiple = F,
 			accept = c(
 			  "text/csv",
@@ -174,13 +175,14 @@ fileInputUI <- function(fileId, heading, headerId, fileEncodingId) {
 		),
 		checkboxInput(headerId, "Header", TRUE), 
 		# checkboxInput(rownamesId, "Row Names", TRUE),
-		selectInput(fileEncodingId, "File Encoding", fileEncodingVec)
+		selectInput(fileEncodingId, "File Encoding", fileEncodingVec),
+		selectInput("alphabet_selectPeriodColumn", "Period Column", c())
 	)
 }
 
 fileInputUIrownames <- function(fileId) {
 	tagList(
-		fileInput(fileId, h3("Choose CSV File"),
+		fileInput(fileId, h4("Choose CSV File"),
 			multiple = F,
 			accept = c(
 			  "text/csv",
@@ -195,7 +197,7 @@ fileInputUIrownames <- function(fileId) {
 
 fileInputUInrows <- function(fileId, nrowsID) {
 	tagList(
-		fileInput(fileId, h3("Choose CSV File"),
+		fileInput(fileId, h4("Choose CSV File"),
 			multiple = F,
 			accept = c(
 			  "text/csv",
@@ -227,10 +229,18 @@ tableOutputSummaryUI <- function(id, title) {
 tableOutputSummaryAlphabet <- function(id, title) {
 	tagList(
 		h4(title),
-		verbatimTextOutput(id),
-		selectInput("alphabet_selectActionColumn", "Category Column", c())
-	) 
+		verbatimTextOutput(id)#,
+		# selectInput("alphabet_selectCategoryColumn", "Category Column", c())
+	)
 }
+
+# tableOutputSummaryAlphabet <- function(id, title) {
+#   tagList(
+#     h4(title),
+#     selectInput("alphabet_selectCategoryColumn", "Category Column", c()),
+#     verbatimTextOutput(id)
+#   ) 
+# }
 
 tableOutputSummaryUIwithSpinner <- function(id, title) {
 	tagList(

@@ -28,7 +28,7 @@
 	{
 		return(list(
 			## Sequence Alphabet
-			analysis_alphabet = list(x=NA, xpath='', varnamemap=NA, actionCol=NA, firmCol=NA, periodCol=NA), 
+			analysis_alphabet = list(x=NA, xpath='', varnamemap=NA, actionCol=NA, actorCol=NA, periodCol=NA), 
 			## Substitution Cost Matrix
 			analysis_subcostmat = list(x=NA, xpath=''),
 			## Sequence Data Series
@@ -145,10 +145,10 @@
 
 
 	##
-	# Create list of sequences by `seqname` attribute (e.g., firm)
+	# Create list of sequences by `seqname` attribute (e.g., actor)
 	# for sequence listed in `varname` column (e.g., action)
 	##
-	longDf2SeqList <- function(df, seqnames, seqname='firm', varname='action')
+	longDf2SeqList <- function(df, seqnames, seqname='actor', varname='action')
 	{
 	  l <- list()
 	  for (i in 1:length(seqnames)) {
@@ -271,7 +271,7 @@
 	#   for `seqx` sequence of actions (a character vector)
 	##
 	pairwiseGammaMatrix <- function(seqx, alphabet, na.fill=NA) {
-	  ## GET 1 firms sequence pairwise gamma table
+	  ## GET 1 actors sequence pairwise gamma table
 	  mat <- matrix(NA,nrow=length(alphabet), ncol=length(alphabet),
 	                dim=list(alphabet, alphabet))
 	  for (i in 1:length(alphabet)) {
@@ -347,36 +347,38 @@
 			# print(c('li: ', li))
 			
 			## UPDATE SELECTION OF ACTION COLUMN
-			updateSelectInput(session, "alphabet_selectActionColumn", label = "Category Column", choices = colnames(df), 
-				selected = ifelse(exists(input$alphabet_selectActionColumn) & input$alphabet_selectActionColumn %in% colnames(df), input$alphabet_selectActionColumn, colnames(df)[1])
-				# selected = input$alphabet_selectActionColumn
+			updateSelectInput(session, "alphabet_selectCategoryColumn", label = "Category Column", choices = colnames(df), 
+				selected = ifelse(exists(input$alphabet_selectCategoryColumn) & input$alphabet_selectCategoryColumn %in% colnames(df), 
+				                  input$alphabet_selectCategoryColumn, 
+				                  colnames(df)[1])
+				# selected = input$alphabet_selectCategoryColumn
 				)
 
 			## add var name abbreviations
-			varnamemap <- if (input$alphabet_selectActionColumn %in% names(li)) {
-					getNameAbbrevList(li[[input$alphabet_selectActionColumn]])
+			varnamemap <- if (input$alphabet_selectCategoryColumn %in% names(li)) {
+					getNameAbbrevList(li[[input$alphabet_selectCategoryColumn]])
 				} else {
 					x <- li[[1]]
 					names(x) <- li[[1]]
 					x
 				}
 
-			## OUTPUT: list of alphabet items (action, firm, etc.) 
+			## OUTPUT: list of alphabet items (action, actor, etc.) 
 			str(li)
 			if (length(varnamemap) > 0) {
 				model <- loadModel()
-				model[['analysis_alphabet']]$actionCol <- input$alphabet_selectActionColumn
+				model[['analysis_alphabet']]$actionCol <- input$alphabet_selectCategoryColumn
 				model[['analysis_alphabet']]$varnamemap <- varnamemap
 				saveRDS(model, file=MODEL_FILE)
 				cat(sprintf('\nAbbreviations for Column: `%s`\n %s', 
-					input$alphabet_selectActionColumn, printNamedList(varnamemap)))
+					input$alphabet_selectCategoryColumn, printNamedList(varnamemap)))
 			}
 
 			## REPLACE ACTION NAMES WITH ABBREVIATIONS
-			if (input$alphabet_selectActionColumn %in% names(li)) {
+			if (input$alphabet_selectCategoryColumn %in% names(li)) {
 				for (i in 1:length(varnamemap)) {
-					idx <- which(li[[input$alphabet_selectActionColumn]] == varnamemap[[i]])
-					li[[input$alphabet_selectActionColumn]][idx] <- names(varnamemap)[i]
+					idx <- which(li[[input$alphabet_selectCategoryColumn]] == varnamemap[[i]])
+					li[[input$alphabet_selectCategoryColumn]][idx] <- names(varnamemap)[i]
 				}
 			}
 			## BREAK SCOPE TO SAVE (both alphabet and var name mapping for alphabet)
@@ -414,7 +416,8 @@
 			varnamemap <- model$analysis_alphabet$varnamemap
 			ncats <- length(varnamemap)
 			
-			# print('varnamemap:',varnamemap)
+			# print(c('DEBUG varnamemap:',varnamemap))
+			# print(c('DEBUG subcostmat df str: ', str(df)))
 
 			## automatically determine column names
 			nrows <- nrow(df)
@@ -476,6 +479,9 @@
 			if (is.null(inFile)) 
 				return(NULL)
 
+			## run seqdef() in parallel
+			require(foreach)
+			
 			model <- loadModel()
 			
 			## INPUT
@@ -485,28 +491,68 @@
 				check.names=TRUE,
 				strip.white=TRUE
 				)
-
+			
 			## Input
 			model$analysis_data <- list(x=df, xpath=inFile$datapath)
 			saveRDS(model, file=MODEL_FILE)
 			# saveModel(model, xname='analysis_data', x=df, xpath=inFile$datapath)
 
+			
+			# print('colnames df:')
+			# print(names(df))
+			
 			## Main model attributes
 			alphabet <- model$analysis_alphabet$x
 			varnamemap <- model$analysis_alphabet$varnamemap
 			ncats <- length(varnamemap)
+			
 			## Main variable names
 			actionCol <- model$analysis_alphabet$actionCol
-			firmCol <- names(alphabet)[ ! names(alphabet) %in%  actionCol ][1] ## 'firm'
-			.remainingCols <- names(df)[! names(df) %in% c(actionCol,firmCol) ]
-			periodCol <- .remainingCols[length(.remainingCols)] ##'period'
-
+			actorCol <- names(alphabet)[ ! names(alphabet) %in%  actionCol ][1] ## e.g., 'actor', 'Team', ...
+			aCols <- c(actionCol,actorCol)
+			aColIdxs <- which( names(df) %in% aCols)
+			naColIdxs <- which( ! names(df) %in% aCols)
+			
+			cnames <- names(df)
+			# periodCol <- cnames[ (max(aColIdxs)+1) ]
+			possiblePdCols <- cnames[ naColIdxs ]
+			
+			# print('DEBUG 6')
+			# print('possiblePdCols:')
+			# print(possiblePdCols)
+			
+			# possiblePdCols <- names(df)[! names(df) %in% aCols ]
+			# periodCol <- possiblePdCols[length(.remainingCols)] ##'period'
+			
+			# # nuni <- apply(df,2,function(x)length(unique(x, na.action='na'))) ## unique elements per column
+			# nuni <- foreach(i=1:ncol(df), .combine='c') %do% { length(unique(df[[i]])) } ## extract i'th column as a vector
+		
+			# print(c('NAMES nuni:',names(nuni)))
+			# print(c('nuni:',nuni))
+			# min.col.idx <- which.min( nuni[naColIdxs] )
+			periodCol <- cnames[ (max(aColIdxs)+1) ] ## the next column after the last of actor/action columns
+			# cat(c('\n\nDEBUG periodCol:', periodCol))
+			
 			## UPDATE MODEL
-			model[['analysis_alphabet']]$firmCol <- firmCol
+			model[['analysis_alphabet']]$actorCol <- actorCol
 			model[['analysis_alphabet']]$periodCol <- periodCol
 			saveRDS(model, file=MODEL_FILE)
-
-
+			# print(model)
+			
+			## UPDATE SELECTION OF PERIOD COLUMN
+			updateSelectInput(session, "alphabet_selectPeriodColumn", label = "Period Column", 
+			                  choices = possiblePdCols, 
+			                  selected = ifelse(exists(input$alphabet_selectPeriodColumn) & input$alphabet_selectPeriodColumn %in% cnames, 
+			                                    input$alphabet_selectPeriodColumn, 
+			                                    periodCol
+			                  )
+			                  # selected = input$alphabet_selectCategoryColumn
+			)
+			
+			periodCol <- input$alphabet_selectPeriodColumn
+			model[['analysis_alphabet']]$periodCol <- periodCol
+			saveRDS(model, file=MODEL_FILE)
+			
 			## REPLACE ACTION NAMES WITH ABBREVIATIONS
 			for (i in 1:length(varnamemap)) {
 				idx <- which(df[,actionCol] == varnamemap[[i]])
@@ -515,19 +561,28 @@
 
 			## Data based on df, alphabet, and main variable names
 			periods <- unique(df[,periodCol])
-			firms <- as.character(alphabet[[firmCol]])
+			actors <- as.character(alphabet[[actorCol]])
 			actionAlphabet <- as.character(alphabet[[actionCol]])
 
-			seqdefs <- list()
-			for (t in 1:length(periods))  #length(periods)
-			{
-				pd <- periods[t]
-				tidx <- which(df[,periodCol] == pd)
-				t.df <- df[tidx, ]
-				t.l <- longDf2SeqList(t.df, firms, firmCol, actionCol)
-				t.ldf <- seqList2Df(t.l)
-				right <- 'DEL'  # left <- 'NA' # gaps <- 'NA'
-				seqdefs[[pd]] <- seqdef(t.ldf, alphabet=actionAlphabet, right=right)
+			# seqdefs <- list()
+			# for (t in 1:length(periods))  #length(periods)
+			# {
+			# 	pd <- periods[t]
+			# 	tidx <- which(df[,periodCol] == pd)
+			# 	t.df <- df[tidx, ]
+			# 	t.l <- longDf2SeqList(t.df, actors, actorCol, actionCol)
+			# 	t.ldf <- seqList2Df(t.l)
+			# 	right <- 'DEL'  # left <- 'NA' # gaps <- 'NA'
+			# 	seqdefs[[pd]] <- seqdef(t.ldf, alphabet=actionAlphabet, right=right)
+			# }
+			seqdefs <- foreach(t=1:length(periods)) %do% {
+			  pd <- periods[t]
+			  tidx <- which(df[,periodCol] == pd)
+			  t.df <- df[tidx, ]
+			  t.l <- longDf2SeqList(t.df, actors, actorCol, actionCol)
+			  t.ldf <- seqList2Df(t.l)
+			  right <- 'DEL'  # left <- 'NA' # gaps <- 'NA'
+			  seqdef(t.ldf, alphabet=actionAlphabet, right=right)
 			}
 			names(seqdefs) <- periods
 			model$seqdefs <- seqdefs
@@ -562,14 +617,14 @@
 		# output$analysis_num_plots <- renderText({
 		# 	model <- loadModel()
 		# 	if (length(model) > 0)
-		# 			return(length(model$analysis_alphabet$x$firms) + length(model$) )
+		# 			return(length(model$analysis_alphabet$x$actors) + length(model$) )
 		# })
 
 		##
 		## seqdef - define missing values on right (NA or DEL)
 		##   --> compute dist from OM  (or selected dist metric)
 		## simplicity - HHI
-		## unpredictability - levdist from own firm previous period(s)
+		## unpredictability - levdist from own actor previous period(s)
 		## grouping - mean { gamma analysis separation score } across all actions
 		## motif - variance of the averages in the pair-wise gamma analysis precedence scores across all action types
 		##
@@ -591,19 +646,20 @@
 				storage.mode(sm) <- "numeric"
 
 				actionCol <- model$analysis_alphabet$actionCol
-				firmCol <- model$analysis_alphabet$firmCol
+				actorCol <- model$analysis_alphabet$actorCol
 				periodCol <- model$analysis_alphabet$periodCol
 				right <- 'DEL'  # left <- 'NA' # gaps <- 'NA' ## seqdef parameter
 
 				periods <- unique(dat[,periodCol])
-				firms <- as.character(alphabet[[firmCol]])
+				actors <- as.character(alphabet[[actorCol]])
 				actionAlphabet <- as.character(alphabet[[actionCol]])
 
 				npds <- length(periods)
-				nfirms <- length(firms)
+				nactors <- length(actors)
+				nactpds <- npds * nactors
 
 				seqdefs <- model$seqdefs
-				gamma <- list()    # list of pairwise gamma matrices per period and per firm
+				gamma <- list()    # list of pairwise gamma matrices per period and per actor
 				distance <- list() # squence distance mesaures period list
 				grouping <- list() # gamma list ('grouping' measure avg. precedence scores)
 				motif <- list() # gamma list ('grouping' measure avg. precedence scores)
@@ -617,140 +673,289 @@
 					if (measure %in% names(model))
 						model[[measure]] <- NULL
 				}
-
+				
+				
 				##-----------------------------------
 				## COMPUTE SELECTED MEASURES BY PERIOD
 				##-----------------------------------
-				## loop over periods (per firm)
-				for (t in 1:length(periods))  #length(periods)
-				{
-					pd <- periods[t]
+				
+				
+				# withProgress(message = 'Computing measures by period...', value=0, {
+				#   npds <- length(periods)
+				#   				    ## TODO: find best place to update progress (beginning, middle, end)
+				#     incProgress(1/npds, detail=sprintf('Processing period: %s',pd))
+				# }) ## /end withProgress()
+				
 
-					## FIRST compute pairwise G-K gamma
-					gamma[[pd]] <- list()
-					for (i in 1:length(firms)) {
-						firm <- firms[i]
-						gamma[[pd]][[firm]] <- pairwiseGammaMatrix(seqdefs[[t]][i,], actionAlphabet, na.fill=0)
-					}
-					# names(gamma) <- firms
+				    
+		    ## Pairwise distances over actors  (per period)
+		    if ('distance' %in% measures) 
+		    {
+		      withProgress(message = 'Computing distance...', value=0, {
+		        model <- loadModel()
+  		      for (t in 1:npds)  #length(periods)
+  		      {
+  		        pd <- periods[t]
+				      t.xdist <- seqdist(seqdefs[[t]], method=method, norm=norm, sm=sm, with.missing=TRUE)
+				      dimnames(t.xdist) <- list(actors, actors)
+				      distance[[pd]] <- t.xdist
+				      incProgress(1/npds, detail=sprintf('Period: %s',pd))
+  		      }
+		        model$distance <- distance
+		        saveRDS(model, file=MODEL_FILE)
+		      }) ## /end withProgress()
+		    }
+		    
+		    ## GK Gamma is used in motif and grouping -- compute it once first for either/both
+		    if (any(c('motif','grouping') %in% measures)) 
+		    {
+		      withProgress(message = 'Computing gamma...', value=0, {
+		        model <- loadModel()
+		        for (t in 1:npds)  #length(periods)
+		        {
+		          pd <- periods[t]
+    		      # # FIRST compute pairwise G-K gamma
+    		      # gamma[[pd]] <- list()
+    		      # for (i in 1:length(actors)) {
+    		      # 	actor <- actors[i]
+    		      # 	gamma[[pd]][[actor]] <- pairwiseGammaMatrix(seqdefs[[t]][i,], actionAlphabet, na.fill=0)
+    		      # }
+    		      # 
+    		      # print(gamma)
+  
+  		        ## FIRST compute pairwise G-K gamma
+  		        gamma[[pd]] <- foreach(i=1:length(actors)) %do% {
+  		          actor <- actors[i]
+  		          incProgress(1/nactpds, detail=sprintf('Period: %s - Actor: %s',pd,actor))
+  		          # gamma[[pd]][[actor]] <- pairwiseGammaMatrix(seqdefs[[t]][i,], actionAlphabet, na.fill=0)
+  		          pairwiseGammaMatrix(seqdefs[[t]][i,], actionAlphabet, na.fill=0)
+  		        }
+  		        names(gamma[[pd]]) <- actors
+		        }
+		        
+		        model$gamma <- gamma
+		        saveRDS(model, file=MODEL_FILE)
+		        
+		      }) ## /end withProgress()
+		 
+		      # names(gamma) <- actors
+		      # print(c('DEBUG gamma:',gamma))
+		    }
+				# print(loadModel())
+				# return()
+				
+		    
+		    if ('grouping' %in% measures) 
+		    {
+		      withProgress(message = 'Computing grouping...', value=0, {
+		        model <- loadModel()
+		        for (t in 1:npds)  #length(periods)
+		        {
+		          pd <- periods[t]
+      		      # # t.dat <- dat[dat[,periodCol]==pd, ]
+      		      # t.group <- data.frame()
+      		      # for (i in 1:length(actors)) {
+      		      # 	actor <- actors[i]
+      		      # 	## separation score for a given type of element is calculated as
+      		      # 	## the mean of the absolute value of its pair-wise gamma values
+      		      # 	## (Holmes, 1995; Holmes and Sykes, 1993).
+      		      # 	separation <- rowMeans(abs(gamma[[pd]][[actor]]), na.rm = T)
+      		      # 	## Grouping
+      		      # 	## To calculate the extent to which the entire sequence exhibits grouping,
+      		      # 	## we calculated the mean of the separation scores across all action types.
+      		      # 	## We reversed the direction of the scores (multiplying them by −1.0)
+      		      # 	## so that higher scores indicate higher levels of grouping
+      		      # 	## among actions in a sequence.
+      		      # 	groupingMeasure <- mean(separation, na.rm = T) * -1
+      		      # 	t.i.group <- data.frame(actor=actor, grouping = groupingMeasure)
+      		      # 	t.group <- rbind(t.group, t.i.group)
+      		      # }
+      		      # grouping[[pd]] <- t.group
+      		      
+      		      grouping[[pd]] <- foreach(i=1:length(actors), .combine='rbind') %do% {
+      		        actor <- actors[i]
+      		        ## separation score for a given type of element is calculated as
+      		        ## the mean of the absolute value of its pair-wise gamma values
+      		        ## (Holmes, 1995; Holmes and Sykes, 1993).
+      		        separation <- rowMeans(abs(gamma[[pd]][[actor]]), na.rm = T)
+      		        ## Grouping
+      		        ## To calculate the extent to which the entire sequence exhibits grouping,
+      		        ## we calculated the mean of the separation scores across all action types.
+      		        ## We reversed the direction of the scores (multiplying them by −1.0)
+      		        ## so that higher scores indicate higher levels of grouping
+      		        ## among actions in a sequence.
+      		        groupingMeasure <- mean(separation, na.rm = T) * -1
+      		        data.frame(actor=actor, grouping = groupingMeasure)
+      		      }
+      		      
+      		      incProgress(1/npds, detail=sprintf('Period: %s',pd))
+      		      
+		        }
+      		      
+		        model$grouping <- grouping
+		        saveRDS(model, file=MODEL_FILE)
+		        
+		      }) ## /end withProgress()
+		      
+		    }
+		    
+		    if ('motif' %in% measures) 
+		    {
+		      withProgress(message = 'Computing motif...', value=0, {
+		        model <- loadModel()
+		        for (t in 1:npds)  #length(periods)
+		        {
+		          pd <- periods[t]
+    		      # # t.dat <- dat[dat[,periodCol]==pd, ]
+    		      # t.motif <- data.frame()
+    		      # for (i in 1:length(actors)) {
+    		      # 	actor <- actors[i]
+    		      # 	## the precedence score for a given element type is calculated as
+    		      # 	## the mean of all of its pair-wise gamma values
+    		      # 	## (Holmes, 1995; Holmes and Sykes, 1993).
+    		      # 	precedence <- rowMeans(gamma[[pd]][[actor]], na.rm = T)
+    		      # 	## Motif
+    		      # 	## determine the extent to which the entire sequence
+    		      # 	## exhibits internal structuredness, we calculated
+    		      # 	## **the variance of the averages in the pair-wise precedence scores
+    		      # 	## across all action types. Averaging across action types indicates
+    		      # 	## the relative position—beginning or end—in the overall sequence
+    		      # 	## in which the particular type of action appears.
+    		      # 	## Variance in average precedence scores captures the ordinal specificity
+    		      # 	## and stability of elements in a sequence.
+    		      # 	motifMeasure <- var(precedence, na.rm = TRUE)
+    		      # 	t.i.motif <- data.frame(actor=actor, motif = motifMeasure)
+    		      # 	t.motif <- rbind(t.motif, t.i.motif)
+    		      # }
+    		      # motif[[pd]] <- t.motif
+    		      
+    		      motif[[pd]] <- foreach(i=1:length(actors), .combine='rbind') %do% {
+    		        actor <- actors[i]
+    		        ## the precedence score for a given element type is calculated as
+    		        ## the mean of all of its pair-wise gamma values
+    		        ## (Holmes, 1995; Holmes and Sykes, 1993).
+    		        precedence <- rowMeans(gamma[[pd]][[actor]], na.rm = T)
+    		        ## Motif
+    		        ## determine the extent to which the entire sequence
+    		        ## exhibits internal structuredness, we calculated
+    		        ## **the variance of the averages in the pair-wise precedence scores
+    		        ## across all action types. Averaging across action types indicates
+    		        ## the relative position—beginning or end—in the overall sequence
+    		        ## in which the particular type of action appears.
+    		        ## Variance in average precedence scores captures the ordinal specificity
+    		        ## and stability of elements in a sequence.
+    		        motifMeasure <- var(precedence, na.rm = TRUE)
+    		        data.frame(actor=actor, motif = motifMeasure)
+    		      }
+    		      
+    		      incProgress(1/npds, detail=sprintf('Period: %s',pd))
+    		      
+		        }
+		        
+		        model$motif <- motif
+		        saveRDS(model, file=MODEL_FILE)
+		        
+		      }) ## /end withProgress()
+		    }
+		    # print(motif)
+		    
+		    if ('simplicity' %in% measures) 
+		    {
+		      withProgress(message = 'Computing simplicity by period...', value=0, {
+		        model <- loadModel()
+		        for (t in 1:npds)  #length(periods)
+		        {
+		          pd <- periods[t]
+    		      ## simplicity HHI score
+    		      t.dat <- dat[dat[,periodCol]==pd, ]
+    		      t.simp <- data.frame()
+    		      for (i in 1:length(actors)) {
+    		      	t.i.cnt <- plyr::count( t.dat[ t.dat[,actorCol]==actors[i] , actionCol] )
+    		      	#simplicityMeasure <- hhi(t.i.cnt$freq)
+    		      	simplicityMeasure <- shannonEntropy(t.i.cnt$freq)
+    		      	t.i.cntdf <- data.frame(actor=actors[i], simplicity = simplicityMeasure)
+    		      	t.simp <- rbind(t.simp,  t.i.cntdf)
+    		      }
+    		      simplicity[[pd]] <- t.simp
+    		      # simplicity[[pd]] <- foreach (i=1:length(actors), .combine='rbind') %do% {
+    		      #   t.i.cnt <- plyr::count( t.dat[ t.dat[,actorCol]==actors[i] , actionCol] )
+    		      #   #simplicityMeasure <- hhi(t.i.cnt$freq)
+    		      #   simplicityMeasure <- shannonEntropy(t.i.cnt$freq)
+    		      #   data.frame(actor=actors[i], simplicity = simplicityMeasure)
+    		      # }
+    		      
+    		      incProgress(1/npds, detail=sprintf('Period: %s',pd))
+    		      
+		        }
+		        
+		        model$simplicity <- simplicity
+		        saveRDS(model, file=MODEL_FILE)
+		        
+		      }) ## /end withProgress()
+		    }
+		    
 
-					## loop over firms  (per period)
-					if ('distance' %in% measures) 
-					{
-						t.xdist <- seqdist(seqdefs[[t]], method=method, norm=norm, sm=sm, with.missing=TRUE)
-						dimnames(t.xdist) <- list(firms, firms)
-						distance[[pd]] <- t.xdist
-					}
-
-					if ('grouping' %in% measures) 
-					{
-						t.dat <- dat[dat[,periodCol]==pd, ]
-						t.group <- data.frame()
-						for (i in 1:length(firms)) {
-							firm <- firms[i]
-							## separation score for a given type of element is calculated as 
-							## the mean of the absolute value of its pair-wise gamma values 
-							## (Holmes, 1995; Holmes and Sykes, 1993). 
-							separation <- rowMeans(abs(gamma[[pd]][[firm]]), na.rm = T)
-							## Grouping
-							## To calculate the extent to which the entire sequence exhibits grouping, 
-							## we calculated the mean of the separation scores across all action types.
-							## We reversed the direction of the scores (multiplying them by −1.0) 
-							## so that higher scores indicate higher levels of grouping 
-							## among actions in a sequence.
-							groupingMeasure <- mean(separation, na.rm = T) * -1 
-							t.i.group <- data.frame(firm=firm, grouping = groupingMeasure)
-							t.group <- rbind(t.group, t.i.group)
-						}
-						grouping[[pd]] <- t.group
-					}
-
-					if ('motif' %in% measures) 
-					{
-						t.dat <- dat[dat[,periodCol]==pd, ]
-						t.motif <- data.frame()
-						for (i in 1:length(firms)) {
-							firm <- firms[i]
-							## the precedence score for a given element type is calculated as
-							## the mean of all of its pair-wise gamma values 
-							## (Holmes, 1995; Holmes and Sykes, 1993).
-							precedence <- rowMeans(gamma[[pd]][[firm]], na.rm = T)
-							## Motif
-							## determine the extent to which the entire sequence 
-							## exhibits internal structuredness, we calculated 
-							## **the variance of the averages in the pair-wise precedence scores 
-							## across all action types. Averaging across action types indicates 
-							## the relative position—beginning or end—in the overall sequence 
-							## in which the particular type of action appears. 
-							## Variance in average precedence scores captures the ordinal specificity 
-							## and stability of elements in a sequence.
-							motifMeasure <- var(precedence, na.rm = TRUE)
-							t.i.motif <- data.frame(firm=firm, motif = motifMeasure)
-							t.motif <- rbind(t.motif, t.i.motif)
-						}
-						motif[[pd]] <- t.motif
-					}
-
-					if ('simplicity' %in% measures) 
-					{
-						## simplicity HHI score
-						t.dat <- dat[dat[,periodCol]==pd, ]
-						t.simp <- data.frame()
-						for (i in 1:length(firms)) {
-							t.i.cnt <- plyr::count( t.dat[ t.dat[,firmCol]==firms[i] , actionCol] )
-							#simplicityMeasure <- hhi(t.i.cnt$freq)
-							simplicityMeasure <- shannonEntropy(t.i.cnt$freq)
-							t.i.cntdf <- data.frame(firm=firms[i], simplicity = simplicityMeasure)
-							t.simp <- rbind(t.simp,  t.i.cntdf)
-						}
-						simplicity[[pd]] <- t.simp
-
-					}
-				} ##/end period loop
-
-				## loop over firms  (per period)
+				  
+				
+				
+				## loop over actors  (per period)
+				## TODO: Convert to foreach (parallel)
 				if ('predictability' %in% measures) 
 				{
-					seqlaglist <- list()
-					for (i in 1:length(firms)) {
-					  firm <- firms[i]
-					  for (t in 1:length(periods)) {
-					    seqlaglist[[firm]] <- lapply(seqdefs, function(x) {
-					      xseq <- as.character(unlist( x[i,]))
-					      return( xseq[which(xseq %in% actionAlphabet)] ) #remove filled-in "%" for empty levels
-					    })
-					  }
-					  tlagseq <- seqList2Df(seqlaglist[[firm]])
-					  seqdeflag <- seqdef(tlagseq, alphabet=actionAlphabet, right=right)
-					  predictability[[firm]] <- seqdist(seqdeflag,  method=method, norm=norm, sm=sm, with.missing = TRUE) * -1
-					  dimnames(predictability[[firm]]) <- list(periods, periods)
-					}
+				  withProgress(message = 'Computing predictability by actor...', value=0, {
+				    model <- loadModel()
+  					seqlaglist <- list()
+  					for (i in 1:length(actors)) 
+  					{
+  					  actor <- actors[i]
+  					  for (t in 1:length(periods)) {
+  					    seqlaglist[[actor]] <- lapply(seqdefs, function(x) {
+  					      xseq <- as.character(unlist( x[i,]))
+  					      return( xseq[which(xseq %in% actionAlphabet)] ) #remove filled-in "%" for empty levels
+  					    })
+  					  }
+  					  tlagseq <- seqList2Df(seqlaglist[[actor]])
+  					  seqdeflag <- seqdef(tlagseq, alphabet=actionAlphabet, right=right)
+  					  predictability[[actor]] <- seqdist(seqdeflag,  method=method, norm=norm, sm=sm, with.missing = TRUE) * -1
+  					  dimnames(predictability[[actor]]) <- list(periods, periods)
+  					  
+  					  ## update progress
+  					  incProgress(1/length(actors), detail=sprintf('Actor: %s',actor))
+  					  
+  					}
+  					
+  					model$predictability <- predictability
+  					saveRDS(model, file=MODEL_FILE)
+  					
+				  })
 				}
 
-				## list names by time period
-				if (length(gamma) == npds)  		names(gamma) <- periods
-				if (length(distance) == npds) 		names(distance) <- periods
-				if (length(grouping) == npds) 		names(grouping) <- periods
-				if (length(motif) == npds) 			names(motif) <- periods
-				if (length(simplicity) == npds) 	names(simplicity) <- periods
-				## list names by firm
-				if (length(predictability) == nfirms) names(predictability) <- firms
+				# ## list names by time period
+				# # if (length(gamma) == npds)  		names(gamma) <- periods
+				# if (length(distance) == npds) 		names(distance) <- periods
+				# if (length(grouping) == npds) 		names(grouping) <- periods
+				# if (length(motif) == npds) 			names(motif) <- periods
+				# if (length(simplicity) == npds) 	names(simplicity) <- periods
+				# ## list names by actor
+				# if (length(predictability) == nactors) names(predictability) <- actors
 
-				## add selected measures to model object
-				if('distance' %in% measures)  		model$distance <- distance
-				if('grouping' %in% measures) 		model$grouping <- grouping
-				if('motif' %in% measures) 			model$motif <- motif
-				if('predictability' %in% measures)  model$predictability <- predictability
-				if('simplicity' %in% measures)  	model$simplicity <- simplicity
-				## add gamma if used by other measure
-				if (any(c('grouping','motif') %in% measures))	model$gamma <- gamma
+				# ## add selected measures to model object
+				# if('distance' %in% measures)  		model$distance <- distance
+				# if('grouping' %in% measures) 		model$grouping <- grouping
+				# if('motif' %in% measures) 			model$motif <- motif
+				# if('predictability' %in% measures)  model$predictability <- predictability
+				# if('simplicity' %in% measures)  	model$simplicity <- simplicity
+				# ## add gamma if used by other measure
+				# # if (any(c('grouping','motif') %in% measures))	model$gamma <- gamma
+				
+				model <- loadModel()
 				
 				## Save Model
 				model$analysis_run <- 'ANALYSIS RUN COMPLETED'
 				saveRDS(model, file=MODEL_FILE)
 
 				# ## SAVE NUM PLOTS
-				# numplots <- length(model$seqdefs) * length(model$analysis_alphabet$x$firm)
+				# numplots <- length(model$seqdefs) * length(model$analysis_alphabet$x$actor)
 				# saveRDS(list(num_plots=numplots), file=NUM_PLOTS_FILE)
 
 				## Print selected measures
@@ -800,8 +1005,8 @@
 		# 			# for (measure in measures) {
 		# 			measure <- 'distance'
 		# 			for (i in 1:length(model[[measure]])) {
-		# 				dflong <- melt(model[[measure]][[i]], varnames = c('firm1','firm2'), value.name = 'distance')
-		# 				plt <- ggplot(data = dflong, aes(x = firm1, y = firm2)) +
+		# 				dflong <- melt(model[[measure]][[i]], varnames = c('actor1','actor2'), value.name = 'distance')
+		# 				plt <- ggplot(data = dflong, aes(x = actor1, y = actor2)) +
 		# 					geom_tile(aes(fill = distance))  + 
 		# 					geom_text(aes(label = round(distance, 1)), colour='#FFFFFF') +
 		# 					scale_fill_continuous(high = "#132B43", low = "#56B1F7") + 
@@ -857,7 +1062,7 @@
 	# 					geom_tile(aes(fill = predictability))  + 
 	# 					geom_text(aes(label = round(predictability, 1)), colour='#FFFFFF') +
 	# 					scale_fill_continuous(high = "#B10026", low = "#FFFFB2") + 
-	# 					ggtitle(sprintf('%s: firm %s',measure, itemnames[i] ))
+	# 					ggtitle(sprintf('%s: actor %s',measure, itemnames[i] ))
 	# 				plots[[length(plots)+1]] <- plt
 	# 			}
 	# 		} 
@@ -884,111 +1089,126 @@
 	 		measuresAll <- c('distance','predictability','simplicity','grouping','motif')
 	 		modelNames <- names(model)
 	 		measures <- measuresAll[measuresAll %in% modelNames]
+	 		
+	 		n.measures <- sum( measuresAll %in% names(model) )
 
-	 		if ( length(measures) == 0 ) {
-	 			return();
+	 		if ( n.measures == 0 ) {
+	 			return()
 	 		}
+	 		
+	 		withProgress(message = 'Rendering plots...', value=0, {
+	 		  model <- loadModel()
 
-	 		plots <- list()
+  	 		plots <- list()
+  	 		
+        counter <- 0
+  
+  	 		MEASURE <- 'distance'
+  	 		if (MEASURE %in% measures) 
+  	 		{
+  	 			# #DEBUG
+  	 			# plot(model[[measures[1]]][[1]], main=sprintf('%s: period %s',measures[1],1))
+  	 			# for (measure in measures) {
+  	 			for (i in 1:length(model[[MEASURE]])) {
+  	 				dflong <- melt(model[[MEASURE]][[i]], varnames = c('actor1','actor2'), value.name = MEASURE)
+  	 				plt <- ggplot(data = dflong, aes(x = actor1, y = actor2)) +
+  	 					geom_tile(aes(fill = distance))  + 
+  	 					geom_text(aes(label = round(distance, 1)), colour='#FFFFFF') +
+  	 					scale_fill_continuous(high = "#132B43", low = "#56B1F7") + 
+  	 					ggtitle(sprintf('%s: period %s',MEASURE,i))
+  	 				plots[[length(plots)+1]] <- plt
+  	 			}
+  	 		  counter <- 
+  	 			incProgress(1/n.measures, detail=sprintf(MEASURE))
+  	 		} 
+  	 		
+  	 		MEASURE <- 'predictability'
+  	 		if (MEASURE %in% measures) 
+  	 		{
+  	 			# #DEBUG
+  	 			# plot(model[[measures[1]]][[1]], main=sprintf('%s: period %s',measures[1],1))
+  	 			# for (measure in measures) {
+  	 			itemnames <- names(model[[MEASURE]])
+  	 			for (i in 1:length(model[[MEASURE]])) {
+  	 				dflong <- melt(model[[MEASURE]][[i]], varnames = c('period1','period2'), value.name = MEASURE)
+  	 				plt <- ggplot(data = dflong, aes(x = period1, y = period2)) +
+  	 					geom_tile(aes(fill = predictability))  + 
+  	 					geom_text(aes(label = round(predictability, 1)), colour='#FFFFFF') +
+  	 					scale_fill_continuous(high = "#B10026", low = "#FFFFB2") + 
+  	 					ggtitle(sprintf('%s: actor %s',MEASURE, itemnames[i] ))
+  	 				plots[[length(plots)+1]] <- plt
+  	 			}
+  	 			incProgress(1/n.measures, detail=sprintf(MEASURE))
+  	 		} 
+  
+  	 		MEASURE <- 'motif'
+  	 		if (MEASURE %in% measures)
+  	 		{
+  	 			dat <- model[[MEASURE]]
+  	 		    dflong <- data.frame()
+  	 		    for (t in 1:length(dat)) {
+  	 		    	dft <- model[[MEASURE]][[t]]
+  	 		    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
+  	 		    	dflong <- rbind(dflong, dft)
+  	 		    }
+  	 		    plt <- ggplot(data = dflong, aes(x = as.integer(period), y = motif, colour=actor)) +
+  	 		    	geom_line()  + 	geom_point() +
+  	 		    	xlab('Period') + theme_bw() + 
+  	 		    	ggtitle(sprintf('%s',MEASURE))
+  	 		    plots[[length(plots)+1]] <- plt
+  	 		    incProgress(1/n.measures, detail=sprintf(MEASURE))
+  	 		}
+  
+  	 		MEASURE <- 'grouping'
+  	 		if (MEASURE %in% measures)
+  	 		{
+  	 			dat <- model[[MEASURE]]
+  	 		    dflong <- data.frame()
+  	 		    for (t in 1:length(dat)) {
+  	 		    	dft <- model[[MEASURE]][[t]]
+  	 		    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
+  	 		    	dflong <- rbind(dflong, dft)
+  	 		    }
+  	 		    plt <- ggplot(data = dflong, aes(x = as.integer(period), y = grouping, colour=actor)) +
+  	 		    	geom_line()  + 	geom_point() +
+  	 		    	xlab('Period') + theme_bw() + 
+  	 		    	ggtitle(sprintf('%s',MEASURE))
+  	 		    plots[[length(plots)+1]] <- plt
+  	 		    incProgress(1/n.measures, detail=sprintf(MEASURE))
+  	 		}
+  
+  	 		MEASURE <- 'simplicity'
+  	 		if (MEASURE %in% measures)
+  	 		{
+  	 			dat <- model[[MEASURE]]
+  	 		    dflong <- data.frame()
+  	 		    for (t in 1:length(dat)) {
+  	 		    	dft <- model[[MEASURE]][[t]]
+  	 		    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
+  	 		    	dflong <- rbind(dflong, dft)
+  	 		    }
+  	 		    plt <- ggplot(data = dflong, aes(x = as.integer(period), y = simplicity, colour=actor)) +
+  	 		    	geom_line()  + 	geom_point() +
+  	 		    	xlab('Period') + theme_bw() + 
+  	 		    	ggtitle(sprintf('%s',MEASURE))
+  	 		    plots[[length(plots)+1]] <- plt
+  	 		    incProgress(1/n.measures, detail=sprintf(MEASURE))
+  	 		}
+  
+  	 		model$plots <- plots
+  	 		saveRDS(model, file=MODEL_FILE)
+  	 		
+	 		})
+  
 
-	 		if ('distance' %in% measures) 
-	 		{
-	 			# #DEBUG
-	 			# plot(model[[measures[1]]][[1]], main=sprintf('%s: period %s',measures[1],1))
-	 			# for (measure in measures) {
-	 			measure <- 'distance'
-	 			for (i in 1:length(model[[measure]])) {
-	 				dflong <- melt(model[[measure]][[i]], varnames = c('firm1','firm2'), value.name = 'distance')
-	 				plt <- ggplot(data = dflong, aes(x = firm1, y = firm2)) +
-	 					geom_tile(aes(fill = distance))  + 
-	 					geom_text(aes(label = round(distance, 1)), colour='#FFFFFF') +
-	 					scale_fill_continuous(high = "#132B43", low = "#56B1F7") + 
-	 					ggtitle(sprintf('%s: period %s',measure,i))
-	 				plots[[length(plots)+1]] <- plt
-	 			}
-	 		} 
-
-	 		if ('predictability' %in% measures) 
-	 		{
-	 			# #DEBUG
-	 			# plot(model[[measures[1]]][[1]], main=sprintf('%s: period %s',measures[1],1))
-	 			# for (measure in measures) {
-	 			measure <- 'predictability'
-	 			itemnames <- names(model[[measure]])
-	 			for (i in 1:length(model[[measure]])) {
-	 				dflong <- melt(model[[measure]][[i]], varnames = c('period1','period2'), value.name = 'predictability')
-	 				plt <- ggplot(data = dflong, aes(x = period1, y = period2)) +
-	 					geom_tile(aes(fill = predictability))  + 
-	 					geom_text(aes(label = round(predictability, 1)), colour='#FFFFFF') +
-	 					scale_fill_continuous(high = "#B10026", low = "#FFFFB2") + 
-	 					ggtitle(sprintf('%s: firm %s',measure, itemnames[i] ))
-	 				plots[[length(plots)+1]] <- plt
-	 			}
-	 		} 
-
-	 		if ('motif' %in% measures)
-	 		{
-	 			measure <- 'motif'
-	 			dat <- model[[measure]]
-	 		    dflong <- data.frame()
-	 		    for (t in 1:length(dat)) {
-	 		    	dft <- model[[measure]][[t]]
-	 		    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
-	 		    	dflong <- rbind(dflong, dft)
-	 		    }
-	 		    plt <- ggplot(data = dflong, aes(x = as.integer(period), y = motif, colour=firm)) +
-	 		    	geom_line()  + 	geom_point() +
-	 		    	xlab('Period') + theme_bw() + 
-	 		    	ggtitle(sprintf('%s',measure))
-	 		    plots[[length(plots)+1]] <- plt
-	 		}
-
-	 		if ('grouping' %in% measures)
-	 		{
-	 			measure <- 'grouping'
-	 			dat <- model[[measure]]
-	 		    dflong <- data.frame()
-	 		    for (t in 1:length(dat)) {
-	 		    	dft <- model[[measure]][[t]]
-	 		    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
-	 		    	dflong <- rbind(dflong, dft)
-	 		    }
-	 		    plt <- ggplot(data = dflong, aes(x = as.integer(period), y = grouping, colour=firm)) +
-	 		    	geom_line()  + 	geom_point() +
-	 		    	xlab('Period') + theme_bw() + 
-	 		    	ggtitle(sprintf('%s',measure))
-	 		    plots[[length(plots)+1]] <- plt
-	 		}
-
-	 		if ('simplicity' %in% measures)
-	 		{
-	 			measure <- 'simplicity'
-	 			dat <- model[[measure]]
-	 		    dflong <- data.frame()
-	 		    for (t in 1:length(dat)) {
-	 		    	dft <- model[[measure]][[t]]
-	 		    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
-	 		    	dflong <- rbind(dflong, dft)
-	 		    }
-	 		    plt <- ggplot(data = dflong, aes(x = as.integer(period), y = simplicity, colour=firm)) +
-	 		    	geom_line()  + 	geom_point() +
-	 		    	xlab('Period') + theme_bw() + 
-	 		    	ggtitle(sprintf('%s',measure))
-	 		    plots[[length(plots)+1]] <- plt
-	 		}
-
-
-
-	 		## SAVE
-	 		model$plots <- plots
-	 		saveRDS(model, file=MODEL_FILE)
-
-	 		## PLOT
+  	 		model <- loadModel()
+  
+  	 		## PLOT
 	    	nall <- length(model$plots)
 	    	ncols <- floor(sqrt(nall))
 	    	nrows <- ceiling(nall / ncols)
-	 		par(mar=c(2,3,2,1))
-	 		ggarrange(plotlist = plots, ncol=ncols, nrow = nrows)
+  	 		par(mar=c(2,3,2,1))
+  	 		ggarrange(plotlist = plots, ncol=ncols, nrow = nrows)
 
 	 	} 
 
@@ -1054,7 +1274,7 @@
 				    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
 				    	df <- rbind(df, dft)
 				    }
-				    names(df)[which(names(df)=='L1')] <- 'firm'  ## list name at Level 1 is the firm name; rename column 'L1' to firmname
+				    names(df)[which(names(df)=='L1')] <- 'actor'  ## list name at Level 1 is the actor name; rename column 'L1' to actorname
 				    file <- sprintf('%s-%s.csv', measure,ts)
 				    write.csv(df, file=file, row.names = F)
 				    files <- c(files, file)
@@ -1066,7 +1286,7 @@
 				    dat <- model[[measure]]
 				    df <- data.frame()
 				    for (t in 1:length(dat)) {
-				    	dft <- melt(dat[[t]], varnames = c('firm1','firm2'), value.name = measure)
+				    	dft <- melt(dat[[t]], varnames = c('actor1','actor2'), value.name = measure)
 				    	dft$period <- ifelse(length(names(dat))>0, names(dat)[t], t)
 				    	df <- rbind(df, dft)
 				    }
@@ -1075,9 +1295,9 @@
 				    files <- c(files, file)
 			    }
 
-		        ## GROUPING
-		        if ('grouping' %in% measures) {
-		        	measure <- 'grouping'
+	        ## GROUPING
+	        if ('grouping' %in% measures) {
+	        	measure <- 'grouping'
 				    df <- data.frame()
 				    for (t in 1:length(dat)) {
 				    	dft <- model[[measure]][[t]]
@@ -1089,9 +1309,9 @@
 				    files <- c(files, file)
 		        }
 
-	            ## MOTIFS
-	            if ('motif' %in% measures) {
-	            	measure <- 'motif'
+          ## MOTIFS
+          if ('motif' %in% measures) {
+	           measure <- 'motif'
 				    df <- data.frame()
 				    for (t in 1:length(dat)) {
 				    	dft <- model[[measure]][[t]]
@@ -1124,7 +1344,7 @@
 				    df <- data.frame()
 				    for (i in 1:length(dat)) {
 				    	dfi <- melt(dat[[i]], varnames = c('period1','period2'), value.name = measure)
-				    	dfi$firm <- names(dat)[i] # ifelse(length(names(dat))>0, names(dat)[t], t)
+				    	dfi$actor <- names(dat)[i] # ifelse(length(names(dat))>0, names(dat)[t], t)
 				    	df <- rbind(df, dfi)
 				    }
 				    file <- sprintf('%s-%s.csv',measure,ts)
@@ -1135,7 +1355,7 @@
 			    # dat <- model$seqdefs
 			    # df <- data.frame()
 			    # for (t in 1:length(dat)) {
-			    # 	dft <- melt(dat[[t]], varnames = c('firm1','firm2'), value.name = 'se')
+			    # 	dft <- melt(dat[[t]], varnames = c('actor1','actor2'), value.name = 'se')
 			    # 	dft$period <- names(dat)[t]
 			    # 	df <- rbind(df, dft)
 			    # }
