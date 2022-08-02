@@ -861,7 +861,7 @@
 		    
 		    if ('simplicity' %in% measures) 
 		    {
-		      withProgress(message = 'Computing simplicity by period...', value=0, {
+		      withProgress(message = 'Computing simplicity...', value=0, {
 		        model <- loadModel()
 		        for (t in 1:npds)  #length(periods)
 		        {
@@ -902,7 +902,7 @@
 				## TODO: Convert to foreach (parallel)
 				if ('predictability' %in% measures) 
 				{
-				  withProgress(message = 'Computing predictability by actor...', value=0, {
+				  withProgress(message = 'Computing predictability...', value=0, {
 				    model <- loadModel()
   					seqlaglist <- list()
   					for (i in 1:length(actors)) 
@@ -1090,13 +1090,13 @@
 	 		modelNames <- names(model)
 	 		measures <- measuresAll[measuresAll %in% modelNames]
 	 		
-	 		n.measures <- sum( measuresAll %in% names(model) )
+	 		n.measures <- sum( measuresAll %in% names(model) ) + 1 ## treat load/save/arrange overhead as another plot for progress bar
 
 	 		if ( n.measures == 0 ) {
 	 			return()
 	 		}
 	 		
-	 		withProgress(message = 'Rendering plots...', value=0, {
+	 		withProgress(message = 'Plotting measures...', value=0, {
 	 		  model <- loadModel()
 
   	 		plots <- list()
@@ -1118,8 +1118,8 @@
   	 					ggtitle(sprintf('%s: period %s',MEASURE,i))
   	 				plots[[length(plots)+1]] <- plt
   	 			}
-  	 		  counter <- 
-  	 			incProgress(1/n.measures, detail=sprintf(MEASURE))
+  	 		  counter <- counter + 1
+  	 			incProgress(1/n.measures)
   	 		} 
   	 		
   	 		MEASURE <- 'predictability'
@@ -1138,7 +1138,8 @@
   	 					ggtitle(sprintf('%s: actor %s',MEASURE, itemnames[i] ))
   	 				plots[[length(plots)+1]] <- plt
   	 			}
-  	 			incProgress(1/n.measures, detail=sprintf(MEASURE))
+  	 			counter <- counter + 1
+  	 			incProgress(1/n.measures)
   	 		} 
   
   	 		MEASURE <- 'motif'
@@ -1156,7 +1157,8 @@
   	 		    	xlab('Period') + theme_bw() + 
   	 		    	ggtitle(sprintf('%s',MEASURE))
   	 		    plots[[length(plots)+1]] <- plt
-  	 		    incProgress(1/n.measures, detail=sprintf(MEASURE))
+  	 		    counter <- counter + 1
+  	 		    incProgress(1/n.measures)
   	 		}
   
   	 		MEASURE <- 'grouping'
@@ -1174,7 +1176,8 @@
   	 		    	xlab('Period') + theme_bw() + 
   	 		    	ggtitle(sprintf('%s',MEASURE))
   	 		    plots[[length(plots)+1]] <- plt
-  	 		    incProgress(1/n.measures, detail=sprintf(MEASURE))
+  	 		    counter <- counter + 1
+  	 		    incProgress(1/n.measures)
   	 		}
   
   	 		MEASURE <- 'simplicity'
@@ -1192,23 +1195,34 @@
   	 		    	xlab('Period') + theme_bw() + 
   	 		    	ggtitle(sprintf('%s',MEASURE))
   	 		    plots[[length(plots)+1]] <- plt
-  	 		    incProgress(1/n.measures, detail=sprintf(MEASURE))
+  	 		    counter <- counter + 1
+  	 		    incProgress(1/n.measures)
   	 		}
   
   	 		model$plots <- plots
   	 		saveRDS(model, file=MODEL_FILE)
   	 		
-	 		})
-  
-
-  	 		model <- loadModel()
-  
+  	 		counter <- counter + 1
+  	 		incProgress(1/n.measures)
+  	 		
   	 		## PLOT
-	    	nall <- length(model$plots)
-	    	ncols <- floor(sqrt(nall))
-	    	nrows <- ceiling(nall / ncols)
+  	 		nall <- length(model$plots)
+  	 		ncols <- floor(sqrt(nall))
+  	 		nrows <- ceiling(nall / ncols)
+  	 		
   	 		par(mar=c(2,3,2,1))
   	 		ggarrange(plotlist = plots, ncol=ncols, nrow = nrows)
+  	 		
+	 		})
+	 		
+# 	 		model <- loadModel()
+# 
+# 	 		## PLOT
+#     	nall <- length(model$plots)
+#     	ncols <- floor(sqrt(nall))
+#     	nrows <- ceiling(nall / ncols)
+# 	 		par(mar=c(2,3,2,1))
+# 	 		ggarrange(plotlist = plots, ncol=ncols, nrow = nrows)
 
 	 	} 
 
