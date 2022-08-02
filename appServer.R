@@ -704,6 +704,8 @@
 		        model$distance <- distance
 		        saveRDS(model, file=MODEL_FILE)
 		      }) ## /end withProgress()
+		    } else {
+		    	model$distance <- NULL
 		    }
 		    
 		    ## GK Gamma is used in motif and grouping -- compute it once first for either/both
@@ -740,6 +742,8 @@
 		 
 		      # names(gamma) <- actors
 		      # print(c('DEBUG gamma:',gamma))
+		    } else {
+		    	model$gamma <- NULL
 		    }
 				# print(loadModel())
 				# return()
@@ -796,8 +800,11 @@
 		        saveRDS(model, file=MODEL_FILE)
 		        
 		      }) ## /end withProgress()
-		      
+
+		    } else {
+		    	model$grouping <- NULL
 		    }
+		    
 		    
 		    if ('motif' %in% measures) 
 		    {
@@ -856,6 +863,8 @@
 		        saveRDS(model, file=MODEL_FILE)
 		        
 		      }) ## /end withProgress()
+		    } else {
+		    	model$motif <- NULL
 		    }
 		    # print(motif)
 		    
@@ -892,6 +901,8 @@
 		        saveRDS(model, file=MODEL_FILE)
 		        
 		      }) ## /end withProgress()
+		    } else {
+		    	model$simplicity <- NULL
 		    }
 		    
 
@@ -928,7 +939,9 @@
   					saveRDS(model, file=MODEL_FILE)
   					
 				  })
-				}
+				}else {
+		    	model$predictability <- NULL
+		    }
 
 				# ## list names by time period
 				# # if (length(gamma) == npds)  		names(gamma) <- periods
@@ -948,7 +961,7 @@
 				# ## add gamma if used by other measure
 				# # if (any(c('grouping','motif') %in% measures))	model$gamma <- gamma
 				
-				model <- loadModel()
+				# model <- loadModel()
 				
 				## Save Model
 				model$analysis_run <- 'ANALYSIS RUN COMPLETED'
@@ -1084,8 +1097,13 @@
 	output$analysis_output_plots <- renderPlot({
 
 	 	if(input$analysis_output_plots_button) {
-	 		model <- readRDS(MODEL_FILE)
-
+	 		# model <- readRDS(MODEL_FILE)
+	 		model <- loadModel()
+	 		
+	 		if ('plots' %in% names(model)) {
+	 		  model$plots <- NULL
+	 		}
+	 		
 	 		measuresAll <- c('distance','predictability','simplicity','grouping','motif')
 	 		modelNames <- names(model)
 	 		measures <- measuresAll[measuresAll %in% modelNames]
@@ -1097,7 +1115,6 @@
 	 		}
 	 		
 	 		withProgress(message = 'Plotting measures...', value=0, {
-	 		  model <- loadModel()
 
   	 		plots <- list()
   	 		
