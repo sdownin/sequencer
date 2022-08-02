@@ -112,14 +112,19 @@
 	# Get list of action name abbreviations 
 	#  (for compact display of subcostmat)
 	##
-	getNameAbbrevList <- function(actions) {
-	  num.categories <- length(actions)
-	  out <- as.list(actions)
+  #cats <- strsplit("Agreement, Challenge, Elaboration, New Idea, Proceeding, 
+	#                     Questioning, Relational Integration", ', ')[[1]]
+	##
+	getNameAbbrevList <- function(categories) {
+	  num.cats <- length(categories)
+	  out <- as.list(categories)
 	  abbs <- LETTERS
 	  i <- 1
-	  while( length(abbs) < num.categories) {
+	  while( length(abbs) < num.cats) {
 	    i <- i+1
-	    abbs <- c(abbs, sapply(LETTERS, function(x)paste(c(x,i),collapse = '')))
+	    abbs <- c(abbs, 
+	      sapply(LETTERS, function(x)paste(c(x,i),collapse = ''))
+	    )
 	  }
 	  names(out) <- abbs[1:length(out)]
 	  
@@ -300,7 +305,7 @@
 	  require(reshape2)
 	  require(ggplot2)
 	  require(tibble)
-	  require(tidyr)
+	  require(tidyr) ## TODO: check if this lib is used or can be removed
 	  require(stringr)
 	  require(ggpubr)
 	  
@@ -320,11 +325,26 @@
 			df <- read.csv(inFile$datapath, header = input$header, na.strings=c('','""'), stringsAsFactors=FALSE, 
 				fileEncoding=input$alphabet_fileEncoding, #'UTF-8',
 				# encoding= 'UTF-8', fileEncoding="UTF-8-BOM", #'UTF-8',
-				check.names=TRUE, strip.white=TRUE)
-			li <- apply(df, 2, function(col){
-				# as.factor(unique(col[which(!is.null(col) & !is.nan(col) & !is.na(col))]))
-				unique(col[which(!is.null(col) & !is.nan(col) & !is.na(col))])
-			})
+				# quote = c('"'),
+				check.names=TRUE, 
+				strip.white=TRUE
+				)
+			# print(c('class df:',class(df)))
+			# print(c('alphabet df:',df))
+			# print(c('colnames alphabet df:',colnames(df)))
+			
+			li <- list()
+			for (i in 1:ncol(df)) {
+			  colnm <- names(df)[i]
+			  .x <- df[[i]] ## get vector from i'th col
+			  li[[colnm]] <- .x[which( !is.null(.x) & !is.nan(.x) & !is.na(.x) )]
+			}
+			# names(li)
+			# li <- plyr::dlply(df function(col){
+			# 	# as.factor(unique(col[which(!is.null(col) & !is.nan(col) & !is.na(col))]))
+			# 	unique(col[which(!is.null(col) & !is.nan(col) & !is.na(col))])
+			# })
+			# print(c('li: ', li))
 			
 			## UPDATE SELECTION OF ACTION COLUMN
 			updateSelectInput(session, "alphabet_selectActionColumn", label = "Category Column", choices = colnames(df), 
@@ -381,12 +401,20 @@
 			df <- read.csv(inFile$datapath, header = input$subcostmat_header, na.strings=c('','""'), stringsAsFactors=FALSE,
 				# row.names=input$subcostmat_rownames,
 				fileEncoding=input$subcostmat_fileEncoding, #'UTF-8',
-				check.names=TRUE, strip.white=TRUE)
+				# quote = c('"'),
+				check.names=TRUE,
+				strip.white=TRUE
+				)
+			
+			# print('DEBUG subcost mat df:')
+			# print(df)
 
 			alphabet <- model$analysis_alphabet$x
 			actionCol <- model$analysis_alphabet$actionCol
 			varnamemap <- model$analysis_alphabet$varnamemap
 			ncats <- length(varnamemap)
+			
+			# print('varnamemap:',varnamemap)
 
 			## automatically determine column names
 			nrows <- nrow(df)
@@ -453,7 +481,10 @@
 			## INPUT
 			df <- read.csv(inFile$datapath, header = TRUE, sep=',', fill=TRUE, stringsAsFactors=FALSE,
 				fileEncoding=input$seqdata_fileEncoding, #'UTF-8',
-				check.names=TRUE, strip.white=TRUE)
+				# quote = c('"'),
+				check.names=TRUE,
+				strip.white=TRUE
+				)
 
 			## Input
 			model$analysis_data <- list(x=df, xpath=inFile$datapath)
