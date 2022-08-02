@@ -1289,10 +1289,11 @@
 		    # file.choose()
 			},
 			content = function(con) {
-				library(reshape2)
+				require(reshape2)
 			  	model <- loadModel()
 			  	measuresAll <- c('distance','grouping','motif','simplicity','predictability')
-			  	measures <- measuresAll[measuresAll %in% names(model)]
+			  	# measures <- measuresAll[measuresAll %in% names(model)]
+			  	measures <- model$analysis_measures_group
 			  	# if (any(c('grouping','motif') %in% measures))
 			  	# 	measures <- c(measures, 'gamma')
 			    files <- NULL;
@@ -1307,6 +1308,7 @@
 					sprintf('Measures: %s', paste(measures, collapse=', ')),
 					sprintf('Notes: %s', ifelse(any(c('grouping','motif') %in% measures), 'gamma values used in motif and/or grouping are also saved', ' '))
 				))
+				
 			    write.table(summarydf, file=file, row.names=FALSE, col.names=FALSE)  ## skip first row (name placehoder) when saving summary txt file
 			    files <- c(files, file)
 
@@ -1344,6 +1346,7 @@
 	        ## GROUPING
 	        if ('grouping' %in% measures) {
 	        	measure <- 'grouping'
+	        	dat <- model[[measure]]
 				    df <- data.frame()
 				    for (t in 1:length(dat)) {
 				    	dft <- model[[measure]][[t]]
@@ -1358,6 +1361,7 @@
           ## MOTIFS
           if ('motif' %in% measures) {
 	           measure <- 'motif'
+	           dat <- model[[measure]]
 				    df <- data.frame()
 				    for (t in 1:length(dat)) {
 				    	dft <- model[[measure]][[t]]
@@ -1372,6 +1376,7 @@
 			    ## Simplicities
 			    if ('simplicity' %in% measures) {
 			    	measure <- 'simplicity'
+			    	dat <- model[[measure]]
 				    df <- data.frame()
 				    for (t in 1:length(dat)) {
 				    	dft <- model[[measure]][[t]]
