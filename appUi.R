@@ -121,7 +121,7 @@
 					# h3("Save Results"),
 					fluidRow(
 						column(width = 6,
-						    downloadButton('analysis_output_download', class='btn btn-default btn-lg btn-block', label = "Save Results") # class = NULL, ...
+						    downloadButton('analysis_output_download', "Save Results", class='btn btn-default btn-lg btn-block') # class = NULL, ...
 						),
 					    column(width = 6, #offset=6,
 					        actionButtonUIrun("analysis_output_plots_button", "Visualize Results", class='btn btn-primary btn-lg btn-block', icon=icon('chart-pie'))
@@ -149,9 +149,9 @@
 					br(),
 					br(),
 					hr(),
-					# h3("Save Plot"),
+					# h3("Save Plots"),
 					fluidRow(column(width=6,
-						downloadButton("analysis_save_plots_button",  "Save Plot", class='btn btn-default btn-lg btn-block', icon=icon('save'))
+						downloadButton("analysis_save_plots_button",  "Save Plots", class='btn btn-default btn-lg btn-block')
 					)),
 					br(),
 					br(),
