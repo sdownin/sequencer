@@ -44,13 +44,13 @@
 								tableOutputSummaryUIwithSpinner("analysis_file_data_table_summary", "Sequence Data Summary") 
 							),		
 						),
-						# hr(),
+						hr(),
 						fluidRow(
 						    column(width = 6, offset=6,
 						        actionButtonUIrun("analysis_measures_goto", "Select Measures", class='btn btn-primary btn-lg btn-block', icon=icon('sliders'))
 						    )
 						),
-						# hr(),
+						hr(),
 						# div(id='analysis_num_plots', style="display:none;", value=0), ## initial value of num_plots
 				icon=icon('table')	
 				), 
@@ -76,6 +76,7 @@
 						      	)
 						      )
 						 )),
+						hr(),
 						fluidRow(
 						    column(width = 6, offset=6,
 						        actionButtonUIrun("analysis_run", "Run Analysis", class='btn btn-primary btn-lg btn-block', icon=icon('play-circle'))
@@ -94,7 +95,7 @@
 						# 		checkboxGroupUI("one")
 						# 	)
 						# ),
-						# hr()
+						hr(),
 				icon=icon('sliders')	
 				), 
 				
@@ -116,7 +117,7 @@
 					#         downloadButton('analysis_output_download', class='btn btn-default btn-lg', label = "Download") # class = NULL, ...
 					#     )
 					# ),
-					# hr(),
+					hr(),
 					# h3("Save Results"),
 					fluidRow(
 						column(width = 6,
@@ -126,7 +127,7 @@
 					        actionButtonUIrun("analysis_output_plots_button", "Visualize Results", class='btn btn-primary btn-lg btn-block', icon=icon('chart-pie'))
 					    )
 					),
-					# hr(),
+					hr(),
 				icon=icon('poll-h')	
 				),
 
@@ -145,7 +146,9 @@
     			    		# plotOutput('analysis_output_plot_singles', height=270, width='100%')
 						)
 					),
-					# hr(),
+					br(),
+					br(),
+					hr(),
 					# h3("Save Plot"),
 					fluidRow(column(width=6,
 						downloadButton("analysis_save_plots_button",  "Save Plot", class='btn btn-default btn-lg btn-block', icon=icon('save'))
