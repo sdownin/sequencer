@@ -666,14 +666,15 @@
 				predictability <- list()
 				simplicity <- list()
 
-				measures <- input$analysis_measures_group
-
 				## clear existing measures from model (in case user reruns analysis with different subset of measures selected)
 				for (measure in c('distance','simplicity','grouping','predictability','motif', 'gamma')) {
 					if (measure %in% names(model))
 						model[[measure]] <- NULL
 				}
 				
+				measures <- input$analysis_measures_group
+				model$analysis_measures_group <- measures
+				saveRDS(model, file=MODEL_FILE)
 				
 				##-----------------------------------
 				## COMPUTE SELECTED MEASURES BY PERIOD
@@ -1093,6 +1094,14 @@
 	# 	} 
 
 	# })
+		
+	## Clear existing plots before re-plotting 
+	## (TODO: check if this is superfluous)
+	output$analysis_output_plots <- renderPlot({
+	    model <- loadModel()
+	    model$plots <- NULL
+	    return()
+	})
 
 	output$analysis_output_plots <- renderPlot({
 
@@ -1106,13 +1115,15 @@
 	 		
 	 		measuresAll <- c('distance','predictability','simplicity','grouping','motif')
 	 		modelNames <- names(model)
-	 		measures <- measuresAll[measuresAll %in% modelNames]
 	 		
-	 		n.measures <- sum( measuresAll %in% names(model) ) + 1 ## treat load/save/arrange overhead as another plot for progress bar
+	 		measures <- model$analysis_measures_group ## use saved measures
+	 		# measures <- measuresAll[measuresAll %in% modelNames]
 
-	 		if ( n.measures == 0 ) {
+	 		if ( length(measures) == 0 ) {
 	 			return()
 	 		}
+	 		
+	 		n.measures <- length(measures) + 1 ## treat load/save/arrange overhead as another plot for progress bar
 	 		
 	 		withProgress(message = 'Plotting measures...', value=0, {
 
@@ -1222,13 +1233,17 @@
   	 		counter <- counter + 1
   	 		incProgress(1/n.measures)
   	 		
-  	 		## PLOT
-  	 		nall <- length(model$plots)
-  	 		ncols <- floor(sqrt(nall))
-  	 		nrows <- ceiling(nall / ncols)
+  	 		if (length(plots) > 0)
+  	 		{
+  	 		  ## PLOT
+  	 		  nall <- length(model$plots)
+  	 		  ncols <- floor(sqrt(nall))
+  	 		  nrows <- ceiling(nall / ncols)
+  	 		  
+  	 		  par(mar=c(2,3,2,1))
+  	 		  ggarrange(plotlist = plots, ncol=ncols, nrow = nrows)
+  	 		}
   	 		
-  	 		par(mar=c(2,3,2,1))
-  	 		ggarrange(plotlist = plots, ncol=ncols, nrow = nrows)
   	 		
 	 		})
 	 		
