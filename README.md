@@ -72,7 +72,7 @@ Example CSV files for formatting your input data are included in the `TestData/`
 
 All notable changes to this project will be documented in this section.
 
-#### [0.5.0] - 2022-07-30
+#### [0.5.0] - 2022-08-02
 ```
 Added
  (none)
