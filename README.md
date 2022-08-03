@@ -26,8 +26,8 @@
 
 | # | Data Set | Files | Stage |
 | --- | ------- | ------- | ------- | 
-| 1 | [**Colored Blocks**](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/EcszQWJcObtAmBTCRkf0hYwBjp0yYAHdiSaSa1-8DjN0Dw) | alphabet, substitution costs, sequence-grouping, sequence-motif, sequence-complexity, sequence-dissimilarity-78, sequence-dissimilarity-79 | AOM2022 |
-| 2 | [**Verbal Utterances**](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/EX1gRddxjFZIv9hp2qQoc-cBLC6Nonay_y61zifxgRDRJw?e=xSD69P) | alphabet, substitution costs, sequences | AOM2022 |
+| 1 | [**Colored Blocks**](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/EagV8GzcFpBAkWAZoApGlmkBA2_aheoK0Sjjtk1pYQy33Q?e=xJ1fNd) | alphabet; substitution costs; sequences examples for grouping, motif, complexity, dissimilarity) | AOM2022 |
+| 2 | [**Verbal Utterances**](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/EZV8hfckQEVKs5l2XzrDsKcBsIdSF638ioAfZ6AeBgNnrg?e=Bm6qab) | alphabet, substitution costs, sequences | AOM2022 |
 
 
 
