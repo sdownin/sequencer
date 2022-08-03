@@ -4,7 +4,7 @@
   "description": "User-friendly sequence analysis in R",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "electron . --trace-warnings",
     "package-mac": "set DEBUG=*  & electron-packager . --overwrite --platform=darwin --arch=x64 --out=SequenceRAppMac --ignore=\"(TestData*|_electron_src*|node_modules*|SequenceRApp*|R-Portable-Win*|\\.vs*|_dev*|_img*)\" ",
     "package-win": "set DEBUG=*  & electron-packager . --overwrite --platform=win32 --arch=ia32 --icon=cc.ico --out=SequenceRAppWindows --ignore=\"(TestData*|_electron_src*|node_modules*|SequenceRApp*|R-Portable-Mac*|\\.vs*|_dev*|_img*)\"  --version-string.CompanyName=Mizzou --version-string.FileDescription=CE --version-string.ProductName=\"SequenceR App\" ",
     "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds"

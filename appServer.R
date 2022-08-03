@@ -163,11 +163,25 @@
 	# Transform named list of sequences to wide dataframe of sequence rows
 	#   paddings NAs at end to match seq lengths 
 	##
-	seqList2Df <- function(l)
+	seqList2Df <- function(l, missing.to.end=FALSE)
 	{
 	  maxlen <- max(sapply(l,length))
+	  
 	  for (i in 1:length(l)) {
-	    xi <- c(l[[i]], rep(NA, maxlen - length(l[[i]])) )
+	    xi <- l[[i]]
+	    xilen <- length(l[[i]])
+	    
+	    if(missing.to.end) { ## move missing to end
+	      idx.val <- which( !is.null(xi) & !is.na(xi) & !is.nan(xi) & xi !='' )
+	      idx.mis <- (1:xilen)[ -idx.val ]
+	      xi <- c( xi[idx.val], rep(NA, length(idx.mis) ) ) #replace empty strings,NULL,NaN with NAs at end
+	    }
+	    
+	    ## pad ending with NAs (to length of longest sequence)
+	    if (xilen < maxlen) {
+	      xi <- c(xi, rep(NA, maxlen - xilen) ) 
+	    }
+	    
 	    if (i == 1) {
 	      ldf <- data.frame(xi)
 	      names(ldf) <- names(l)[i]
@@ -175,9 +189,37 @@
 	      ldf <- cbind(ldf, xi)
 	      names(ldf)[i] <- names(l)[i]
 	    }
+	    
 	  }
 	  return(t(ldf))
 	}
+
+	# ##
+	# # Transform named list of sequences to wide dataframe of sequence rows
+	# #   paddings NAs at end to match seq lengths 
+	# ##
+	# seqList2Df <- function(l, categories)
+	# {
+	#   ## get vector of lengths for each item(vector) in input list
+	#   l.len <- plyr::laply(l, length) 
+	#   ## filter l to only items with elements (length > 0)
+	#   l <- l[ which(l.len > 0) ]
+	#   ##
+	#   maxlen <- max(l.len)
+	#   for (i in 1:length(l)) {
+	#     n.xi.orig <- length( l[[i]] )
+	#     xi <- l[[i]][ which( l[[i]] %in% categories ) ]
+	#     xi <- c(xi, rep(NA, maxlen - n.xi.orig) )
+	#     if (i == 1) {
+	#       ldf <- data.frame(xi)
+	#       names(ldf) <- names(l)[i]
+	#     } else {
+	#       ldf <- cbind(ldf, xi)
+	#       names(ldf)[i] <- names(l)[i]
+	#     }
+	#   }
+	#   return(t(ldf))
+	# }
 
 	##
 	# Concordant and Discordant Pairs
@@ -322,7 +364,7 @@
 				return(NULL)
 			
 			## INPUT
-			df <- read.csv(inFile$datapath, header = input$header, na.strings=c('','""'), stringsAsFactors=FALSE, 
+			df <- read.csv(inFile$datapath, header = input$header, na.strings=c('','""','NA'), stringsAsFactors=FALSE, 
 				fileEncoding=input$alphabet_fileEncoding, #'UTF-8',
 				# encoding= 'UTF-8', fileEncoding="UTF-8-BOM", #'UTF-8',
 				# quote = c('"'),
@@ -337,7 +379,7 @@
 			for (i in 1:ncol(df)) {
 			  colnm <- names(df)[i]
 			  .x <- df[[i]] ## get vector from i'th col
-			  li[[colnm]] <- .x[which( !is.null(.x) & !is.nan(.x) & !is.na(.x) )]
+			  li[[colnm]] <- .x[which( !is.null(.x) & !is.nan(.x) & !is.na(.x) & .x != '' )]
 			}
 			# names(li)
 			# li <- plyr::dlply(df function(col){
@@ -392,7 +434,7 @@
 		output$analysis_file_subcostmat_summary <- renderPrint({
 
 			inFile <- input$analysis_file_subcostmat
-
+  
 			## NONE
 			if (is.null(inFile)) 
 				return(NULL)
@@ -400,47 +442,135 @@
 			model <- loadModel()
 
 			## INPUT
-			df <- read.csv(inFile$datapath, header = input$subcostmat_header, na.strings=c('','""'), stringsAsFactors=FALSE,
-				# row.names=input$subcostmat_rownames,
-				fileEncoding=input$subcostmat_fileEncoding, #'UTF-8',
-				# quote = c('"'),
-				check.names=TRUE,
-				strip.white=TRUE
-				)
+			df <- read.csv(inFile$datapath, header = FALSE, ## header=FALSE for handling row/colnames
+			               na.strings=c('','""'), stringsAsFactors=FALSE,  
+              		  # header = input$subcostmat_header
+              			# row.names=input$subcostmat_rownames,
+              			fileEncoding=input$subcostmat_fileEncoding, #'UTF-8',
+              			# quote = c('"'),
+              			check.names=TRUE,
+              			strip.white=TRUE
+              			)
+      
+      # print('DEBUG subcost mat df:')
+      # print(df)
+      
+    	alphabet <- model$analysis_alphabet$x
+    	actionCol <- model$analysis_alphabet$actionCol
+    	varnamemap <- model$analysis_alphabet$varnamemap
+    	ncats <- length(varnamemap)
+    
+    	
+    	nrows <- nrow(df)
+    	ncols <- ncol(df)
+    	
+    	## Assume must have row names or column names
+    	## Only keep subcost mat rows/cols in square matrix (excluding header or rownames)
+    	## 
+    	if (nrows == ncols) {
+    	  headvec <- df[1,] ## either first row or column should work
+    	  df2 <- df[-1,-1]
+    	} else if (nrows > ncols) {
+    	  headvec <- df[1, ]
+    	  df2 <- df[-1, ]
+    	} else {
+    	  headvec <- df[ ,1]
+    	  df2 <- df[ ,-1]
+    	}
+    	
+    	idxs <- which(headvec %in% varnamemap)
+    	
+    	mat <- as.matrix( df2[idxs,idxs] )
+    	rownames(mat) <- headvec[idxs]
+    	colnames(mat) <- headvec[idxs]
+    	storage.mode(mat) <- "numeric"
+    	
+    	
+    	# ## ASSUME ROW NAMES OR COLUMN NAMES ARE INCLUDED (REQUIRED)
+    	# if (nrows == ncols) {
+    	#   row.idxs <- which( df[,1] %in% varnamemap ) ## first col of df for rownames
+    	#   col.idxs <- which( df[1,] %in% varnamemap ) ## first row of df for colnames 
+    	#   mat <- as.matrix( df[row.idxs, col.idxs] )
+    	#   rownames(mat) <- varnamemap[ row.idxs ]
+    	#   colnames(mat) <- varnamemap[ col.idxs ]
+    	#   
+    	# } else {
+    	#   
+    	#   headvec <- if (nrows > ncols) { df[1,] } else { df[,1] }
+    	#   ## take the square matrix of what rows/cols have in common
+    	#   ## regardless missing 1 row or 1 col
+    	#   nsq <- min( nrows, ncols )
+    	#   ## bottom right square of input table (in case it's rectangular with header row, etc.)
+    	#   df2 <- df[ (nrows-nsq+1):nrows, (ncols-nsq+1):ncols ]
+    	#   mat <- as.matrix( df2 )
+    	#   
+    	#   .cnames <- headvec[which(headvec %in% varnamemap)]
+    	#   .cnames <- if( length(.cnames) < nsq ) {
+    	#     ## pad missing names with letters as placeholders
+    	#     .cnames <- c(.cnames, paste0('v', (length(.cnames)+1):nsq ) )  
+    	#   } else if () {
+    	#     
+    	#   } else {
+    	#     
+    	#   }
+    	#   
+    	#   rownames(mat) <- 
+    	#   colnames(mat) <- 
+    	#   
+    	# }
+    	
+  		# ## Use only the square matrix of common rows/columns
+  		# ## reading in the table without header...
+  		# ##  (if ncols > nrows --> has header; no rownames)
+  		# ##  (if nrows < ncols --> has rownames; no header )
+  		# ##  --> keep only square matrix
+  		# df2 <- df[ (nrows-n+1):nrows, (ncols-n+1):ncols ]
+  		# as.matrix( df2 )
+  		# # .catnames <- if ( length(varnamemap) >= n) {
+  		# #   names(varnamemap)[1:n]
+  		# # } else {
+  		# #   c()
+  		# # }
+     
+  		# mat <- as.matrix( df )
 			
-			# print('DEBUG subcost mat df:')
-			# print(df)
 
-			alphabet <- model$analysis_alphabet$x
-			actionCol <- model$analysis_alphabet$actionCol
-			varnamemap <- model$analysis_alphabet$varnamemap
-			ncats <- length(varnamemap)
+			nvarnms <- length(varnamemap)
 			
-			# print(c('DEBUG varnamemap:',varnamemap))
-			# print(c('DEBUG subcostmat df str: ', str(df)))
-
-			## automatically determine column names
-			nrows <- nrow(df)
-			ncols <- ncol(df)
-			hasColNames <- nrows > ncats ## if 1 more row than #cats --> has col name
-			hasRowNames <- ncols > ncats ## if 1 more col than #cats --> has row name
-			## remove name row or col if present, and then assign rownames(), colnames()
-			df <- if (hasColNames & hasRowNames) { # is Square
-				# .rownames <-  df[,1]; # .colnames <-  df[1,]
-					df <- df[-1,-1]
-				} else if (nrows > ncols) {
-					## varnames in 1st row  (as column headers)
-					df <- df[-1, ]
-				} else if (ncols > nrows) {
-					## varnames in 1st col (as row names)
-					df <- df[ ,-1]
-				} else {
-					df ## NO CHANGE (no col names and no row names)
-				}
-			colnames(df) <- names(varnamemap)
-			rownames(df) <- names(varnamemap)
-
-			mat <- as.matrix(df)
+			if ( nvarnms != nrow(mat) ) {
+			  cat(sprintf('\nNumber of category names %s does not equal the subcost matrix dimensions [%s x %s], transformed from input table dimensions [%s x %s]\n', 
+			                nvarnms, dim(df)[1], dim(df)[2], nrows, ncols))
+			  return()
+			}
+			
+			
+			# # print(c('DEBUG varnamemap:',varnamemap))
+			# # print(c('DEBUG subcostmat df str: ', str(df)))
+			
+			##-----------------------------------------
+			# ## automatically determine column names
+			# nrows <- nrow(df)
+			# ncols <- ncol(df)
+			# hasColNames <- nrows > ncats ## if 1 more row than #cats --> has col name
+			# hasRowNames <- ncols > ncats ## if 1 more col than #cats --> has row name
+			# ## remove name row or col if present, and then assign rownames(), colnames()
+			# df <- if (hasColNames & hasRowNames) { # is Square
+			# 	# .rownames <-  df[,1]; # .colnames <-  df[1,]
+			# 		df <- df[-1,-1]
+			# 	} else if (nrows > ncols) {
+			# 		## varnames in 1st row  (as column headers)
+			# 		df <- df[-1, ]
+			# 	} else if (ncols > nrows) {
+			# 		## varnames in 1st col (as row names)
+			# 		df <- df[ ,-1]
+			# 	} else {
+			# 		df ## NO CHANGE (no col names and no row names)
+			# 	}
+			# colnames(df) <- names(varnamemap)
+			# rownames(df) <- names(varnamemap)
+			# 
+			# mat <- as.matrix(df)
+			##------------------------
 
 			## SAVE
 			saveModel(loadModel(), xname='analysis_subcostmat', x=mat, xpath=inFile$datapath)
@@ -485,7 +615,7 @@
 			model <- loadModel()
 			
 			## INPUT
-			df <- read.csv(inFile$datapath, header = TRUE, sep=',', fill=TRUE, stringsAsFactors=FALSE,
+			df <- read.csv(inFile$datapath, header = input$seqdata_header, sep=',', fill=TRUE, stringsAsFactors=FALSE,
 				fileEncoding=input$seqdata_fileEncoding, #'UTF-8',
 				# quote = c('"'),
 				check.names=TRUE,
@@ -530,7 +660,13 @@
 			# print(c('NAMES nuni:',names(nuni)))
 			# print(c('nuni:',nuni))
 			# min.col.idx <- which.min( nuni[naColIdxs] )
-			periodCol <- cnames[ (max(aColIdxs)+1) ] ## the next column after the last of actor/action columns
+			maxaColIdxs <- max(aColIdxs)
+			pdColIdx <- if ( !is.infinite(maxaColIdxs) & maxaColIdxs < ncol(df) ) {
+			  max(aColIdxs)+1 ## the next column after the last of actor/action columns
+			} else {
+			  length(cnames) ## just use last column
+			}
+			periodCol <- cnames[pdColIdx]
 			# cat(c('\n\nDEBUG periodCol:', periodCol))
 			
 			## UPDATE MODEL
@@ -563,7 +699,24 @@
 			periods <- unique(df[,periodCol])
 			actors <- as.character(alphabet[[actorCol]])
 			actionAlphabet <- as.character(alphabet[[actionCol]])
-
+			
+			## remove null actor rows (e.g., empty last CSV row)
+			df <- df[which(df[[actorCol]] %in% actors), ]
+			
+			##-----------------------------------------------
+			## LIMIT ACTORS TO THOSE WITH ACTIONS IN DATAFRAME
+			# if (input$seqdata_drop_empty_actors) {
+			  df <- df[complete.cases(df), ]
+			  # df <- df[which(df[[actorCol]] %in% actors), ]
+			  idx.actions <- which( ! is.null(df[[actionCol]]) & !is.na(df[[actionCol]]) & df[[actionCol]] != '')
+			  actorsNonempty <- sort(unique(df[idx.actions,actorCol]))
+			  actors <- actorsNonempty #sort(unique(df[[actorCol]]))
+			  ##
+			  model$analysis_alphabet$x$actorsSubset <- actors
+			  # model$analysis_data$x <- df
+			# }
+			##-----------------------------------------------
+			
 			# seqdefs <- list()
 			# for (t in 1:length(periods))  #length(periods)
 			# {
@@ -580,9 +733,44 @@
 			  tidx <- which(df[,periodCol] == pd)
 			  t.df <- df[tidx, ]
 			  t.l <- longDf2SeqList(t.df, actors, actorCol, actionCol)
-			  t.ldf <- seqList2Df(t.l)
+			  # ##
+			  # model$DEBUG <- list(t.l=t.l) ## DEBUG
+			  # saveRDS(model, file = MODEL_FILE) ##DEBUG
+			  # print(t.l)
+			  # return()
+			  # ##
+			  t.ldf <- seqList2Df(t.l, missing.to.end=TRUE) ## <-- Fixes error(?) TODO: more testing with different data
+			  
+			  # model$DEBUG <- list(t.l=t.l) ## DEBUG
+			  # saveRDS(model, file = MODEL_FILE) ##DEBUG
+			  # print(actionAlphabet)
+			  # print(t.l)
+			  # # return()
+			  
+			  ## REMOVE ACTORS WITHOUT ACTIONS
+			  # if (input$seqdata_drop_empty_actors) {
+  		    t.ldf.lns <- sapply(t.ldf, length)
+  		    if(any(t.ldf.lns == 0)) {
+  		      cat('\nNote: Removing actors without actions from sequences list.\n\n')
+  		      t.ldf <- t.ldf[ which(t.ldf.lns > 0) ]
+  		    }
+			  # }
+			  
+			  ## this block moved to seqList2Df() logic
+			  # ## MOVE missing actions (NA's or empty '' ) to end of each actor's sequence
+			  # t.ldf <- plyr::llply(t.ldf, function(x){
+			  #   idx.val <- which( !is.null(x) & !is.na(x) & !is.nan(x) & x!='' )
+			  #   idx.mis <- (1:length(x))[ -idx.val ]
+			  #   c( x[idx.val], x[idx.mis] ) # move missing to end for now (this is a constraint to be loosened in future development)
+			  # })
+			  
+			  
+			  ##
 			  right <- 'DEL'  # left <- 'NA' # gaps <- 'NA'
-			  seqdef(t.ldf, alphabet=actionAlphabet, right=right)
+			  seqdef(t.ldf, alphabet=actionAlphabet, right=right)  # missing=''
+			  
+			  # return()
+			  
 			}
 			names(seqdefs) <- periods
 			model$seqdefs <- seqdefs
@@ -651,10 +839,18 @@
 				right <- 'DEL'  # left <- 'NA' # gaps <- 'NA' ## seqdef parameter
 
 				periods <- unique(dat[,periodCol])
-				actors <- as.character(alphabet[[actorCol]])
+				## use subset of actors with actors, else use original alphabet of all actors
+				actors <- if ('actorsSubset' %in% names(alphabet) ){ 
+				    as.character( alphabet[['actorsSubset']] )
+				  } else { 
+				    as.character( alphabet[[actorCol]] )
+				  }
 				actionAlphabet <- as.character(alphabet[[actionCol]])
 
 				npds <- length(periods)
+				
+				## Filter Actors to those kept 
+				##  (MOVED TO DATA INPUT STEP)
 				nactors <- length(actors)
 				nactpds <- npds * nactors
 
@@ -687,7 +883,6 @@
 				#     incProgress(1/npds, detail=sprintf('Processing period: %s',pd))
 				# }) ## /end withProgress()
 				
-
 				    
 		    ## Pairwise distances over actors  (per period)
 		    if ('distance' %in% measures) 
@@ -697,7 +892,7 @@
   		      for (t in 1:npds)  #length(periods)
   		      {
   		        pd <- periods[t]
-				      t.xdist <- seqdist(seqdefs[[t]], method=method, norm=norm, sm=sm, with.missing=TRUE)
+				      t.xdist <- seqdist(seqdefs[[t]], method=method, norm=norm, sm=sm, with.missing=input$seqdata_run_with_missing)
 				      dimnames(t.xdist) <- list(actors, actors)
 				      distance[[pd]] <- t.xdist
 				      incProgress(1/npds, detail=sprintf('Period: %s',pd))
@@ -708,7 +903,11 @@
 		    } else {
 		    	model$distance <- NULL
 		    }
-		    
+		  
+				# print('DEBUG 1')
+				# return()
+				
+				
 		    ## GK Gamma is used in motif and grouping -- compute it once first for either/both
 		    if (any(c('motif','grouping') %in% measures)) 
 		    {

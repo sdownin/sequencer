@@ -150,7 +150,7 @@ fileInputUIAlphabet <- function(fileId, heading) {
 	)
 }
 
-fileInputUISubcostmat <- function(fileId, heading, headerId, fileEncodingId) {
+fileInputUISubcostmat <- function(fileId, heading, fileEncodingId) { # rowColNamesId
 	tagList(
 		fileInput(fileId, h4(heading),
 			multiple = F,
@@ -159,12 +159,13 @@ fileInputUISubcostmat <- function(fileId, heading, headerId, fileEncodingId) {
 			  "text/comma-separated-values,text/plain",
 			  ".csv")
 		),
-		checkboxInput(headerId, "Header", TRUE),
+		# checkboxInput(rowColNamesId, "Row/Column Names", TRUE),
+		# checkboxInput(headerId, "Header", TRUE),
 		selectInput(fileEncodingId, "File Encoding", fileEncodingVec)
 	)
 }
 
-fileInputUI <- function(fileId, heading, headerId, fileEncodingId) {
+fileInputUI <- function(fileId, heading, headerId, fileEncodingId) {  #dropEmptyActorsId
 	tagList(
 		fileInput(fileId, h4(heading),
 			multiple = F,
@@ -174,6 +175,7 @@ fileInputUI <- function(fileId, heading, headerId, fileEncodingId) {
 			  ".csv")
 		),
 		checkboxInput(headerId, "Header", TRUE), 
+		# checkboxInput(dropEmptyActorsId, "Drop Empty Actors", TRUE), 
 		# checkboxInput(rownamesId, "Row Names", TRUE),
 		selectInput(fileEncodingId, "File Encoding", fileEncodingVec),
 		selectInput("alphabet_selectPeriodColumn", "Period Column", c())

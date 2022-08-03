@@ -27,7 +27,7 @@
 						# hr(),
 						sidebarLayout(
 							sidebarPanel(
-								fileInputUISubcostmat("analysis_file_subcostmat", '2. Substitution Costs', 'subcostmat_header', 'subcostmat_fileEncoding')
+								fileInputUISubcostmat("analysis_file_subcostmat", '2. Substitution Costs', 'subcostmat_fileEncoding') #subcostmat_row_col_names
 							),
 							mainPanel(
 								tableOutputSummaryUI("analysis_file_subcostmat_summary", "Substitution Cost Matrix")
@@ -37,7 +37,7 @@
 						# hr(),
 						sidebarLayout(
 							sidebarPanel(
-								fileInputUI("analysis_file_data", '3. Sequence Data', 'seqdata_header', 'seqdata_fileEncoding')
+								fileInputUI("analysis_file_data", '3. Sequence Data', 'seqdata_header', 'seqdata_fileEncoding') # 'seqdata_drop_empty_actors
 							),
 							mainPanel(
 								tableOutputUI("analysis_file_data_table"),
@@ -64,16 +64,17 @@
 						      ),
 						      column(width = 6,
 						      	conditionalPanel(condition = "input.analysis_measures_group.includes('distance')",
-							      	h3("Sequence Distance Measurement Settings"),
-							      	tagList(
-							      		icon('question-circle'),
-										a("Sequence distance function details", href="https://rdrr.io/cran/TraMineR/man/seqdist.html", target="_blank"),
-							      		br(),br()
-							      	),
-									selectInputUIdistance('analysis_distance_function', 'Distance Function')#,
-									# selectInputUInorm('analysis_distance_norm', 'Normalization') #,
-									# sliderTextUItenths('analysis_indel_cost', "INDEL Cost")
-						      	)
+  							      	h3("Sequence Distance Measurement Settings"),
+  							      	tagList(
+  							      		icon('question-circle'),
+  										a("Sequence distance function details", href="https://rdrr.io/cran/TraMineR/man/seqdist.html", target="_blank"),
+  							      		br(),br()
+  							      	),
+  									selectInputUIdistance('analysis_distance_function', 'Distance Function'),
+  									checkboxInput('seqdata_run_with_missing', "Run With Missing Data", TRUE),
+  									# selectInputUInorm('analysis_distance_norm', 'Normalization') #,
+  									# sliderTextUItenths('analysis_indel_cost', "INDEL Cost")
+  						      	)
 						      )
 						 )),
 						hr(),
