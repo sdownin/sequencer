@@ -79,8 +79,8 @@ Added
 
 Changed
  - Bug fixes for nonuniform data inputs (missing values, actors without actions in a period, etc.). 
-     (Note: missing values are not treated as a separate category. This does not yet support differnet temporal bracketing, 
-      empty turns within a period, etc.) 
+     (Note: missing values are not treated as a separate category. This does not yet support 
+      different temporal bracketing, empty turns within a period, etc.) 
 
 Removed
  (none)
