@@ -892,7 +892,7 @@
   		      for (t in 1:npds)  #length(periods)
   		      {
   		        pd <- periods[t]
-				      t.xdist <- seqdist(seqdefs[[t]], method=method, norm=norm, sm=sm, with.missing=input$seqdata_run_with_missing)
+				      t.xdist <- seqdist(seqdefs[[t]], method=method, norm=norm, sm=sm, with.missing=TRUE) ##input$seqdata_run_with_missing
 				      dimnames(t.xdist) <- list(actors, actors)
 				      distance[[pd]] <- t.xdist
 				      incProgress(1/npds, detail=sprintf('Period: %s',pd))

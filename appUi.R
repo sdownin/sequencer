@@ -70,8 +70,8 @@
   										a("Sequence distance function details", href="https://rdrr.io/cran/TraMineR/man/seqdist.html", target="_blank"),
   							      		br(),br()
   							      	),
-  									selectInputUIdistance('analysis_distance_function', 'Distance Function'),
-  									checkboxInput('seqdata_run_with_missing', "Run With Missing Data", TRUE),
+  									selectInputUIdistance('analysis_distance_function', 'Distance Function')#,
+  									# checkboxInput('seqdata_run_with_missing', "Run With Missing Data", TRUE),
   									# selectInputUInorm('analysis_distance_norm', 'Normalization') #,
   									# sliderTextUItenths('analysis_indel_cost', "INDEL Cost")
   						      	)
