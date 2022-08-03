@@ -478,11 +478,24 @@
     	  df2 <- df[ ,-1]
     	}
     	
+    	headvec <- unname( unlist(headvec) )
+    	
     	idxs <- which(headvec %in% varnamemap)
     	
     	mat <- as.matrix( df2[idxs,idxs] )
-    	rownames(mat) <- headvec[idxs]
-    	colnames(mat) <- headvec[idxs]
+    	
+    	labels <- headvec[idxs]  ## the headers from the input matrix that are in the alphabet's category list in varnamemap
+
+    	## search varnamemap backwards (return key for given value)
+    	vnm.names <- names(varnamemap)
+    	vnm.values <- unname(unlist(varnamemap))
+    	abbrevs <- c()
+    	for (i in 1:length(labels)) {
+    	  abbrevs[i] <- vnm.names[which(vnm.values == labels[i])] ## return abbreviated 'name' for the varnamemap value == header[i]
+    	}
+    	## Add subcostmat rownames, columnnames 
+    	rownames(mat) <- abbrevs
+    	colnames(mat) <- abbrevs
     	storage.mode(mat) <- "numeric"
     	
     	
