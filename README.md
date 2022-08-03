@@ -72,6 +72,20 @@ Example CSV files for formatting your input data are included in the `TestData/`
 
 All notable changes to this project will be documented in this section.
 
+#### [0.5.1] - 2022-08-03
+```
+Added
+ (none)
+
+Changed
+ - Bug fixes for nonuniform data inputs (missing values, actors without actions in a period, etc.). 
+     (Note: missing values are not treated as a separate category. This does not yet support differnet temporal bracketing, 
+      empty turns within a period, etc.) 
+
+Removed
+ (none)
+```
+
 #### [0.5.0] - 2022-08-02
 ```
 Added
