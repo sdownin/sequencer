@@ -29,11 +29,6 @@
 | 1 | [**Colored Blocks**](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/EcszQWJcObtAmBTCRkf0hYwBjp0yYAHdiSaSa1-8DjN0Dw) | alphabet, substitution costs, sequence-grouping, sequence-motif, sequence-complexity, sequence-dissimilarity-78, sequence-dissimilarity-79 | AOM2022 |
 | 2 | [**Verbal Utterances**](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/EX1gRddxjFZIv9hp2qQoc-cBLC6Nonay_y61zifxgRDRJw?e=xSD69P) | alphabet, substitution costs, sequences | AOM2022 |
 
-[**Sequence Alphabet**](https://mailmissouri-my.sharepoint.com/:x:/g/personal/sdr8y_umsystem_edu/ESc9Bot0z99LvYFHQGlnuDMBTycy6ZWdAKEa2Sws3gRc0g?e=oRTj9v)
-
-| Verbal utterances | [**Sequence Alphabet**](https://mailmissouri-my.sharepoint.com/:x:/g/personal/sdr8y_umsystem_edu/ESc9Bot0z99LvYFHQGlnuDMBTycy6ZWdAKEa2Sws3gRc0g?e=oRTj9v) | AOM2022 |
-| Verbal utterances | [**Substitution Cost Matrix**](https://mailmissouri-my.sharepoint.com/:x:/g/personal/sdr8y_umsystem_edu/ER_E904k2lpNvmmIshCX9JQBrCEZo9Rgiw2W9qK28eBJhA?e=xFej53) | AOM2022 |
-| Verbal utterances | [**Sequence Data**](https://mailmissouri-my.sharepoint.com/:x:/g/personal/sdr8y_umsystem_edu/EbhyoKeY7FJPrsXAJtyLCCUB0MvZe6OaQ9HwyOytlr_WjQ?e=PjSD6I) | AOM2022 |
 
 
 ## Sequence Analysis Steps
