@@ -26,7 +26,7 @@
 
 | # | Data Set | Files | Stage |
 | --- | ------- | ------- | ------- | 
-| 1 | [**Colored Blocks**](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/EagV8GzcFpBAkWAZoApGlmkBA2_aheoK0Sjjtk1pYQy33Q?e=xJ1fNd) | alphabet; substitution costs; sequences examples for grouping, motif, complexity, dissimilarity) | AOM2022 |
+| 1 | [**Colored Blocks**](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/EagV8GzcFpBAkWAZoApGlmkBA2_aheoK0Sjjtk1pYQy33Q?e=xJ1fNd) | alphabet; substitution costs; sequences examples for grouping, motif, complexity, dissimilarity | AOM2022 |
 | 2 | [**Verbal Utterances**](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/EZV8hfckQEVKs5l2XzrDsKcBsIdSF638ioAfZ6AeBgNnrg?e=Bm6qab) | alphabet, substitution costs, sequences | AOM2022 |
 
 
