@@ -8,7 +8,7 @@
 | Platform | Software | Type | Version | Date | Stage |
 | ------- | ------- | ------- | ------- | ------- | ------- |
 | Web | [**SequenceR Web App**](https://sdowning.shinyapps.io/sequencer-webhost/) | link | 0.5.1 | 2022-08-03 | AOM2023 |
-| Windows PC | [**SequenceR Portable App**](https://mailmissouri-my.sharepoint.com/:u:/g/personal/sdr8y_umsystem_edu/ETPi-fSWyUZErHrDMBksKAwBRrDy34cRn4G0DZ869y2P0w?e=3G6P0X) | download | 0.5.1 | 2022-08-03 | AOM2023 |
+| Windows PC | [**SequenceR Portable App**](https://1drv.ms/u/c/6890386d9c4a0eb1/EQ3TGrnA7xVBqfe0SIPu1kkBKUtsS9AvvS1yqf6XTSZ-TA?e=n4CZop) | download | 0.5.1 | 2022-08-03 | AOM2023 |
 | Mac OS | Unsupported - Use Web App | - | - | - | AOM2023 |
 
 ##### Web App Getting Started
